@@ -25,11 +25,14 @@ namespace DJMatch.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Answer> Answers { get; set; }
         public virtual DbSet<DJ> DJs { get; set; }
         public virtual DbSet<Playlist> Playlists { get; set; }
-        public virtual DbSet<Song> Songs { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
+        public virtual DbSet<Song> Songs { get; set; }
         public virtual DbSet<SongsToPlaylist> SongsToPlaylists { get; set; }
+        public virtual DbSet<UserAnswer> UserAnswers { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

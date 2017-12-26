@@ -1,0 +1,42 @@
+﻿@model DJMatch.Models.SongsToPlaylist
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SongsToPlaylist</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tags)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tags)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Playlist.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Playlist.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Song.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Song.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -4,7 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DJ_MatchModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DJ_MatchModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Answers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="text" Nullable="false" />
+          <Property Name="QuestionID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="DJs">
           <Key>
             <PropertyRef Name="ID" />
@@ -32,6 +40,13 @@
           <Property Name="UserID" Type="int" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Picture" Type="image" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="text" Nullable="false" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -62,6 +77,16 @@
           <Property Name="PlaylistID" Type="int" Nullable="false" />
           <Property Name="Tags" Type="nvarchar" MaxLength="256" />
         </EntityType>
+        <EntityType Name="UserAnswers">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="QuestionID" />
+            <PropertyRef Name="AnswerID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="QuestionID" Type="int" Nullable="false" />
+          <Property Name="AnswerID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="ID" />
@@ -73,6 +98,18 @@
           <Property Name="Password" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Picture" Type="image" />
         </EntityType>
+        <Association Name="FK_Answers_Questions">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="Answers" Type="Self.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Playlists_DJs">
           <End Role="DJs" Type="Self.DJs" Multiplicity="1" />
           <End Role="Playlists" Type="Self.Playlists" Multiplicity="*" />
@@ -145,13 +182,56 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserAnswers_Answers">
+          <End Role="Answers" Type="Self.Answers" Multiplicity="1" />
+          <End Role="UserAnswers" Type="Self.UserAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserAnswers">
+              <PropertyRef Name="AnswerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAnswers_Questions">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="UserAnswers" Type="Self.UserAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserAnswers">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAnswers_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserAnswers" Type="Self.UserAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserAnswers">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DJ_MatchModelStoreContainer">
+          <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DJs" EntityType="Self.DJs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Playlists" EntityType="Self.Playlists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Songs" EntityType="Self.Songs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SongsToPlaylists" EntityType="Self.SongsToPlaylists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAnswers" EntityType="Self.UserAnswers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Answers_Questions" Association="Self.FK_Answers_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
           <AssociationSet Name="FK_Playlists_DJs" Association="Self.FK_Playlists_DJs">
             <End Role="DJs" EntitySet="DJs" />
             <End Role="Playlists" EntitySet="Playlists" />
@@ -176,17 +256,41 @@
             <End Role="Songs" EntitySet="Songs" />
             <End Role="SongsToPlaylists" EntitySet="SongsToPlaylists" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserAnswers_Answers" Association="Self.FK_UserAnswers_Answers">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="UserAnswers" EntitySet="UserAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAnswers_Questions" Association="Self.FK_UserAnswers_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="UserAnswers" EntitySet="UserAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAnswers_Users" Association="Self.FK_UserAnswers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserAnswers" EntitySet="UserAnswers" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DJ_MatchModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_Answers_Questions" FromRole="Answers" ToRole="Questions" />
+          <NavigationProperty Name="UserAnswers" Relationship="Self.FK_UserAnswers_Answers" FromRole="Answers" ToRole="UserAnswers" />
+        </EntityType>
         <EntityType Name="DJ">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
           <Property Name="ExperienceYears" Type="Int32" />
           <Property Name="PriceMin" Type="Int32" />
           <Property Name="PriceMax" Type="Int32" />
@@ -196,10 +300,9 @@
           <Property Name="WebSite" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="FacebookPage" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="IGProfile" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Playlists" Relationship="Self.FK_Playlists_DJs" FromRole="DJs" ToRole="Playlists" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_DJs" FromRole="DJs" ToRole="Reviews" />
-          <Property Name="BirthDate" Type="DateTime" Precision="0" />
-          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Playlist">
           <Key>
@@ -209,33 +312,19 @@
           <Property Name="DJ_ID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="DJ" Relationship="Self.FK_Playlists_DJs" FromRole="Playlists" ToRole="DJs" />
           <NavigationProperty Name="User" Relationship="Self.FK_Playlists_Users" FromRole="Playlists" ToRole="Users" />
           <NavigationProperty Name="SongsToPlaylists" Relationship="Self.FK_SongsToPlaylists_Playlists" FromRole="Playlists" ToRole="SongsToPlaylists" />
-          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="Song">
+        <EntityType Name="Question">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Artist" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Genre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SongsToPlaylists" Relationship="Self.FK_SongsToPlaylists_Songs" FromRole="Songs" ToRole="SongsToPlaylists" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PhoneNum" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Playlists" Relationship="Self.FK_Playlists_Users" FromRole="Users" ToRole="Playlists" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Users" FromRole="Users" ToRole="Reviews" />
-          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Answers" Relationship="Self.FK_Answers_Questions" FromRole="Questions" ToRole="Answers" />
+          <NavigationProperty Name="UserAnswers" Relationship="Self.FK_UserAnswers_Questions" FromRole="Questions" ToRole="UserAnswers" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -250,6 +339,16 @@
           <NavigationProperty Name="DJ" Relationship="Self.FK_Reviews_DJs" FromRole="Reviews" ToRole="DJs" />
           <NavigationProperty Name="User" Relationship="Self.FK_Reviews_Users" FromRole="Reviews" ToRole="Users" />
         </EntityType>
+        <EntityType Name="Song">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Artist" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Genre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SongsToPlaylists" Relationship="Self.FK_SongsToPlaylists_Songs" FromRole="Songs" ToRole="SongsToPlaylists" />
+        </EntityType>
         <EntityType Name="SongsToPlaylist">
           <Key>
             <PropertyRef Name="SongID" />
@@ -261,6 +360,57 @@
           <NavigationProperty Name="Playlist" Relationship="Self.FK_SongsToPlaylists_Playlists" FromRole="SongsToPlaylists" ToRole="Playlists" />
           <NavigationProperty Name="Song" Relationship="Self.FK_SongsToPlaylists_Songs" FromRole="SongsToPlaylists" ToRole="Songs" />
         </EntityType>
+        <EntityType Name="UserAnswer">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="QuestionID" />
+            <PropertyRef Name="AnswerID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <Property Name="AnswerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Answer" Relationship="Self.FK_UserAnswers_Answers" FromRole="UserAnswers" ToRole="Answers" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_UserAnswers_Questions" FromRole="UserAnswers" ToRole="Questions" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserAnswers_Users" FromRole="UserAnswers" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNum" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Playlists" Relationship="Self.FK_Playlists_Users" FromRole="Users" ToRole="Playlists" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Users" FromRole="Users" ToRole="Reviews" />
+          <NavigationProperty Name="UserAnswers" Relationship="Self.FK_UserAnswers_Users" FromRole="Users" ToRole="UserAnswers" />
+        </EntityType>
+        <Association Name="FK_Answers_Questions">
+          <End Role="Questions" Type="Self.Question" Multiplicity="1" />
+          <End Role="Answers" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAnswers_Answers">
+          <End Role="Answers" Type="Self.Answer" Multiplicity="1" />
+          <End Role="UserAnswers" Type="Self.UserAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserAnswers">
+              <PropertyRef Name="AnswerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Playlists_DJs">
           <End Role="DJs" Type="Self.DJ" Multiplicity="1" />
           <End Role="Playlists" Type="Self.Playlist" Multiplicity="*" />
@@ -309,15 +459,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SongsToPlaylists_Songs">
-          <End Role="Songs" Type="Self.Song" Multiplicity="1" />
-          <End Role="SongsToPlaylists" Type="Self.SongsToPlaylist" Multiplicity="*" />
+        <Association Name="FK_UserAnswers_Questions">
+          <End Role="Questions" Type="Self.Question" Multiplicity="1" />
+          <End Role="UserAnswers" Type="Self.UserAnswer" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Songs">
+            <Principal Role="Questions">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="SongsToPlaylists">
-              <PropertyRef Name="SongID" />
+            <Dependent Role="UserAnswers">
+              <PropertyRef Name="QuestionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -333,13 +483,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SongsToPlaylists_Songs">
+          <End Role="Songs" Type="Self.Song" Multiplicity="1" />
+          <End Role="SongsToPlaylists" Type="Self.SongsToPlaylist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Songs">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SongsToPlaylists">
+              <PropertyRef Name="SongID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAnswers_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserAnswers" Type="Self.UserAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserAnswers">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DJ_MatchEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Answers" EntityType="Self.Answer" />
           <EntitySet Name="DJs" EntityType="Self.DJ" />
           <EntitySet Name="Playlists" EntityType="Self.Playlist" />
-          <EntitySet Name="Songs" EntityType="Self.Song" />
-          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Questions" EntityType="Self.Question" />
           <EntitySet Name="Reviews" EntityType="Self.Review" />
+          <EntitySet Name="Songs" EntityType="Self.Song" />
           <EntitySet Name="SongsToPlaylists" EntityType="Self.SongsToPlaylist" />
+          <EntitySet Name="UserAnswers" EntityType="Self.UserAnswer" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Answers_Questions" Association="Self.FK_Answers_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAnswers_Answers" Association="Self.FK_UserAnswers_Answers">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="UserAnswers" EntitySet="UserAnswers" />
+          </AssociationSet>
           <AssociationSet Name="FK_Playlists_DJs" Association="Self.FK_Playlists_DJs">
             <End Role="DJs" EntitySet="DJs" />
             <End Role="Playlists" EntitySet="Playlists" />
@@ -356,13 +541,21 @@
             <End Role="Playlists" EntitySet="Playlists" />
             <End Role="SongsToPlaylists" EntitySet="SongsToPlaylists" />
           </AssociationSet>
-          <AssociationSet Name="FK_SongsToPlaylists_Songs" Association="Self.FK_SongsToPlaylists_Songs">
-            <End Role="Songs" EntitySet="Songs" />
-            <End Role="SongsToPlaylists" EntitySet="SongsToPlaylists" />
+          <AssociationSet Name="FK_UserAnswers_Questions" Association="Self.FK_UserAnswers_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="UserAnswers" EntitySet="UserAnswers" />
           </AssociationSet>
           <AssociationSet Name="FK_Reviews_Users" Association="Self.FK_Reviews_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SongsToPlaylists_Songs" Association="Self.FK_SongsToPlaylists_Songs">
+            <End Role="Songs" EntitySet="Songs" />
+            <End Role="SongsToPlaylists" EntitySet="SongsToPlaylists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAnswers_Users" Association="Self.FK_UserAnswers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserAnswers" EntitySet="UserAnswers" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -371,13 +564,21 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DJ_MatchModelStoreContainer" CdmEntityContainer="DJ_MatchEntities">
+          <EntitySetMapping Name="Answers">
+            <EntityTypeMapping TypeName="DJ_MatchModel.Answer">
+              <MappingFragment StoreEntitySet="Answers">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="DJs">
             <EntityTypeMapping TypeName="DJ_MatchModel.DJ">
               <MappingFragment StoreEntitySet="DJs">
-                <ScalarProperty Name="Picture" ColumnName="Picture" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
                 <ScalarProperty Name="ExperienceYears" ColumnName="ExperienceYears" />
                 <ScalarProperty Name="PriceMin" ColumnName="PriceMin" />
                 <ScalarProperty Name="PriceMax" ColumnName="PriceMax" />
@@ -387,39 +588,26 @@
                 <ScalarProperty Name="WebSite" ColumnName="WebSite" />
                 <ScalarProperty Name="FacebookPage" ColumnName="FacebookPage" />
                 <ScalarProperty Name="IGProfile" ColumnName="IGProfile" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Playlists">
             <EntityTypeMapping TypeName="DJ_MatchModel.Playlist">
               <MappingFragment StoreEntitySet="Playlists">
-                <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="DJ_ID" ColumnName="DJ_ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Songs">
-            <EntityTypeMapping TypeName="DJ_MatchModel.Song">
-              <MappingFragment StoreEntitySet="Songs">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Artist" ColumnName="Artist" />
-                <ScalarProperty Name="Genre" ColumnName="Genre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="DJ_MatchModel.User">
-              <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Picture" ColumnName="Picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="DJ_MatchModel.Question">
+              <MappingFragment StoreEntitySet="Questions">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PhoneNum" ColumnName="PhoneNum" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -435,12 +623,43 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Songs">
+            <EntityTypeMapping TypeName="DJ_MatchModel.Song">
+              <MappingFragment StoreEntitySet="Songs">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Artist" ColumnName="Artist" />
+                <ScalarProperty Name="Genre" ColumnName="Genre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="SongsToPlaylists">
             <EntityTypeMapping TypeName="DJ_MatchModel.SongsToPlaylist">
               <MappingFragment StoreEntitySet="SongsToPlaylists">
                 <ScalarProperty Name="SongID" ColumnName="SongID" />
                 <ScalarProperty Name="PlaylistID" ColumnName="PlaylistID" />
                 <ScalarProperty Name="Tags" ColumnName="Tags" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAnswers">
+            <EntityTypeMapping TypeName="DJ_MatchModel.UserAnswer">
+              <MappingFragment StoreEntitySet="UserAnswers">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="AnswerID" ColumnName="AnswerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DJ_MatchModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNum" ColumnName="PhoneNum" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

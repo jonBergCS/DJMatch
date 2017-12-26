@@ -19,6 +19,7 @@ namespace DJMatch.Models
         {
             this.Playlists = new HashSet<Playlist>();
             this.Reviews = new HashSet<Review>();
+            this.UserAnswers = new HashSet<UserAnswer>();
         }
     
         public int ID { get; set; }
@@ -32,5 +33,7 @@ namespace DJMatch.Models
         public virtual ICollection<Playlist> Playlists { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Review> Reviews { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserAnswer> UserAnswers { get; set; }
     }
 }

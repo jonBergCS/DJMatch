@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="DJMatch.Global" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="DJMatch.MvcApplication" Language="C#" %>

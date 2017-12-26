@@ -2,103 +2,126 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Description;
+using System.Web;
+using System.Web.Mvc;
 using DJMatch.Models;
 
 namespace DJMatch.Controllers
 {
-    public class PlaylistsController : ApiController
+    public class PlaylistsController : Controller
     {
         private DJ_MatchEntities db = new DJ_MatchEntities();
 
-        // GET: api/Playlists
-        public IQueryable<Playlist> GetPlaylists()
+        // GET: Playlists
+        public ActionResult Index()
         {
-            return db.Playlists;
+            var playlists = db.Playlists.Include(p => p.DJ).Include(p => p.User);
+            return View(playlists.ToList());
         }
 
-        // GET: api/Playlists/5
-        [ResponseType(typeof(Playlist))]
-        public IHttpActionResult GetPlaylist(int id)
+        // GET: Playlists/Details/5
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             Playlist playlist = db.Playlists.Find(id);
             if (playlist == null)
             {
-                return NotFound();
+                return HttpNotFound();
             }
-
-            return Ok(playlist);
+            return View(playlist);
         }
 
-        // PUT: api/Playlists/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutPlaylist(int id, Playlist playlist)
+        // GET: Playlists/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            ViewBag.DJ_ID = new SelectList(db.DJs, "ID", "Name");
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Name");
+            return View();
+        }
 
-            if (id != playlist.ID)
+        // POST: Playlists/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ID,DJ_ID,UserID,Name,Picture")] Playlist playlist)
+        {
+            if (ModelState.IsValid)
             {
-                return BadRequest();
-            }
-
-            db.Entry(playlist).State = EntityState.Modified;
-
-            try
-            {
+                db.Playlists.Add(playlist);
                 db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PlaylistExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToAction("Index");
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            ViewBag.DJ_ID = new SelectList(db.DJs, "ID", "Name", playlist.DJ_ID);
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Name", playlist.UserID);
+            return View(playlist);
         }
 
-        // POST: api/Playlists
-        [ResponseType(typeof(Playlist))]
-        public IHttpActionResult PostPlaylist(Playlist playlist)
+        // GET: Playlists/Edit/5
+        public ActionResult Edit(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return BadRequest(ModelState);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            db.Playlists.Add(playlist);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = playlist.ID }, playlist);
-        }
-
-        // DELETE: api/Playlists/5
-        [ResponseType(typeof(Playlist))]
-        public IHttpActionResult DeletePlaylist(int id)
-        {
             Playlist playlist = db.Playlists.Find(id);
             if (playlist == null)
             {
-                return NotFound();
+                return HttpNotFound();
             }
+            ViewBag.DJ_ID = new SelectList(db.DJs, "ID", "Name", playlist.DJ_ID);
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Name", playlist.UserID);
+            return View(playlist);
+        }
 
+        // POST: Playlists/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ID,DJ_ID,UserID,Name,Picture")] Playlist playlist)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(playlist).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.DJ_ID = new SelectList(db.DJs, "ID", "Name", playlist.DJ_ID);
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Name", playlist.UserID);
+            return View(playlist);
+        }
+
+        // GET: Playlists/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Playlist playlist = db.Playlists.Find(id);
+            if (playlist == null)
+            {
+                return HttpNotFound();
+            }
+            return View(playlist);
+        }
+
+        // POST: Playlists/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Playlist playlist = db.Playlists.Find(id);
             db.Playlists.Remove(playlist);
             db.SaveChanges();
-
-            return Ok(playlist);
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
@@ -108,11 +131,6 @@ namespace DJMatch.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool PlaylistExists(int id)
-        {
-            return db.Playlists.Count(e => e.ID == id) > 0;
         }
     }
 }

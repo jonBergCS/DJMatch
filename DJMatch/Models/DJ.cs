@@ -23,6 +23,7 @@ namespace DJMatch.Models
     
         public int ID { get; set; }
         public string Name { get; set; }
+        public Nullable<System.DateTime> BirthDate { get; set; }
         public Nullable<int> ExperienceYears { get; set; }
         public Nullable<int> PriceMin { get; set; }
         public Nullable<int> PriceMax { get; set; }
@@ -32,7 +33,6 @@ namespace DJMatch.Models
         public string WebSite { get; set; }
         public string FacebookPage { get; set; }
         public string IGProfile { get; set; }
-        public Nullable<System.DateTime> BirthDate { get; set; }
         public byte[] Picture { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

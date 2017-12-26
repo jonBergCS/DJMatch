@@ -2,103 +2,126 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Description;
+using System.Web;
+using System.Web.Mvc;
 using DJMatch.Models;
 
 namespace DJMatch.Controllers
 {
-    public class ReviewsController : ApiController
+    public class ReviewsController : Controller
     {
         private DJ_MatchEntities db = new DJ_MatchEntities();
 
-        // GET: api/Reviews
-        public IQueryable<Review> GetReviews()
+        // GET: Reviews
+        public ActionResult Index()
         {
-            return db.Reviews;
+            var reviews = db.Reviews.Include(r => r.DJ).Include(r => r.User);
+            return View(reviews.ToList());
         }
 
-        // GET: api/Reviews/5
-        [ResponseType(typeof(Review))]
-        public IHttpActionResult GetReview(int id)
+        // GET: Reviews/Details/5
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             Review review = db.Reviews.Find(id);
             if (review == null)
             {
-                return NotFound();
+                return HttpNotFound();
             }
-
-            return Ok(review);
+            return View(review);
         }
 
-        // PUT: api/Reviews/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutReview(int id, Review review)
+        // GET: Reviews/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            ViewBag.DJ_ID = new SelectList(db.DJs, "ID", "Name");
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Name");
+            return View();
+        }
 
-            if (id != review.ID)
+        // POST: Reviews/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ID,DJ_ID,UserID,Text,Score,Date")] Review review)
+        {
+            if (ModelState.IsValid)
             {
-                return BadRequest();
-            }
-
-            db.Entry(review).State = EntityState.Modified;
-
-            try
-            {
+                db.Reviews.Add(review);
                 db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ReviewExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToAction("Index");
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            ViewBag.DJ_ID = new SelectList(db.DJs, "ID", "Name", review.DJ_ID);
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Name", review.UserID);
+            return View(review);
         }
 
-        // POST: api/Reviews
-        [ResponseType(typeof(Review))]
-        public IHttpActionResult PostReview(Review review)
+        // GET: Reviews/Edit/5
+        public ActionResult Edit(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return BadRequest(ModelState);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            db.Reviews.Add(review);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = review.ID }, review);
-        }
-
-        // DELETE: api/Reviews/5
-        [ResponseType(typeof(Review))]
-        public IHttpActionResult DeleteReview(int id)
-        {
             Review review = db.Reviews.Find(id);
             if (review == null)
             {
-                return NotFound();
+                return HttpNotFound();
             }
+            ViewBag.DJ_ID = new SelectList(db.DJs, "ID", "Name", review.DJ_ID);
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Name", review.UserID);
+            return View(review);
+        }
 
+        // POST: Reviews/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ID,DJ_ID,UserID,Text,Score,Date")] Review review)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(review).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.DJ_ID = new SelectList(db.DJs, "ID", "Name", review.DJ_ID);
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Name", review.UserID);
+            return View(review);
+        }
+
+        // GET: Reviews/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Review review = db.Reviews.Find(id);
+            if (review == null)
+            {
+                return HttpNotFound();
+            }
+            return View(review);
+        }
+
+        // POST: Reviews/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Review review = db.Reviews.Find(id);
             db.Reviews.Remove(review);
             db.SaveChanges();
-
-            return Ok(review);
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
@@ -108,11 +131,6 @@ namespace DJMatch.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool ReviewExists(int id)
-        {
-            return db.Reviews.Count(e => e.ID == id) > 0;
         }
     }
 }
