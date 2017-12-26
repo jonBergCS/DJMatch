@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: "Lato", sans-serif;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -21,4 +22,51 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.nav-icon {
+    background-image: url("../App_LocalResources/icon.png");
+}
+
+
+.sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 6px 6px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.main {
+    margin-left: 200px; /* Same as the width of the sidenav */
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.sidenav a {
+    font-size: 20px;
+}
+
+.logo {
+    width: 200px;   
+    margin-bottom: 20px;
 }

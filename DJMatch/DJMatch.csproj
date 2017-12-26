@@ -218,6 +218,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_LocalResources\icon.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -234,6 +235,9 @@
       <DependentUpon>DJMatchModel.edmx</DependentUpon>
       <LastGenOutput>DJMatchModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -246,6 +250,7 @@
     <Content Include="Models\DJMatchModel.edmx.diagram">
       <DependentUpon>DJMatchModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
