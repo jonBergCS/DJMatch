@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DJ_MatchModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DJMatchModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Answers">
           <Key>
             <PropertyRef Name="ID" />
@@ -218,7 +218,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DJ_MatchModelStoreContainer">
+        <EntityContainer Name="DJMatchModelStoreContainer">
           <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DJs" EntityType="Self.DJs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Playlists" EntityType="Self.Playlists" Schema="dbo" store:Type="Tables" />
@@ -273,7 +273,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DJ_MatchModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DJMatchModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Answer">
           <Key>
             <PropertyRef Name="ID" />
@@ -507,7 +507,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DJ_MatchEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DJMatchEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Answers" EntityType="Self.Answer" />
           <EntitySet Name="DJs" EntityType="Self.DJ" />
           <EntitySet Name="Playlists" EntityType="Self.Playlist" />
@@ -563,9 +563,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DJ_MatchModelStoreContainer" CdmEntityContainer="DJ_MatchEntities">
+        <EntityContainerMapping StorageEntityContainer="DJMatchModelStoreContainer" CdmEntityContainer="DJMatchEntities">
           <EntitySetMapping Name="Answers">
-            <EntityTypeMapping TypeName="DJ_MatchModel.Answer">
+            <EntityTypeMapping TypeName="DJMatchModel.Answer">
               <MappingFragment StoreEntitySet="Answers">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
@@ -574,7 +574,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DJs">
-            <EntityTypeMapping TypeName="DJ_MatchModel.DJ">
+            <EntityTypeMapping TypeName="DJMatchModel.DJ">
               <MappingFragment StoreEntitySet="DJs">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -593,7 +593,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Playlists">
-            <EntityTypeMapping TypeName="DJ_MatchModel.Playlist">
+            <EntityTypeMapping TypeName="DJMatchModel.Playlist">
               <MappingFragment StoreEntitySet="Playlists">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="DJ_ID" ColumnName="DJ_ID" />
@@ -604,7 +604,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Questions">
-            <EntityTypeMapping TypeName="DJ_MatchModel.Question">
+            <EntityTypeMapping TypeName="DJMatchModel.Question">
               <MappingFragment StoreEntitySet="Questions">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
@@ -612,7 +612,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Reviews">
-            <EntityTypeMapping TypeName="DJ_MatchModel.Review">
+            <EntityTypeMapping TypeName="DJMatchModel.Review">
               <MappingFragment StoreEntitySet="Reviews">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="DJ_ID" ColumnName="DJ_ID" />
@@ -624,7 +624,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Songs">
-            <EntityTypeMapping TypeName="DJ_MatchModel.Song">
+            <EntityTypeMapping TypeName="DJMatchModel.Song">
               <MappingFragment StoreEntitySet="Songs">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -634,7 +634,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SongsToPlaylists">
-            <EntityTypeMapping TypeName="DJ_MatchModel.SongsToPlaylist">
+            <EntityTypeMapping TypeName="DJMatchModel.SongsToPlaylist">
               <MappingFragment StoreEntitySet="SongsToPlaylists">
                 <ScalarProperty Name="SongID" ColumnName="SongID" />
                 <ScalarProperty Name="PlaylistID" ColumnName="PlaylistID" />
@@ -643,7 +643,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserAnswers">
-            <EntityTypeMapping TypeName="DJ_MatchModel.UserAnswer">
+            <EntityTypeMapping TypeName="DJMatchModel.UserAnswer">
               <MappingFragment StoreEntitySet="UserAnswers">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
@@ -652,7 +652,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="DJ_MatchModel.User">
+            <EntityTypeMapping TypeName="DJMatchModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

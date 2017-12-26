@@ -13,10 +13,10 @@ namespace DJMatch.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DJ_MatchEntities : DbContext
+    public partial class DJMatchEntities : DbContext
     {
-        public DJ_MatchEntities()
-            : base("name=DJ_MatchEntities")
+        public DJMatchEntities()
+            : base("name=DJMatchEntities")
         {
         }
     

@@ -227,8 +227,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\DJMatchModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DJMatchModel.Context.cs</LastGenOutput>
       <DependentUpon>DJMatchModel.edmx</DependentUpon>
+      <LastGenOutput>DJMatchModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\DJMatchModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -251,6 +251,7 @@
       <DependentUpon>DJMatchModel.edmx</DependentUpon>
     </Content>
     <Content Include="Scripts\angular.min.js.map" />
+    <None Include="Properties\PublishProfiles\fadj - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
