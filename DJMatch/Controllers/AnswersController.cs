@@ -12,7 +12,7 @@ namespace DJMatch.Controllers
 {
     public class AnswersController : Controller
     {
-        private DJ_MatchEntities db = new DJ_MatchEntities();
+        private DJMatchEntities db = new DJMatchEntities();
 
         // GET: Answers
         public ActionResult Index()
