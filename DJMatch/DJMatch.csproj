@@ -246,6 +246,7 @@
     <Content Include="Models\DJMatchModel.edmx.diagram">
       <DependentUpon>DJMatchModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\fadj - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
