@@ -2,117 +2,103 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
 using DJMatch.Models;
 
 namespace DJMatch.Controllers
 {
-    public class SongsController : Controller
+    public class SongsController : ApiController
     {
         private DJMatchEntities db = new DJMatchEntities();
 
-        // GET: Songs
-        public ActionResult Index()
+        // GET: api/Songs
+        public IQueryable<Song> GetSongs()
         {
-            return View(db.Songs.ToList());
+            return db.Songs;
         }
 
-        // GET: Songs/Details/5
-        public ActionResult Details(int? id)
+        // GET: api/Songs/5
+        [ResponseType(typeof(Song))]
+        public IHttpActionResult GetSong(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Song song = db.Songs.Find(id);
             if (song == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            return View(song);
+
+            return Ok(song);
         }
 
-        // GET: Songs/Create
-        public ActionResult Create()
+        // PUT: api/Songs/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutSong(int id, Song song)
         {
-            return View();
-        }
-
-        // POST: Songs/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Artist,Genre")] Song song)
-        {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.Songs.Add(song);
+                return BadRequest(ModelState);
+            }
+
+            if (id != song.ID)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(song).State = EntityState.Modified;
+
+            try
+            {
                 db.SaveChanges();
-                return RedirectToAction("Index");
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SongExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
-            return View(song);
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: Songs/Edit/5
-        public ActionResult Edit(int? id)
+        // POST: api/Songs
+        [ResponseType(typeof(Song))]
+        public IHttpActionResult PostSong(Song song)
         {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest(ModelState);
             }
+
+            db.Songs.Add(song);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = song.ID }, song);
+        }
+
+        // DELETE: api/Songs/5
+        [ResponseType(typeof(Song))]
+        public IHttpActionResult DeleteSong(int id)
+        {
             Song song = db.Songs.Find(id);
             if (song == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            return View(song);
-        }
 
-        // POST: Songs/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Artist,Genre")] Song song)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(song).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(song);
-        }
-
-        // GET: Songs/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Song song = db.Songs.Find(id);
-            if (song == null)
-            {
-                return HttpNotFound();
-            }
-            return View(song);
-        }
-
-        // POST: Songs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Song song = db.Songs.Find(id);
             db.Songs.Remove(song);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return Ok(song);
         }
 
         protected override void Dispose(bool disposing)
@@ -122,6 +108,11 @@ namespace DJMatch.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool SongExists(int id)
+        {
+            return db.Songs.Count(e => e.ID == id) > 0;
         }
     }
 }

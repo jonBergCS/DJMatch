@@ -2,122 +2,103 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
 using DJMatch.Models;
 
 namespace DJMatch.Controllers
 {
-    public class AnswersController : Controller
+    public class AnswersController : ApiController
     {
         private DJMatchEntities db = new DJMatchEntities();
 
-        // GET: Answers
-        public ActionResult Index()
+        // GET: api/Answers
+        public IQueryable<Answer> GetAnswers()
         {
-            var answers = db.Answers.Include(a => a.Question);
-            return View(answers.ToList());
+            return db.Answers;
         }
 
-        // GET: Answers/Details/5
-        public ActionResult Details(int? id)
+        // GET: api/Answers/5
+        [ResponseType(typeof(Answer))]
+        public IHttpActionResult GetAnswer(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Answer answer = db.Answers.Find(id);
             if (answer == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            return View(answer);
+
+            return Ok(answer);
         }
 
-        // GET: Answers/Create
-        public ActionResult Create()
+        // PUT: api/Answers/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutAnswer(int id, Answer answer)
         {
-            ViewBag.QuestionID = new SelectList(db.Questions, "ID", "Text");
-            return View();
-        }
-
-        // POST: Answers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Text,QuestionID")] Answer answer)
-        {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.Answers.Add(answer);
+                return BadRequest(ModelState);
+            }
+
+            if (id != answer.ID)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(answer).State = EntityState.Modified;
+
+            try
+            {
                 db.SaveChanges();
-                return RedirectToAction("Index");
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AnswerExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
-            ViewBag.QuestionID = new SelectList(db.Questions, "ID", "Text", answer.QuestionID);
-            return View(answer);
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: Answers/Edit/5
-        public ActionResult Edit(int? id)
+        // POST: api/Answers
+        [ResponseType(typeof(Answer))]
+        public IHttpActionResult PostAnswer(Answer answer)
         {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest(ModelState);
             }
+
+            db.Answers.Add(answer);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = answer.ID }, answer);
+        }
+
+        // DELETE: api/Answers/5
+        [ResponseType(typeof(Answer))]
+        public IHttpActionResult DeleteAnswer(int id)
+        {
             Answer answer = db.Answers.Find(id);
             if (answer == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            ViewBag.QuestionID = new SelectList(db.Questions, "ID", "Text", answer.QuestionID);
-            return View(answer);
-        }
 
-        // POST: Answers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Text,QuestionID")] Answer answer)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(answer).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.QuestionID = new SelectList(db.Questions, "ID", "Text", answer.QuestionID);
-            return View(answer);
-        }
-
-        // GET: Answers/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Answer answer = db.Answers.Find(id);
-            if (answer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(answer);
-        }
-
-        // POST: Answers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Answer answer = db.Answers.Find(id);
             db.Answers.Remove(answer);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return Ok(answer);
         }
 
         protected override void Dispose(bool disposing)
@@ -127,6 +108,11 @@ namespace DJMatch.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool AnswerExists(int id)
+        {
+            return db.Answers.Count(e => e.ID == id) > 0;
         }
     }
 }
