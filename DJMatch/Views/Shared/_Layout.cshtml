@@ -4,9 +4,11 @@
     <title>FinDJ</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="729749725873-d5urfih573fgod9ttjmj2i2hlecoc68m.apps.googleusercontent.com">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/angular.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="~/Scripts/Home/app.js" type="text/javascript"></script>    
 </head>
 <body ng-app="FinDJApp" style="background-image:url(~/Content/Images/background.jpg)">
@@ -14,7 +16,6 @@
             <a href="~/Home/Index">
                 <img class="logo" src="~/Content/Images/FinDJ_logo2.png" />
             </a>
-            
             <a href="~/Users/Index">My profile</a>
             <a href="~/DJs/Index">DJs</a>
             <a href="~/Events/Index">My Events</a>

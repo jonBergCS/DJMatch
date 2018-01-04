@@ -1,0 +1,35 @@
+﻿
+.dj-profile-header {
+    display: -webkit-box;
+    padding: 0 5vw;
+}
+
+.dj-profile-img-container {
+    max-width: 200px;
+    max-height: 200px;
+}
+
+.dj-profile-img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.dj-profile-header-details {
+    margin-left: 3vw;
+}
+
+.dj-profile-name {
+    margin-top: -22px;
+}
+
+.dj-profile-icon {
+    width: 1.7vw;
+}
+
+.dj-profile-header-row {
+    margin-top: 1vh;
+}
+
+.dj-profile-networks {
+    margin-top: 10px;
+}
