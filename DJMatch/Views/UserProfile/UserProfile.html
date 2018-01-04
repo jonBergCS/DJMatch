@@ -1,0 +1,11 @@
+﻿<script src="~/Scripts/UserProfile/userProfile.js"></script>
+<div ng-controller="userProfileController">
+    <div ng-repeat="question in questions">
+        <h1>Question no. {{question.id}}</h1>
+        <form name="answers">
+            <label ng-repeat="answer in answers">
+                <input type="radio" ng-model="answer.text" ng-value="answer.id"/>
+            </label>
+        </form>
+    </div>
+</div>
