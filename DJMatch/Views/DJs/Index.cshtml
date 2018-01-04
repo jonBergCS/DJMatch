@@ -4,96 +4,24 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Optinal DJs</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExperienceYears)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PriceMin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PriceMax)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Genres)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNum)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WebSite)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FacebookPage)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IGProfile)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Picture)
-        </th>
-        <th></th>
-    </tr>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+    <div class="w3-row-padding w3-grayscale">
+        @foreach (var item in Model)
+        {
+            <div class="w3-col l3 m6 w3-margin-bottom">
+                <img src="~/Content/Images/icon.png" class="photo">
+                <h3>DJ @Html.DisplayFor(modelItem => item.Name)</h3>
+                <p class="w3-opacity">@Html.DisplayFor(modelItem => item.ExperienceYears) years of experience</p>
+                <p class="w3-opacity">@Html.DisplayFor(modelItem => item.PriceMin) $ - @Html.DisplayFor(modelItem => item.PriceMax) $</p>
+                <p class="w3-opacity">Plays @Html.DisplayFor(modelItem => item.Genres)</p>
+                <p> @Html.ActionLink("Details", "Details", new { id = item.ID })</p>
+            </div>
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BirthDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExperienceYears)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PriceMin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PriceMax)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genres)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WebSite)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FacebookPage)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IGProfile)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Picture)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-
-</table>
+    </div>
+</body>

@@ -9,10 +9,10 @@
     <script src="~/Scripts/angular.min.js"></script>
     <script src="~/Scripts/Home/app.js" type="text/javascript"></script>    
 </head>
-<body ng-app="FinDJApp">
+<body ng-app="FinDJApp" style="background-image:url(~/Content/Images/background.jpg)">
         <div class="sidenav">
             <a href="~/Home/Index">
-                <img class="logo" src="~/Content/Images/FinDJ_logo.png" />
+                <img class="logo" src="~/Content/Images/FinDJ_logo2.png" />
             </a>
             
             <a href="~/Users/Index">My profile</a>
@@ -30,5 +30,6 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
