@@ -21,6 +21,26 @@ namespace DJMatch.Controllers
             return View(events.ToList());
         }
 
+        // GET: Events of user
+        public ActionResult getEventsByUser(int? userId)
+        {
+            var events = db.Events.Where(e => e.User.ID == userId)
+                .Include(p => p.DJ)
+                .Include(p => p.Playlist)
+                .Include(e => e.User);
+            return View(events.ToList());
+        }
+
+        // GET: Events of user
+        public ActionResult getEventsByDJ(int? DJId)
+        {
+            var events = db.Events.Where(e => e.DJ.ID == DJId)
+                .Include(p => p.DJ)
+                .Include(p => p.Playlist)
+                .Include(e => e.User);
+            return View(events.ToList());
+        }
+
         // GET: Events/Details/5
         public ActionResult Details(int? id)
         {
