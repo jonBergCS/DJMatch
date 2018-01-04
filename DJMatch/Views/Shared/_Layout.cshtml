@@ -1,37 +1,18 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Find m a DJ</title>
+    <title>FinDJ</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <!--
-    <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
-        <nav class="collapse bd-links" id="bd-docs-nav">
-            <div class="bd-toc-item">
-                <a href="~/Views/Users/Index.cshtml">My profile</a>
-            </div>
-            <div class="bd-toc-item">
-                <a href="~/Views/DJs/Index.cshtml">DJs</a>
-            </div>
-            <div class="bd-toc-item">
-                <a href="~/Views/Playlists/Index.cshtml">Shared playlist</a>
-            </div>
-        </nav>
-    </div>
-
-        <div class="container body-content">
-        //////////RenderBody()
-        <hr />
-    </div>
-        -->
-
-
         <div class="sidenav">
-            <img class="logo" src="~/Content/Images/FinDJ_logo.png"/>
+            <a href="~/Home/Index">
+                <img class="logo" src="~/Content/Images/FinDJ_logo.png" />
+            </a>
+            
             <a href="~/Users/Index">My profile</a>
             <a href="~/DJs/Index">DJs</a>
             <a href="~/Playlists/Index">Shared playlist</a>
