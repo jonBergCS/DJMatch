@@ -206,6 +206,7 @@
     <Compile Include="Controllers\SongsController.cs" />
     <Compile Include="Controllers\SongsToPlaylistsController.cs" />
     <Compile Include="Controllers\UserAnswersController.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -321,7 +322,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Home\app.js" />
     <Content Include="Scripts\UserProfile\userProfile.js" />
-    <Content Include="Views\UserProfile\UserProfile.html" />
+    <None Include="Views\UserProfile\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
