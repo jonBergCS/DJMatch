@@ -10,21 +10,23 @@
     <script src="~/Scripts/Home/app.js" type="text/javascript"></script>    
 </head>
 <body ng-app="FinDJApp">
-    <div class="sidenav">
-        <a href="~/Home/Index">
-            <img class="logo" src="~/Content/Images/FinDJ_logo.png" />
-        </a>
-
-        <a href="~/Users/Index">My profile</a>
-        <a href="~/DJs/Index">DJs</a>
-        <a href="~/Playlists/Index">Shared playlist</a>
-        <a href="~/Home/About">About Us</a>
-        <a href="~/Home/Contact">Contact</a>
-    </div>
+        <div class="sidenav">
+            <a href="~/Home/Index">
+                <img class="logo" src="~/Content/Images/FinDJ_logo.png" />
+            </a>
+            
+            <a href="~/Users/Index">My profile</a>
+            <a href="~/DJs/Index">DJs</a>
+            <a href="~/Events/Index">My Events</a>
+            <a href="~/Home/About">About Us</a>
+            <a href="~/Home/Contact">Contact</a>
+        </div>
 
     <div class="main">
         @RenderBody()
     </div>
+
+    
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
