@@ -162,6 +162,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AnswersController.cs" />
     <Compile Include="Controllers\DJsController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlaylistsController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
@@ -325,6 +326,11 @@
     <Content Include="Views\UserAnswers\Details.cshtml" />
     <Content Include="Views\UserAnswers\Edit.cshtml" />
     <Content Include="Views\UserAnswers\Index.cshtml" />
+    <Content Include="Views\Events\Create.cshtml" />
+    <Content Include="Views\Events\Delete.cshtml" />
+    <Content Include="Views\Events\Details.cshtml" />
+    <Content Include="Views\Events\Edit.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
