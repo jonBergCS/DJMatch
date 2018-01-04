@@ -2,118 +2,130 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Description;
+using System.Web;
+using System.Web.Mvc;
 using DJMatch.Models;
 
 namespace DJMatch.Controllers
 {
-    public class UserAnswersController : ApiController
+    public class UserAnswersController : Controller
     {
         private DJMatchEntities db = new DJMatchEntities();
 
-        // GET: api/UserAnswers
-        public IQueryable<UserAnswer> GetUserAnswers()
+        // GET: UserAnswers
+        public ActionResult Index()
         {
-            return db.UserAnswers;
+            var userAnswers = db.UserAnswers.Include(u => u.Answer).Include(u => u.Question).Include(u => u.User);
+            return View(userAnswers.ToList());
         }
 
-        // GET: api/UserAnswers/5
-        [ResponseType(typeof(UserAnswer))]
-        public IHttpActionResult GetUserAnswer(int id)
+        // GET: UserAnswers/Details/5
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             UserAnswer userAnswer = db.UserAnswers.Find(id);
             if (userAnswer == null)
             {
-                return NotFound();
+                return HttpNotFound();
             }
-
-            return Ok(userAnswer);
+            return View(userAnswer);
         }
 
-        // PUT: api/UserAnswers/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutUserAnswer(int id, UserAnswer userAnswer)
+        // GET: UserAnswers/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            ViewBag.AnswerID = new SelectList(db.Answers, "ID", "Text");
+            ViewBag.QuestionID = new SelectList(db.Questions, "ID", "Text");
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Name");
+            return View();
+        }
 
-            if (id != userAnswer.UserID)
+        // POST: UserAnswers/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "UserID,QuestionID,AnswerID,Text")] UserAnswer userAnswer)
+        {
+            if (ModelState.IsValid)
             {
-                return BadRequest();
-            }
-
-            db.Entry(userAnswer).State = EntityState.Modified;
-
-            try
-            {
+                db.UserAnswers.Add(userAnswer);
                 db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserAnswerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToAction("Index");
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            ViewBag.AnswerID = new SelectList(db.Answers, "ID", "Text", userAnswer.AnswerID);
+            ViewBag.QuestionID = new SelectList(db.Questions, "ID", "Text", userAnswer.QuestionID);
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Name", userAnswer.UserID);
+            return View(userAnswer);
         }
 
-        // POST: api/UserAnswers
-        [ResponseType(typeof(UserAnswer))]
-        public IHttpActionResult PostUserAnswer(UserAnswer userAnswer)
+        // GET: UserAnswers/Edit/5
+        public ActionResult Edit(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return BadRequest(ModelState);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            db.UserAnswers.Add(userAnswer);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (UserAnswerExists(userAnswer.UserID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = userAnswer.UserID }, userAnswer);
-        }
-
-        // DELETE: api/UserAnswers/5
-        [ResponseType(typeof(UserAnswer))]
-        public IHttpActionResult DeleteUserAnswer(int id)
-        {
             UserAnswer userAnswer = db.UserAnswers.Find(id);
             if (userAnswer == null)
             {
-                return NotFound();
+                return HttpNotFound();
             }
+            ViewBag.AnswerID = new SelectList(db.Answers, "ID", "Text", userAnswer.AnswerID);
+            ViewBag.QuestionID = new SelectList(db.Questions, "ID", "Text", userAnswer.QuestionID);
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Name", userAnswer.UserID);
+            return View(userAnswer);
+        }
 
+        // POST: UserAnswers/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "UserID,QuestionID,AnswerID,Text")] UserAnswer userAnswer)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(userAnswer).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.AnswerID = new SelectList(db.Answers, "ID", "Text", userAnswer.AnswerID);
+            ViewBag.QuestionID = new SelectList(db.Questions, "ID", "Text", userAnswer.QuestionID);
+            ViewBag.UserID = new SelectList(db.Users, "ID", "Name", userAnswer.UserID);
+            return View(userAnswer);
+        }
+
+        // GET: UserAnswers/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            UserAnswer userAnswer = db.UserAnswers.Find(id);
+            if (userAnswer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(userAnswer);
+        }
+
+        // POST: UserAnswers/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            UserAnswer userAnswer = db.UserAnswers.Find(id);
             db.UserAnswers.Remove(userAnswer);
             db.SaveChanges();
-
-            return Ok(userAnswer);
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
@@ -123,11 +135,6 @@ namespace DJMatch.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool UserAnswerExists(int id)
-        {
-            return db.UserAnswers.Count(e => e.UserID == id) > 0;
         }
     }
 }

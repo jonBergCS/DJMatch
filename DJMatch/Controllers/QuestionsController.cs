@@ -2,103 +2,117 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Description;
+using System.Web;
+using System.Web.Mvc;
 using DJMatch.Models;
 
 namespace DJMatch.Controllers
 {
-    public class QuestionsController : ApiController
+    public class QuestionsController : Controller
     {
         private DJMatchEntities db = new DJMatchEntities();
 
-        // GET: api/Questions
-        public IQueryable<Question> GetQuestions()
+        // GET: Questions
+        public ActionResult Index()
         {
-            return db.Questions;
+            return View(db.Questions.ToList());
         }
 
-        // GET: api/Questions/5
-        [ResponseType(typeof(Question))]
-        public IHttpActionResult GetQuestion(int id)
+        // GET: Questions/Details/5
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             Question question = db.Questions.Find(id);
             if (question == null)
             {
-                return NotFound();
+                return HttpNotFound();
             }
-
-            return Ok(question);
+            return View(question);
         }
 
-        // PUT: api/Questions/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutQuestion(int id, Question question)
+        // GET: Questions/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            return View();
+        }
 
-            if (id != question.ID)
+        // POST: Questions/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ID,Text")] Question question)
+        {
+            if (ModelState.IsValid)
             {
-                return BadRequest();
-            }
-
-            db.Entry(question).State = EntityState.Modified;
-
-            try
-            {
+                db.Questions.Add(question);
                 db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!QuestionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToAction("Index");
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return View(question);
         }
 
-        // POST: api/Questions
-        [ResponseType(typeof(Question))]
-        public IHttpActionResult PostQuestion(Question question)
+        // GET: Questions/Edit/5
+        public ActionResult Edit(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return BadRequest(ModelState);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            db.Questions.Add(question);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = question.ID }, question);
-        }
-
-        // DELETE: api/Questions/5
-        [ResponseType(typeof(Question))]
-        public IHttpActionResult DeleteQuestion(int id)
-        {
             Question question = db.Questions.Find(id);
             if (question == null)
             {
-                return NotFound();
+                return HttpNotFound();
             }
+            return View(question);
+        }
 
+        // POST: Questions/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ID,Text")] Question question)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(question).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(question);
+        }
+
+        // GET: Questions/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Question question = db.Questions.Find(id);
+            if (question == null)
+            {
+                return HttpNotFound();
+            }
+            return View(question);
+        }
+
+        // POST: Questions/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Question question = db.Questions.Find(id);
             db.Questions.Remove(question);
             db.SaveChanges();
-
-            return Ok(question);
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
@@ -108,11 +122,6 @@ namespace DJMatch.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool QuestionExists(int id)
-        {
-            return db.Questions.Count(e => e.ID == id) > 0;
         }
     }
 }
