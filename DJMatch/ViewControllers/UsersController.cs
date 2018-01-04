@@ -20,6 +20,12 @@ namespace DJMatch.ViewControllers
             return View(db.Users.ToList());
         }
 
+        // GET: Users
+        public ActionResult UserProfile()
+        {
+            return View();
+        }
+
         // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
