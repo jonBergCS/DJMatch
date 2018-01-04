@@ -386,26 +386,6 @@
     <Content Include="Views\Events\Details.cshtml" />
     <Content Include="Views\Events\Edit.cshtml" />
     <Content Include="Views\Events\Index.cshtml" />
-    <Content Include="Views\DJs1\Create.cshtml" />
-    <Content Include="Views\DJs1\Delete.cshtml" />
-    <Content Include="Views\DJs1\Details.cshtml" />
-    <Content Include="Views\DJs1\Edit.cshtml" />
-    <Content Include="Views\DJs1\Index.cshtml" />
-    <Content Include="Views\AnswersView\Create.cshtml" />
-    <Content Include="Views\AnswersView\Delete.cshtml" />
-    <Content Include="Views\AnswersView\Details.cshtml" />
-    <Content Include="Views\AnswersView\Edit.cshtml" />
-    <Content Include="Views\AnswersView\Index.cshtml" />
-    <Content Include="Views\DJsView\Create.cshtml" />
-    <Content Include="Views\DJsView\Delete.cshtml" />
-    <Content Include="Views\DJsView\Details.cshtml" />
-    <Content Include="Views\DJsView\Edit.cshtml" />
-    <Content Include="Views\DJsView\Index.cshtml" />
-    <Content Include="Views\EventsView\Create.cshtml" />
-    <Content Include="Views\EventsView\Delete.cshtml" />
-    <Content Include="Views\EventsView\Details.cshtml" />
-    <Content Include="Views\EventsView\Edit.cshtml" />
-    <Content Include="Views\EventsView\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
