@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Mvc;
 using DJMatch.Models;
 
 namespace DJMatch.Controllers
@@ -15,7 +16,7 @@ namespace DJMatch.Controllers
     public class DJsController : ApiController
     {
         private DJMatchEntities db = new DJMatchEntities();
-
+        
         // GET: api/DJs
         public IQueryable<DJ> GetDJs()
         {
