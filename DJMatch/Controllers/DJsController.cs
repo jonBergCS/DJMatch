@@ -2,117 +2,103 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
 using DJMatch.Models;
 
 namespace DJMatch.Controllers
 {
-    public class DJsController : Controller
+    public class DJsController : ApiController
     {
         private DJMatchEntities db = new DJMatchEntities();
 
-        // GET: DJs
-        public ActionResult Index()
+        // GET: api/DJs
+        public IQueryable<DJ> GetDJs()
         {
-            return View(db.DJs.ToList());
+            return db.DJs;
         }
 
-        // GET: DJs/Details/5
-        public ActionResult Details(int? id)
+        // GET: api/DJs/5
+        [ResponseType(typeof(DJ))]
+        public IHttpActionResult GetDJ(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             DJ dJ = db.DJs.Find(id);
             if (dJ == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            return View(dJ);
+
+            return Ok(dJ);
         }
 
-        // GET: DJs/Create
-        public ActionResult Create()
+        // PUT: api/DJs/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutDJ(int id, DJ dJ)
         {
-            return View();
-        }
-
-        // POST: DJs/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,BirthDate,ExperienceYears,PriceMin,PriceMax,Genres,Address,PhoneNum,WebSite,FacebookPage,IGProfile,Picture")] DJ dJ)
-        {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.DJs.Add(dJ);
+                return BadRequest(ModelState);
+            }
+
+            if (id != dJ.ID)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(dJ).State = EntityState.Modified;
+
+            try
+            {
                 db.SaveChanges();
-                return RedirectToAction("Index");
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DJExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
-            return View(dJ);
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: DJs/Edit/5
-        public ActionResult Edit(int? id)
+        // POST: api/DJs
+        [ResponseType(typeof(DJ))]
+        public IHttpActionResult PostDJ(DJ dJ)
         {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest(ModelState);
             }
+
+            db.DJs.Add(dJ);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = dJ.ID }, dJ);
+        }
+
+        // DELETE: api/DJs/5
+        [ResponseType(typeof(DJ))]
+        public IHttpActionResult DeleteDJ(int id)
+        {
             DJ dJ = db.DJs.Find(id);
             if (dJ == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            return View(dJ);
-        }
 
-        // POST: DJs/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,BirthDate,ExperienceYears,PriceMin,PriceMax,Genres,Address,PhoneNum,WebSite,FacebookPage,IGProfile,Picture")] DJ dJ)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(dJ).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(dJ);
-        }
-
-        // GET: DJs/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DJ dJ = db.DJs.Find(id);
-            if (dJ == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dJ);
-        }
-
-        // POST: DJs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            DJ dJ = db.DJs.Find(id);
             db.DJs.Remove(dJ);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return Ok(dJ);
         }
 
         protected override void Dispose(bool disposing)
@@ -122,6 +108,11 @@ namespace DJMatch.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool DJExists(int id)
+        {
+            return db.DJs.Count(e => e.ID == id) > 0;
         }
     }
 }
