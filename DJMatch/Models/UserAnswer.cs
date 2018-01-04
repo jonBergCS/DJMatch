@@ -17,6 +17,7 @@ namespace DJMatch.Models
         public int UserID { get; set; }
         public int QuestionID { get; set; }
         public int AnswerID { get; set; }
+        public string Text { get; set; }
     
         public virtual Answer Answer { get; set; }
         public virtual Question Question { get; set; }
