@@ -18,7 +18,9 @@ namespace DJMatch.Controllers
         public ActionResult Index()
         {
             var answers = db.Answers.Include(a => a.Question);
-            return View(answers.ToList());
+            var res = this.Json(answers.Select(x => new { x.ID, x.QuestionID, x.Text }));
+            res.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return res;
         }
 
         // GET: Answers/Details/5

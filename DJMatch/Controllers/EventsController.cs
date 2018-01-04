@@ -17,7 +17,7 @@ namespace DJMatch.Controllers
         // GET: Events
         public ActionResult Index()
         {
-            var events = db.Events.Include(p => p.DJ).Include(p => p.Playlist).Include(e => e.User);
+            var events = db.Events.Include(e => e.DJ).Include(e => e.Playlist).Include(e => e.User);
             return View(events.ToList());
         }
 

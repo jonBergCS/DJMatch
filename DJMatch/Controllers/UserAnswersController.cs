@@ -50,7 +50,7 @@ namespace DJMatch.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,QuestionID,AnswerID")] UserAnswer userAnswer)
+        public ActionResult Create([Bind(Include = "UserID,QuestionID,AnswerID,Text")] UserAnswer userAnswer)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace DJMatch.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,QuestionID,AnswerID")] UserAnswer userAnswer)
+        public ActionResult Edit([Bind(Include = "UserID,QuestionID,AnswerID,Text")] UserAnswer userAnswer)
         {
             if (ModelState.IsValid)
             {
