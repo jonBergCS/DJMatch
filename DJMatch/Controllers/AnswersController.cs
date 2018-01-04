@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -18,7 +19,7 @@ namespace DJMatch.Controllers
 
         // GET: api/Answers
         public IQueryable<Answer> GetAnswers()
-        {
+        { 
             return db.Answers;
         }
 

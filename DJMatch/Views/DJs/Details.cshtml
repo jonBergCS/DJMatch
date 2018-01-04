@@ -1,112 +1,42 @@
-﻿@model DJMatch.Models.DJ
+﻿<link rel="stylesheet" type="text/css" href="~/Content/DJProfile.css">
 
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Details</h2>
-
+<div class="dj-profile-header row">
+    <div class="dj-profile-img-container col">
+        <img class="dj-profile-img" src="~/Content/Images/Skazi.jpg" />
+    </div> 
+    <div class="dj-profile-header-details col">
+        <div class="dj-profile-name row">
+            <h2>Skazi</h2>
+        </div>
+        <div class="dj-profile-header-row row">
+            <img class="dj-profile-icon" src="~/Content/Icons/location.png" />
+            <span>Tel Aviv</span>
+        </div>
+        <div class="dj-profile-header-row row">
+            <img class="dj-profile-icon" src="~/Content/Icons/money.png" />
+            <span>1000$ - 1500$</span>
+        </div>
+        <div class="dj-profile-header-row row">
+            <img class="dj-profile-icon" src="~/Content/Icons/star.png" />
+            <span>4.3</span>
+        </div>
+        <div class="dj-profile-header-row row">
+            <img class="dj-profile-icon" src="~/Content/Icons/laptop.png" />
+            <a>http://www.skazi.com</a>
+        </div>
+        <div class="dj-profile-header-row dj-profile-networks row">
+            <a href="">
+                <img alt="facebook" class="dj-profile-icon" src="~/Content/Icons/facebook.png" />
+            </a>
+            <a href="">
+                <img alt="instagram" class="dj-profile-icon" src="~/Content/Icons/instagram.png" />
+            </a>
+        </div>
+    </div>
+</div>
 <div>
-    <h4>DJ</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BirthDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ExperienceYears)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ExperienceYears)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PriceMin)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PriceMin)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PriceMax)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PriceMax)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Genres)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Genres)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNum)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNum)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.WebSite)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.WebSite)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FacebookPage)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FacebookPage)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IGProfile)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IGProfile)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Picture)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Picture)
-        </dd>
-
-    </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |

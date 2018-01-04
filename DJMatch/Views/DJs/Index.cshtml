@@ -6,73 +6,22 @@
 
 <h2>Optinal DJs</h2>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">
-                Name
-            </th>
-            <th scope="col">
-                Birth Date
-            </th>
-            <th scope="col">
-                Years of Experience
-            </th>
-            <th scope="col">
-                Minimum Price
-            </th>
-            <th scope="col">
-                Maximum Price
-            </th>
-            <th scope="col">
-                Genres
-            </th>
-            <th scope="col">
-                Address
-            </th>
-            <th scope="col">
-                Phone Number
-            </th>
-            <th scope="col">
-                Picture
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+    <div class="w3-row-padding w3-grayscale">
+        @foreach (var item in Model)
+        {
+            <div class="w3-col l3 m6 w3-margin-bottom">
+                <img src="~/Content/Images/icon.png" class="photo">
+                <h3>DJ @Html.DisplayFor(modelItem => item.Name)</h3>
+                <p class="w3-opacity">@Html.DisplayFor(modelItem => item.ExperienceYears) years of experience</p>
+                <p class="w3-opacity">@Html.DisplayFor(modelItem => item.PriceMin) $ - @Html.DisplayFor(modelItem => item.PriceMax) $</p>
+                <p class="w3-opacity">Plays @Html.DisplayFor(modelItem => item.Genres)</p>
+                <p> @Html.ActionLink("Details", "Details", new { id = item.ID })</p>
+            </div>
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BirthDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExperienceYears)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PriceMin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PriceMax)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genres)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Picture)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) 
-        </td>
-    </tr>
-}
-
-</table>
+    </div>
+</body>
