@@ -24,6 +24,10 @@
         <AssociationConnector Association="DJMatchModel.FK_Reviews_Users" ManuallyRouted="false" />
         <AssociationConnector Association="DJMatchModel.FK_SongsToPlaylists_Songs" ManuallyRouted="false" />
         <AssociationConnector Association="DJMatchModel.FK_UserAnswers_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DJMatchModel.Event" Width="1.5" PointX="5.25" PointY="8.625" />
+        <AssociationConnector Association="DJMatchModel.FK_Events_DJs" />
+        <AssociationConnector Association="DJMatchModel.FK_Events_Playlists" />
+        <AssociationConnector Association="DJMatchModel.FK_Events_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

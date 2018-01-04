@@ -31,6 +31,19 @@
           <Property Name="IGProfile" Type="nvarchar" MaxLength="256" />
           <Property Name="Picture" Type="image" />
         </EntityType>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="DJId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="PlaylistId" Type="int" Nullable="false" />
+          <Property Name="EventType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="text" />
+        </EntityType>
         <EntityType Name="Playlists">
           <Key>
             <PropertyRef Name="ID" />
@@ -108,6 +121,42 @@
             </Principal>
             <Dependent Role="Answers">
               <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_DJs">
+          <End Role="DJs" Type="Self.DJs" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DJs">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="DJId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Playlists">
+          <End Role="Playlists" Type="Self.Playlists" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Playlists">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="PlaylistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -222,6 +271,7 @@
         <EntityContainer Name="DJMatchModelStoreContainer">
           <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DJs" EntityType="Self.DJs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Playlists" EntityType="Self.Playlists" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
@@ -232,6 +282,18 @@
           <AssociationSet Name="FK_Answers_Questions" Association="Self.FK_Answers_Questions">
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_DJs" Association="Self.FK_Events_DJs">
+            <End Role="DJs" EntitySet="DJs" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Playlists" Association="Self.FK_Events_Playlists">
+            <End Role="Playlists" EntitySet="Playlists" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Users" Association="Self.FK_Events_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Events" EntitySet="Events" />
           </AssociationSet>
           <AssociationSet Name="FK_Playlists_DJs" Association="Self.FK_Playlists_DJs">
             <End Role="DJs" EntitySet="DJs" />
@@ -303,6 +365,7 @@
           <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Playlists" Relationship="Self.FK_Playlists_DJs" FromRole="DJs" ToRole="Playlists" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_DJs" FromRole="DJs" ToRole="Reviews" />
+          <NavigationProperty Name="Events" Relationship="DJMatchModel.FK_Events_DJs" FromRole="DJ" ToRole="Event" />
         </EntityType>
         <EntityType Name="Playlist">
           <Key>
@@ -316,6 +379,7 @@
           <NavigationProperty Name="DJ" Relationship="Self.FK_Playlists_DJs" FromRole="Playlists" ToRole="DJs" />
           <NavigationProperty Name="User" Relationship="Self.FK_Playlists_Users" FromRole="Playlists" ToRole="Users" />
           <NavigationProperty Name="SongsToPlaylists" Relationship="Self.FK_SongsToPlaylists_Playlists" FromRole="Playlists" ToRole="SongsToPlaylists" />
+          <NavigationProperty Name="Events" Relationship="DJMatchModel.FK_Events_Playlists" FromRole="Playlist" ToRole="Event" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -387,6 +451,7 @@
           <NavigationProperty Name="Playlists" Relationship="Self.FK_Playlists_Users" FromRole="Users" ToRole="Playlists" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Users" FromRole="Users" ToRole="Reviews" />
           <NavigationProperty Name="UserAnswers" Relationship="Self.FK_UserAnswers_Users" FromRole="Users" ToRole="UserAnswers" />
+          <NavigationProperty Name="Events" Relationship="DJMatchModel.FK_Events_Users" FromRole="User" ToRole="Event" />
         </EntityType>
         <Association Name="FK_Answers_Questions">
           <End Role="Questions" Type="Self.Question" Multiplicity="1" />
@@ -558,7 +623,72 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UserAnswers" EntitySet="UserAnswers" />
           </AssociationSet>
+          <EntitySet Name="Events" EntityType="DJMatchModel.Event" />
+          <AssociationSet Name="FK_Events_DJs" Association="DJMatchModel.FK_Events_DJs">
+            <End Role="DJ" EntitySet="DJs" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Playlists" Association="DJMatchModel.FK_Events_Playlists">
+            <End Role="Playlist" EntitySet="Playlists" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Users" Association="DJMatchModel.FK_Events_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="DJId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="PlaylistId" Type="Int32" Nullable="false" />
+          <Property Name="EventType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DJ" Relationship="DJMatchModel.FK_Events_DJs" FromRole="Event" ToRole="DJ" />
+          <NavigationProperty Name="Playlist" Relationship="DJMatchModel.FK_Events_Playlists" FromRole="Event" ToRole="Playlist" />
+          <NavigationProperty Name="User" Relationship="DJMatchModel.FK_Events_Users" FromRole="Event" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Events_DJs">
+          <End Type="DJMatchModel.DJ" Role="DJ" Multiplicity="1" />
+          <End Type="DJMatchModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DJ">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="DJId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Playlists">
+          <End Type="DJMatchModel.Playlist" Role="Playlist" Multiplicity="1" />
+          <End Type="DJMatchModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Playlist">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="PlaylistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Users">
+          <End Type="DJMatchModel.User" Role="User" Multiplicity="1" />
+          <End Type="DJMatchModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -662,6 +792,20 @@
                 <ScalarProperty Name="PhoneNum" ColumnName="PhoneNum" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Picture" ColumnName="Picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="DJMatchModel.Event">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="PlaylistId" ColumnName="PlaylistId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DJId" ColumnName="DJId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

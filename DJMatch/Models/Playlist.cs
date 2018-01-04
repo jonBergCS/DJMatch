@@ -18,6 +18,7 @@ namespace DJMatch.Models
         public Playlist()
         {
             this.SongsToPlaylists = new HashSet<SongsToPlaylist>();
+            this.Events = new HashSet<Event>();
         }
     
         public int ID { get; set; }
@@ -30,5 +31,7 @@ namespace DJMatch.Models
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SongsToPlaylist> SongsToPlaylists { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Event> Events { get; set; }
     }
 }

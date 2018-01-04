@@ -34,5 +34,6 @@ namespace DJMatch.Models
         public virtual DbSet<SongsToPlaylist> SongsToPlaylists { get; set; }
         public virtual DbSet<UserAnswer> UserAnswers { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
     }
 }

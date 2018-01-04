@@ -194,6 +194,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DJMatchModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Event.cs">
+      <DependentUpon>DJMatchModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Playlist.cs">
       <DependentUpon>DJMatchModel.tt</DependentUpon>
     </Compile>
@@ -251,7 +254,6 @@
       <DependentUpon>DJMatchModel.edmx</DependentUpon>
     </Content>
     <Content Include="Scripts\angular.min.js.map" />
-
     <None Include="Properties\PublishProfiles\fadj - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
