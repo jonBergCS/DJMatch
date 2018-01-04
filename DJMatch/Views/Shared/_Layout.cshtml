@@ -7,8 +7,9 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/Home/app.js" type="text/javascript"></script>    
 </head>
-<body>
+<body ng-app="FinDJApp">
         <div class="sidenav">
             <a href="~/Home/Index">
                 <img class="logo" src="~/Content/Images/FinDJ_logo.png" />
@@ -21,14 +22,13 @@
             <a href="~/Home/Contact">Contact</a>
         </div>
 
-        <div class="main">
-            @RenderBody()
-        </div>
+    <div class="main">
+        @RenderBody()
+    </div>
 
     
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>
