@@ -1,7 +1,7 @@
 ﻿<script src="~/Scripts/UserProfile/userProfile.js"></script>
 <div ng-controller="userProfileController">
     <h1>My Profile</h1>
-    <div ng-repeat="question in questions">
+    <div ng-repeat="question in questions track by $index" ng-if="$index == (currentIndex - 1)">
         <h3>{{question.ID}}. {{question.Text}}</h3>
         <form name="answers" ng-if="question.Answers.length > 0">
             <div ng-repeat="answer in question.Answers">
@@ -9,5 +9,7 @@
             </div>
         </form>
         <input type="date" ng-model="answer.Text" ng-if="question.Answers.length == 0"/>
+        <button type="button" class="btn btn-secondary" ng-click="next()" ng-if="$index != (questions.length - 1)">next</button>
+        <button type="button" class="btn btn-success" ng-click="save()" ng-if="$index == (questions.length - 1)">save</button>
     </div>
 </div>
