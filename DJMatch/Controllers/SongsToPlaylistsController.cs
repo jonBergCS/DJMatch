@@ -15,15 +15,22 @@ namespace DJMatch.Controllers
     public class SongsToPlaylistsController : ApiController
     {
         private DJMatchEntities db = new DJMatchEntities();
+        private SongsToPlaylistMapper mapper = new SongsToPlaylistMapper();
+        private Func<SongsToPlaylist, SongsToPlaylistDTO> MapSongsToPlaylist;
+
+        public SongsToPlaylistsController()
+        {
+            MapSongsToPlaylist = mapper.SelectorExpression.Compile();
+        }
 
         // GET: api/SongsToPlaylists
-        public IQueryable<SongsToPlaylist> GetSongsToPlaylists()
+        public IEnumerable<SongsToPlaylistDTO> GetSongsToPlaylists()
         {
-            return db.SongsToPlaylists;
+            return db.SongsToPlaylists.Select(MapSongsToPlaylist);
         }
 
         // GET: api/SongsToPlaylists/5
-        [ResponseType(typeof(SongsToPlaylist))]
+        [ResponseType(typeof(SongsToPlaylistDTO))]
         public IHttpActionResult GetSongsToPlaylist(int id)
         {
             SongsToPlaylist songsToPlaylist = db.SongsToPlaylists.Find(id);
@@ -32,7 +39,7 @@ namespace DJMatch.Controllers
                 return NotFound();
             }
 
-            return Ok(songsToPlaylist);
+            return Ok(MapSongsToPlaylist(songsToPlaylist));
         }
 
         // PUT: api/SongsToPlaylists/5
@@ -71,7 +78,7 @@ namespace DJMatch.Controllers
         }
 
         // POST: api/SongsToPlaylists
-        [ResponseType(typeof(SongsToPlaylist))]
+        [ResponseType(typeof(SongsToPlaylistDTO))]
         public IHttpActionResult PostSongsToPlaylist(SongsToPlaylist songsToPlaylist)
         {
             if (!ModelState.IsValid)
@@ -97,11 +104,11 @@ namespace DJMatch.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = songsToPlaylist.SongID }, songsToPlaylist);
+            return CreatedAtRoute("DefaultApi", new { id = songsToPlaylist.SongID }, MapSongsToPlaylist(songsToPlaylist));
         }
 
         // DELETE: api/SongsToPlaylists/5
-        [ResponseType(typeof(SongsToPlaylist))]
+        [ResponseType(typeof(SongsToPlaylistDTO))]
         public IHttpActionResult DeleteSongsToPlaylist(int id)
         {
             SongsToPlaylist songsToPlaylist = db.SongsToPlaylists.Find(id);
@@ -113,7 +120,7 @@ namespace DJMatch.Controllers
             db.SongsToPlaylists.Remove(songsToPlaylist);
             db.SaveChanges();
 
-            return Ok(songsToPlaylist);
+            return Ok(MapSongsToPlaylist(songsToPlaylist));
         }
 
         protected override void Dispose(bool disposing)

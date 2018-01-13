@@ -15,15 +15,22 @@ namespace DJMatch.Controllers
     public class SongsController : ApiController
     {
         private DJMatchEntities db = new DJMatchEntities();
+        private SongMapper mapper = new SongMapper();
+        private Func<Song, SongDTO> MapSong;
+
+        public SongsController()
+        {
+            MapSong = mapper.SelectorExpression.Compile();
+        }
 
         // GET: api/Songs
-        public IQueryable<Song> GetSongs()
+        public IEnumerable<SongDTO> GetSongs()
         {
-            return db.Songs;
+            return db.Songs.Select(MapSong);
         }
 
         // GET: api/Songs/5
-        [ResponseType(typeof(Song))]
+        [ResponseType(typeof(SongDTO))]
         public IHttpActionResult GetSong(int id)
         {
             Song song = db.Songs.Find(id);
@@ -32,7 +39,7 @@ namespace DJMatch.Controllers
                 return NotFound();
             }
 
-            return Ok(song);
+            return Ok(MapSong(song));
         }
 
         // PUT: api/Songs/5
@@ -71,7 +78,7 @@ namespace DJMatch.Controllers
         }
 
         // POST: api/Songs
-        [ResponseType(typeof(Song))]
+        [ResponseType(typeof(SongDTO))]
         public IHttpActionResult PostSong(Song song)
         {
             if (!ModelState.IsValid)
@@ -82,11 +89,11 @@ namespace DJMatch.Controllers
             db.Songs.Add(song);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = song.ID }, song);
+            return CreatedAtRoute("DefaultApi", new { id = song.ID }, MapSong(song));
         }
 
         // DELETE: api/Songs/5
-        [ResponseType(typeof(Song))]
+        [ResponseType(typeof(SongDTO))]
         public IHttpActionResult DeleteSong(int id)
         {
             Song song = db.Songs.Find(id);
@@ -98,7 +105,7 @@ namespace DJMatch.Controllers
             db.Songs.Remove(song);
             db.SaveChanges();
 
-            return Ok(song);
+            return Ok(MapSong(song));
         }
 
         protected override void Dispose(bool disposing)

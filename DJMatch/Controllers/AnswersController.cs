@@ -16,15 +16,22 @@ namespace DJMatch.Controllers
     public class AnswersController : ApiController
     {
         private DJMatchEntities db = new DJMatchEntities();
+        private AnswerMapper mapper = new AnswerMapper();
+        private Func<Answer, AnswerDTO> MapAnswer;
+
+        public AnswersController()
+        {
+            MapAnswer = mapper.SelectorExpression.Compile();
+        }
 
         // GET: api/Answers
-        public IQueryable<Answer> GetAnswers()
-        { 
-            return db.Answers;
+        public IEnumerable<AnswerDTO> GetAnswers()
+        {
+            return db.Answers.Select(MapAnswer);
         }
 
         // GET: api/Answers/5
-        [ResponseType(typeof(Answer))]
+        [ResponseType(typeof(AnswerDTO))]
         public IHttpActionResult GetAnswer(int id)
         {
             Answer answer = db.Answers.Find(id);
@@ -33,7 +40,7 @@ namespace DJMatch.Controllers
                 return NotFound();
             }
 
-            return Ok(answer);
+            return Ok(MapAnswer(answer));
         }
 
         // PUT: api/Answers/5
@@ -72,7 +79,7 @@ namespace DJMatch.Controllers
         }
 
         // POST: api/Answers
-        [ResponseType(typeof(Answer))]
+        [ResponseType(typeof(AnswerDTO))]
         public IHttpActionResult PostAnswer(Answer answer)
         {
             if (!ModelState.IsValid)
@@ -83,11 +90,11 @@ namespace DJMatch.Controllers
             db.Answers.Add(answer);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = answer.ID }, answer);
+            return CreatedAtRoute("DefaultApi", new { id = answer.ID }, MapAnswer(answer));
         }
 
         // DELETE: api/Answers/5
-        [ResponseType(typeof(Answer))]
+        [ResponseType(typeof(AnswerDTO))]
         public IHttpActionResult DeleteAnswer(int id)
         {
             Answer answer = db.Answers.Find(id);
@@ -99,7 +106,7 @@ namespace DJMatch.Controllers
             db.Answers.Remove(answer);
             db.SaveChanges();
 
-            return Ok(answer);
+            return Ok(MapAnswer(answer));
         }
 
         protected override void Dispose(bool disposing)

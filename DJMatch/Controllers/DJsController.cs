@@ -16,15 +16,22 @@ namespace DJMatch.Controllers
     public class DJsController : ApiController
     {
         private DJMatchEntities db = new DJMatchEntities();
-        
-        // GET: api/DJs
-        public IQueryable<DJ> GetDJs()
+        private DJMapper mapper = new DJMapper();
+        private Func<DJ, DJDTO> MapDJ;
+
+        public DJsController()
         {
-            return db.DJs;
+            MapDJ = mapper.SelectorExpression.Compile();
+        }
+
+        // GET: api/DJs
+        public IEnumerable<DJDTO> GetDJs()
+        {
+            return db.DJs.Select(MapDJ);
         }
 
         // GET: api/DJs/5
-        [ResponseType(typeof(DJ))]
+        [ResponseType(typeof(DJDTO))]
         public IHttpActionResult GetDJ(int id)
         {
             DJ dJ = db.DJs.Find(id);
@@ -33,7 +40,7 @@ namespace DJMatch.Controllers
                 return NotFound();
             }
 
-            return Ok(dJ);
+            return Ok(MapDJ(dJ));
         }
 
         // PUT: api/DJs/5
@@ -72,7 +79,7 @@ namespace DJMatch.Controllers
         }
 
         // POST: api/DJs
-        [ResponseType(typeof(DJ))]
+        [ResponseType(typeof(DJDTO))]
         public IHttpActionResult PostDJ(DJ dJ)
         {
             if (!ModelState.IsValid)
@@ -83,11 +90,11 @@ namespace DJMatch.Controllers
             db.DJs.Add(dJ);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = dJ.ID }, dJ);
+            return CreatedAtRoute("DefaultApi", new { id = dJ.ID }, MapDJ(dJ));
         }
 
         // DELETE: api/DJs/5
-        [ResponseType(typeof(DJ))]
+        [ResponseType(typeof(DJDTO))]
         public IHttpActionResult DeleteDJ(int id)
         {
             DJ dJ = db.DJs.Find(id);
@@ -99,7 +106,7 @@ namespace DJMatch.Controllers
             db.DJs.Remove(dJ);
             db.SaveChanges();
 
-            return Ok(dJ);
+            return Ok(MapDJ(dJ));
         }
 
         protected override void Dispose(bool disposing)

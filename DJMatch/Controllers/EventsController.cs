@@ -15,27 +15,34 @@ namespace DJMatch.Controllers
     public class EventsController : ApiController
     {
         private DJMatchEntities db = new DJMatchEntities();
+        private EventMapper mapper = new EventMapper();
+        private Func<Event, EventDTO> MapEvent;
+
+        public EventsController()
+        {
+            MapEvent = mapper.SelectorExpression.Compile();
+        }
 
         #region Additional Methods
 
         // GET: api/Events/EventsByUserID/1
         [Route("api/Events/ByUserID/{userID}")]
-        public Event[] GetEventsByUserID(int userID)
+        public EventDTO[] GetEventsByUserID(int userID)
         {
-            return db.Events.Where(x=> x.UserId == userID).ToArray();
+            return db.Events.Where(x=> x.UserId == userID).Select(MapEvent).ToArray();
         }
 
         #endregion
 
         #region Basic REST
         // GET: api/Events
-        public IQueryable<Event> GetEvents()
+        public IEnumerable<EventDTO> GetEvents()
         {
-            return db.Events;
+            return db.Events.Select(MapEvent);
         }
 
         // GET: api/Events/5
-        [ResponseType(typeof(Event))]
+        [ResponseType(typeof(EventDTO))]
         public IHttpActionResult GetEvent(int id)
         {
             Event @event = db.Events.Find(id);
@@ -44,7 +51,7 @@ namespace DJMatch.Controllers
                 return NotFound();
             }
 
-            return Ok(@event);
+            return Ok(MapEvent(@event));
         }
 
         // PUT: api/Events/5
@@ -83,7 +90,7 @@ namespace DJMatch.Controllers
         }
 
         // POST: api/Events
-        [ResponseType(typeof(Event))]
+        [ResponseType(typeof(EventDTO))]
         public IHttpActionResult PostEvent(Event @event)
         {
             if (!ModelState.IsValid)
@@ -94,11 +101,11 @@ namespace DJMatch.Controllers
             db.Events.Add(@event);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = @event.ID }, @event);
+            return CreatedAtRoute("DefaultApi", new { id = @event.ID }, MapEvent(@event));
         }
 
         // DELETE: api/Events/5
-        [ResponseType(typeof(Event))]
+        [ResponseType(typeof(EventDTO))]
         public IHttpActionResult DeleteEvent(int id)
         {
             Event @event = db.Events.Find(id);
@@ -110,7 +117,7 @@ namespace DJMatch.Controllers
             db.Events.Remove(@event);
             db.SaveChanges();
 
-            return Ok(@event);
+            return Ok(MapEvent(@event));
         } 
         #endregion
 
