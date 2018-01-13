@@ -24,6 +24,21 @@ namespace DJMatch.Controllers
             MapDJ = mapper.SelectorExpression.Compile();
         }
 
+        
+        [System.Web.Http.Route("api/DJs/{id}/rate")]
+        public IHttpActionResult GetDJRating(int id)
+        {
+            DJ dJ = db.DJs.Find(id);
+            if (dJ == null)
+            {
+                return NotFound();
+            }
+
+            var avg = db.Reviews.Where(rev => rev.DJ_ID == id).Average(rev => rev.Score);
+
+            return Ok(avg);
+        }
+
         // GET: api/DJs
         public IEnumerable<DJDTO> GetDJs()
         {
