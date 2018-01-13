@@ -16,6 +16,18 @@ namespace DJMatch.Controllers
     {
         private DJMatchEntities db = new DJMatchEntities();
 
+        #region Additional Methods
+
+        // GET: api/Events/EventsByUserID/1
+        [Route("api/Events/ByUserID/{userID}")]
+        public Event[] GetEventsByUserID(int userID)
+        {
+            return db.Events.Where(x=> x.UserId == userID).ToArray();
+        }
+
+        #endregion
+
+        #region Basic REST
         // GET: api/Events
         public IQueryable<Event> GetEvents()
         {
@@ -99,7 +111,8 @@ namespace DJMatch.Controllers
             db.SaveChanges();
 
             return Ok(@event);
-        }
+        } 
+        #endregion
 
         protected override void Dispose(bool disposing)
         {
