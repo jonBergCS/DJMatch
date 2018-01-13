@@ -1,6 +1,7 @@
 ﻿
 <script src="~/Scripts/DJs/djProfile.js"></script>
 <link rel="stylesheet" type="text/css" href="~/Content/DJProfile.css">
+
 <div ng-controller="djProfileController">
     <div class="dj-profile-header row">
         <div class="dj-profile-img-container col">
@@ -8,15 +9,15 @@
         </div>
         <div class="dj-profile-header-details col">
             <div class="dj-profile-name row">
-                <h2>Skazi {{currentDJ.ID}}</h2>
+                <h2>{{currentDJ.Name}}</h2>
             </div>
             <div class="dj-profile-header-row row">
                 <img class="dj-profile-icon" src="~/Content/Icons/location.png" />
-                <span>Tel Aviv</span>
+                <span>{{currentDJ.Address}}</span>
             </div>
             <div class="dj-profile-header-row row">
                 <img class="dj-profile-icon" src="~/Content/Icons/money.png" />
-                <span>1000$ - 1500$</span>
+                <span>{{currentDJ.PriceMin}}$ - {{currentDJ.PriceMax}}$</span>
             </div>
             <div class="dj-profile-header-row row">
                 <img class="dj-profile-icon" src="~/Content/Icons/star.png" />
@@ -24,13 +25,13 @@
             </div>
             <div class="dj-profile-header-row row">
                 <img class="dj-profile-icon" src="~/Content/Icons/laptop.png" />
-                <a href="http://www.skazi.com">http://www.skazi.com</a>
+                <a href={{currentDJ.WebSite}}>{{currentDJ.WebSite}}</a>
             </div>
             <div class="dj-profile-header-row dj-profile-networks row">
-                <a href="">
+                <a href={{currentDJ.FacebookPage}}>
                     <img alt="facebook" class="dj-profile-icon" src="~/Content/Icons/facebook.png" />
                 </a>
-                <a href="">
+                <a href={{currentDJ.IGProfile}}>
                     <img alt="instagram" class="dj-profile-icon" src="~/Content/Icons/instagram.png" />
                 </a>
             </div>
@@ -38,29 +39,15 @@
     </div>
     <div>
         <hr />
-        <div class="dj-profile-reviews-container">
+        <div class="dj-profile-reviews-container" ng-repeat="review in currentDJ.Reviews">
             <div class="dj-profile-review">
                 <div class="dj-profile-review-header row">
                     <img class="dj-profile-icon dj-profile-review-icon" src="~/Content/Icons/star.png" />
-                    <span>5</span>
+                    <span>{{review.Score}}</span>
                 </div>
-                <span class="row dj-profile-review-name">Michal Teverovsky, 15/5/2017</span>
-                <span class="row dj-profile-review-text">"Best DJ ever, so fab and handsome!"</span>
-            </div>
-        </div>
-        <div class="dj-profile-reviews-container">
-            <div class="dj-profile-review">
-                <div class="dj-profile-review-header row">
-                    <img class="dj-profile-icon dj-profile-review-icon" src="~/Content/Icons/star.png" />
-                    <span>4.2</span>
-                </div>
-                <span class="row dj-profile-review-name">Bar Vilek, 15/5/2017</span>
-                <span class="row dj-profile-review-text">"Overall we had a very cool experience, thank you Skazush"</span>
+                <span class="row dj-profile-review-name">{{review.User.Name}}, {{review.Date}}</span>
+                <span class="row dj-profile-review-text">{{review.Text}}</span>
             </div>
         </div>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
 </div>
