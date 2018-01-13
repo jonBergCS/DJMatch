@@ -15,15 +15,22 @@ namespace DJMatch.Controllers
     public class QuestionsController : ApiController
     {
         private DJMatchEntities db = new DJMatchEntities();
+        private QuestionMapper mapper = new QuestionMapper();
+        private Func<Question, QuestionDTO> MapQuestion;
+
+        public QuestionsController()
+        {
+            MapQuestion = mapper.SelectorExpression.Compile();
+        }
 
         // GET: api/Questions
-        public IQueryable<Question> GetQuestions()
+        public IEnumerable<QuestionDTO> GetQuestions()
         {
-            return db.Questions;
+            return db.Questions.Select(MapQuestion);
         }
 
         // GET: api/Questions/5
-        [ResponseType(typeof(Question))]
+        [ResponseType(typeof(QuestionDTO))]
         public IHttpActionResult GetQuestion(int id)
         {
             Question question = db.Questions.Find(id);
@@ -32,7 +39,7 @@ namespace DJMatch.Controllers
                 return NotFound();
             }
 
-            return Ok(question);
+            return Ok(MapQuestion(question));
         }
 
         // PUT: api/Questions/5
@@ -71,7 +78,7 @@ namespace DJMatch.Controllers
         }
 
         // POST: api/Questions
-        [ResponseType(typeof(Question))]
+        [ResponseType(typeof(QuestionDTO))]
         public IHttpActionResult PostQuestion(Question question)
         {
             if (!ModelState.IsValid)
@@ -82,11 +89,11 @@ namespace DJMatch.Controllers
             db.Questions.Add(question);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = question.ID }, question);
+            return CreatedAtRoute("DefaultApi", new { id = question.ID }, MapQuestion(question));
         }
 
         // DELETE: api/Questions/5
-        [ResponseType(typeof(Question))]
+        [ResponseType(typeof(QuestionDTO))]
         public IHttpActionResult DeleteQuestion(int id)
         {
             Question question = db.Questions.Find(id);
@@ -98,7 +105,7 @@ namespace DJMatch.Controllers
             db.Questions.Remove(question);
             db.SaveChanges();
 
-            return Ok(question);
+            return Ok(MapQuestion(question));
         }
 
         protected override void Dispose(bool disposing)

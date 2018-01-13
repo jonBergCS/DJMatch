@@ -15,15 +15,22 @@ namespace DJMatch.Controllers
     public class ReviewsController : ApiController
     {
         private DJMatchEntities db = new DJMatchEntities();
+        private ReviewMapper mapper = new ReviewMapper();
+        private Func<Review, ReviewDTO> MapReview;
+
+        public ReviewsController()
+        {
+            MapReview = mapper.SelectorExpression.Compile();
+        }
 
         // GET: api/Reviews
-        public IQueryable<Review> GetReviews()
+        public IEnumerable<ReviewDTO> GetReviews()
         {
-            return db.Reviews;
+            return db.Reviews.Select(MapReview);
         }
 
         // GET: api/Reviews/5
-        [ResponseType(typeof(Review))]
+        [ResponseType(typeof(ReviewDTO))]
         public IHttpActionResult GetReview(int id)
         {
             Review review = db.Reviews.Find(id);
@@ -32,7 +39,7 @@ namespace DJMatch.Controllers
                 return NotFound();
             }
 
-            return Ok(review);
+            return Ok(MapReview(review));
         }
 
         // PUT: api/Reviews/5
@@ -71,7 +78,7 @@ namespace DJMatch.Controllers
         }
 
         // POST: api/Reviews
-        [ResponseType(typeof(Review))]
+        [ResponseType(typeof(ReviewDTO))]
         public IHttpActionResult PostReview(Review review)
         {
             if (!ModelState.IsValid)
@@ -82,11 +89,11 @@ namespace DJMatch.Controllers
             db.Reviews.Add(review);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = review.ID }, review);
+            return CreatedAtRoute("DefaultApi", new { id = review.ID }, MapReview(review));
         }
 
         // DELETE: api/Reviews/5
-        [ResponseType(typeof(Review))]
+        [ResponseType(typeof(ReviewDTO))]
         public IHttpActionResult DeleteReview(int id)
         {
             Review review = db.Reviews.Find(id);
@@ -98,7 +105,7 @@ namespace DJMatch.Controllers
             db.Reviews.Remove(review);
             db.SaveChanges();
 
-            return Ok(review);
+            return Ok(MapReview(review));
         }
 
         protected override void Dispose(bool disposing)
