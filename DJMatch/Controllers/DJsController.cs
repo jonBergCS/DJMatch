@@ -24,7 +24,19 @@ namespace DJMatch.Controllers
             MapDJ = mapper.SelectorExpression.Compile();
         }
 
-        
+        [System.Web.Http.Route("api/Djs/{id}/full")]
+        [ResponseType(typeof(DJ))]
+        public IHttpActionResult GetFullDJ(int id)
+        {
+            DJ dJ = db.DJs.Find(id);
+            if (dJ == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(dJ);
+        }
+
         [System.Web.Http.Route("api/DJs/{id}/rate")]
         public IHttpActionResult GetDJRating(int id)
         {
