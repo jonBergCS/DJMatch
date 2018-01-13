@@ -5,37 +5,30 @@
 
     var getDjs = function ()
     {
-        if (djsList.length == 0)
-        {
-            $http({
-                method: 'GET',
-                url: url + '/DJs'
-            }).then(function successCallback(response) {
-                djsList = response.data;
-                return djsList;
-            });
-        }
-        return djsList;
+        return(
+        $http({
+            method: 'GET',
+            url: url + '/DJs'
+        }));
     };
 
-    var getCurrentDJDetails = function(djID)
-    {
-        if (currentDJ == {})
-        {
+    var getCurrentDJDetails = function (djID) {
+        return (
             $http({
                 method: 'GET',
                 url: url + '/DJs/' + djID
             }).then(function successCallback(response) {
                 currentDJ = response.data;
                 return currentDJ;
-            });
-        }
-        return currentDJ;
-    }
+            }));
+
+    };
 
     return {
+        djsList : djsList,
+        currentDJ : currentDJ,
+        currentDJID: currentDJID,
         getDjs: getDjs,
         getCurrentDJDetails: getCurrentDJDetails
     };
-
 });
