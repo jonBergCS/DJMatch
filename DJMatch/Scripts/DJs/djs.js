@@ -1,12 +1,8 @@
-﻿djApp.controller("djsController", function djsController($scope, $http) {
-    $http({
-        method: 'GET',
-        url: url + '/DJs'
-    }).then(function successCallback(response) {
-        $scope.djsList = response.data;
-    });
+﻿djApp.controller("djsController", ['djsService', '$scope', function djsController(djsService, $scope) {
 
-    $scope.getDetails = function (djID) {
+    $scope.djsList = djsService.getDjs();
 
+    $scope.displayDetails = function (djID) {
+        djsService.currentDJID = djID;
     };
-});
+}]);

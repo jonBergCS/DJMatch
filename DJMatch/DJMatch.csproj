@@ -320,7 +320,9 @@
     <None Include="Properties\PublishProfiles\fadj - Web Deploy.pubxml" />
     <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\DJs\djProfile.js" />
     <Content Include="Scripts\DJs\djs.js" />
+    <Content Include="Scripts\DJs\djService.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
