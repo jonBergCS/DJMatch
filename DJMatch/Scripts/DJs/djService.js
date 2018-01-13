@@ -8,7 +8,7 @@
         return(
         $http({
             method: 'GET',
-            url: url + '/DJs'
+            url: url + '/api/DJs'
         }));
     };
 
@@ -16,7 +16,7 @@
         return (
             $http({
                 method: 'GET',
-                url: url + '/DJs/' + djID
+                url: url + '/api/DJs/' + djID
             }).then(function successCallback(response) {
                 currentDJ = response.data;
                 return currentDJ;
