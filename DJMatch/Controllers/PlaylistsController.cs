@@ -15,15 +15,22 @@ namespace DJMatch.Controllers
     public class PlaylistsController : ApiController
     {
         private DJMatchEntities db = new DJMatchEntities();
+        private PlaylistMapper mapper = new PlaylistMapper();
+        private Func<Playlist, PlaylistDTO> MapPlaylist;
+
+        public PlaylistsController()
+        {
+            MapPlaylist = mapper.SelectorExpression.Compile();
+        }
 
         // GET: api/Playlists
-        public IQueryable<Playlist> GetPlaylists()
+        public IEnumerable<PlaylistDTO> GetPlaylists()
         {
-            return db.Playlists;
+            return db.Playlists.Select(MapPlaylist);
         }
 
         // GET: api/Playlists/5
-        [ResponseType(typeof(Playlist))]
+        [ResponseType(typeof(PlaylistDTO))]
         public IHttpActionResult GetPlaylist(int id)
         {
             Playlist playlist = db.Playlists.Find(id);
@@ -32,7 +39,7 @@ namespace DJMatch.Controllers
                 return NotFound();
             }
 
-            return Ok(playlist);
+            return Ok(MapPlaylist(playlist));
         }
 
         // PUT: api/Playlists/5
@@ -71,7 +78,7 @@ namespace DJMatch.Controllers
         }
 
         // POST: api/Playlists
-        [ResponseType(typeof(Playlist))]
+        [ResponseType(typeof(PlaylistDTO))]
         public IHttpActionResult PostPlaylist(Playlist playlist)
         {
             if (!ModelState.IsValid)
@@ -82,11 +89,11 @@ namespace DJMatch.Controllers
             db.Playlists.Add(playlist);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = playlist.ID }, playlist);
+            return CreatedAtRoute("DefaultApi", new { id = playlist.ID }, MapPlaylist(playlist));
         }
 
         // DELETE: api/Playlists/5
-        [ResponseType(typeof(Playlist))]
+        [ResponseType(typeof(PlaylistDTO))]
         public IHttpActionResult DeletePlaylist(int id)
         {
             Playlist playlist = db.Playlists.Find(id);
@@ -98,7 +105,7 @@ namespace DJMatch.Controllers
             db.Playlists.Remove(playlist);
             db.SaveChanges();
 
-            return Ok(playlist);
+            return Ok(MapPlaylist(playlist));
         }
 
         protected override void Dispose(bool disposing)

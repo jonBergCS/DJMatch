@@ -15,15 +15,22 @@ namespace DJMatch.Controllers
     public class UserAnswersController : ApiController
     {
         private DJMatchEntities db = new DJMatchEntities();
+        private UserAnswerMapper mapper = new UserAnswerMapper();
+        private Func<UserAnswer, UserAnswerDTO> MapUserAnswer;
+
+        public UserAnswersController()
+        {
+            MapUserAnswer = mapper.SelectorExpression.Compile();
+        }
 
         // GET: api/UserAnswers
-        public IQueryable<UserAnswer> GetUserAnswers()
+        public IEnumerable<UserAnswerDTO> GetUserAnswers()
         {
-            return db.UserAnswers;
+            return db.UserAnswers.Select(MapUserAnswer);
         }
 
         // GET: api/UserAnswers/5
-        [ResponseType(typeof(UserAnswer))]
+        [ResponseType(typeof(UserAnswerDTO))]
         public IHttpActionResult GetUserAnswer(int id)
         {
             UserAnswer userAnswer = db.UserAnswers.Find(id);
@@ -32,7 +39,7 @@ namespace DJMatch.Controllers
                 return NotFound();
             }
 
-            return Ok(userAnswer);
+            return Ok(MapUserAnswer(userAnswer));
         }
 
         // PUT: api/UserAnswers/5
@@ -71,7 +78,7 @@ namespace DJMatch.Controllers
         }
 
         // POST: api/UserAnswers
-        [ResponseType(typeof(UserAnswer))]
+        [ResponseType(typeof(UserAnswerDTO))]
         public IHttpActionResult PostUserAnswer(UserAnswer userAnswer)
         {
             if (!ModelState.IsValid)
@@ -97,11 +104,11 @@ namespace DJMatch.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = userAnswer.UserID }, userAnswer);
+            return CreatedAtRoute("DefaultApi", new { id = userAnswer.UserID }, MapUserAnswer(userAnswer));
         }
 
         // DELETE: api/UserAnswers/5
-        [ResponseType(typeof(UserAnswer))]
+        [ResponseType(typeof(UserAnswerDTO))]
         public IHttpActionResult DeleteUserAnswer(int id)
         {
             UserAnswer userAnswer = db.UserAnswers.Find(id);
@@ -113,7 +120,7 @@ namespace DJMatch.Controllers
             db.UserAnswers.Remove(userAnswer);
             db.SaveChanges();
 
-            return Ok(userAnswer);
+            return Ok(MapUserAnswer(userAnswer));
         }
 
         protected override void Dispose(bool disposing)
