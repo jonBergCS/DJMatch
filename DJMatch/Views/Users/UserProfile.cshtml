@@ -3,13 +3,13 @@
     <h1>My Profile</h1>
     <div ng-repeat="question in questions track by $index" ng-if="$index == (currentIndex - 1)">
         <h3>{{question.ID}}. {{question.Text}}</h3>
-        <form name="answers" ng-if="question.Answers.length > 0">
+        <form id="{{'answers'+ question.ID}}" ng-if="question.Answers.length > 0">
             <div ng-repeat="answer in question.Answers">
-                <input type="checkbox" ng-model="answer.Text" ng-value="answer.ID" /> {{answer.Text}} 
+                <input type="checkbox" ng-model="userAnswers[answer.ID]"/> {{answer.Text}} 
             </div>
         </form>
         <input type="date" ng-model="answer.Text" ng-if="question.Answers.length == 0"/>
         <button type="button" class="btn btn-secondary" ng-click="next()" ng-if="$index != (questions.length - 1)">next</button>
-        <button type="button" class="btn btn-success" ng-click="save()" ng-if="$index == (questions.length - 1)">save</button>
+        <button type="button" class="btn btn-success" ng-click="end()" ng-if="$index == (questions.length - 1)">end</button>
     </div>
 </div>
