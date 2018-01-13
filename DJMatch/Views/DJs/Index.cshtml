@@ -13,7 +13,7 @@
                 <p class="w3-opacity">{{currentDJ.ExperienceYears}} years of experience</p>
                 <p class="w3-opacity">{{currentDJ.PriceMin}}$ - {{currentDJ.PriceMax}}$</p>
                 <p class="w3-opacity">Plays {{currentDJ.Genres}}</p>
-                <p> <a href="~/DJs/Details/{{currentDJ.ID}}" rel="search">Details</a></p>
+                <p> <a href="~/DJs/Details/{{currentDJ.ID}}" ng-click="displayDetails(currentDJ.ID)">Details</a></p>
             </div>
 
         </div>
