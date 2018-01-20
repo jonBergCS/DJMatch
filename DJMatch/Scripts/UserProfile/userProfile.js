@@ -76,9 +76,7 @@
             url: url + '/api/UserAnswers/array',
             data: toSend
         }).then(function successCallback(response) {
-            var a = response;
-        }, function errorCallback(response) {
-                var b = response;
+            window.location = url + '/DJs/Index'
         });
     };
 
@@ -93,7 +91,7 @@
                     // TODO: get real id
                     $scope.toSend.push({
                         UserID: 1, QuestionID: $scope.questions[$scope.currentIndex].ID,
-                        AnswerID: currentAnswers[i].ID, Text: null
+                        AnswerID: currentAnswers[i].ID, Text: ""
                     });
                 }
             }
