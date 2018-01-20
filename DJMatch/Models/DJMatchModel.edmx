@@ -91,16 +91,19 @@
           <Property Name="PlaylistID" Type="int" Nullable="false" />
           <Property Name="Tags" Type="nvarchar" MaxLength="256" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DJMatch.dbo.UserAnswers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserAnswers">
           <Key>
             <PropertyRef Name="UserID" />
             <PropertyRef Name="QuestionID" />
             <PropertyRef Name="AnswerID" />
+            <PropertyRef Name="Text" />
           </Key>
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="QuestionID" Type="int" Nullable="false" />
           <Property Name="AnswerID" Type="int" Nullable="false" />
-          <Property Name="Text" Type="text" />
+          <Property Name="Text" Type="text" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -233,18 +236,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserAnswers_Answers">
-          <End Role="Answers" Type="Self.Answers" Multiplicity="1" />
-          <End Role="UserAnswers" Type="Self.UserAnswers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Answers">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserAnswers">
-              <PropertyRef Name="AnswerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserAnswers_Questions">
           <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
           <End Role="UserAnswers" Type="Self.UserAnswers" Multiplicity="*" />
@@ -278,8 +269,15 @@
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Songs" EntityType="Self.Songs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SongsToPlaylists" EntityType="Self.SongsToPlaylists" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserAnswers" EntityType="Self.UserAnswers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAnswers" EntityType="Self.UserAnswers" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UserAnswers].[UserID] AS [UserID], 
+    [UserAnswers].[QuestionID] AS [QuestionID], 
+    [UserAnswers].[AnswerID] AS [AnswerID], 
+    [UserAnswers].[Text] AS [Text]
+    FROM [dbo].[UserAnswers] AS [UserAnswers]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Answers_Questions" Association="Self.FK_Answers_Questions">
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Answers" EntitySet="Answers" />
@@ -320,10 +318,6 @@
             <End Role="Songs" EntitySet="Songs" />
             <End Role="SongsToPlaylists" EntitySet="SongsToPlaylists" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserAnswers_Answers" Association="Self.FK_UserAnswers_Answers">
-            <End Role="Answers" EntitySet="Answers" />
-            <End Role="UserAnswers" EntitySet="UserAnswers" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserAnswers_Questions" Association="Self.FK_UserAnswers_Questions">
             <End Role="Questions" EntitySet="Questions" />
             <End Role="UserAnswers" EntitySet="UserAnswers" />
@@ -345,7 +339,6 @@
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="QuestionID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Question" Relationship="Self.FK_Answers_Questions" FromRole="Answers" ToRole="Questions" />
-          <NavigationProperty Name="UserAnswers" Relationship="Self.FK_UserAnswers_Answers" FromRole="Answers" ToRole="UserAnswers" />
         </EntityType>
         <EntityType Name="DJ">
           <Key>
@@ -431,6 +424,7 @@
             <PropertyRef Name="UserID" />
             <PropertyRef Name="QuestionID" />
             <PropertyRef Name="AnswerID" />
+            <PropertyRef Name="Text" />
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="QuestionID" Type="Int32" Nullable="false" />
@@ -438,7 +432,7 @@
           <NavigationProperty Name="Answer" Relationship="Self.FK_UserAnswers_Answers" FromRole="UserAnswers" ToRole="Answers" />
           <NavigationProperty Name="Question" Relationship="Self.FK_UserAnswers_Questions" FromRole="UserAnswers" ToRole="Questions" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserAnswers_Users" FromRole="UserAnswers" ToRole="Users" />
-          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>

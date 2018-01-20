@@ -37,6 +37,19 @@ namespace DJMatch.Controllers
             return Ok(dJ);
         }
 
+        [System.Web.Http.Route("api/DJs/{id}/reviews")]
+        [ResponseType(typeof(List<ReviewDTO>))]
+        public IHttpActionResult GetDJReviews(int id)
+        {
+            var reviews = db.Reviews.Where(rev => rev.DJ_ID == id).Select(new ReviewMapper().SelectorExpression);
+            if (reviews == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(reviews);
+        }
+
         [System.Web.Http.Route("api/DJs/{id}/rate")]
         public IHttpActionResult GetDJRating(int id)
         {
