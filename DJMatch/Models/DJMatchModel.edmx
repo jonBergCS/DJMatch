@@ -91,19 +91,16 @@
           <Property Name="PlaylistID" Type="int" Nullable="false" />
           <Property Name="Tags" Type="nvarchar" MaxLength="256" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DJMatch.dbo.UserAnswers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserAnswers">
           <Key>
             <PropertyRef Name="UserID" />
             <PropertyRef Name="QuestionID" />
             <PropertyRef Name="AnswerID" />
-            <PropertyRef Name="Text" />
           </Key>
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="QuestionID" Type="int" Nullable="false" />
           <Property Name="AnswerID" Type="int" Nullable="false" />
-          <Property Name="Text" Type="text" Nullable="false" />
+          <Property Name="Text" Type="text" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -269,15 +266,8 @@ warning 6002: The table/view 'DJMatch.dbo.UserAnswers' does not have a primary k
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Songs" EntityType="Self.Songs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SongsToPlaylists" EntityType="Self.SongsToPlaylists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAnswers" EntityType="Self.UserAnswers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserAnswers" EntityType="Self.UserAnswers" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserAnswers].[UserID] AS [UserID], 
-    [UserAnswers].[QuestionID] AS [QuestionID], 
-    [UserAnswers].[AnswerID] AS [AnswerID], 
-    [UserAnswers].[Text] AS [Text]
-    FROM [dbo].[UserAnswers] AS [UserAnswers]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Answers_Questions" Association="Self.FK_Answers_Questions">
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Answers" EntitySet="Answers" />
@@ -424,7 +414,6 @@ warning 6002: The table/view 'DJMatch.dbo.UserAnswers' does not have a primary k
             <PropertyRef Name="UserID" />
             <PropertyRef Name="QuestionID" />
             <PropertyRef Name="AnswerID" />
-            <PropertyRef Name="Text" />
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="QuestionID" Type="Int32" Nullable="false" />
@@ -432,7 +421,7 @@ warning 6002: The table/view 'DJMatch.dbo.UserAnswers' does not have a primary k
           <NavigationProperty Name="Answer" Relationship="Self.FK_UserAnswers_Answers" FromRole="UserAnswers" ToRole="Answers" />
           <NavigationProperty Name="Question" Relationship="Self.FK_UserAnswers_Questions" FromRole="UserAnswers" ToRole="Questions" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserAnswers_Users" FromRole="UserAnswers" ToRole="Users" />
-          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
