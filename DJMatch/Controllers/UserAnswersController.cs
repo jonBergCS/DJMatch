@@ -30,16 +30,17 @@ namespace DJMatch.Controllers
         }
 
         // GET: api/UserAnswers/5
-        [ResponseType(typeof(UserAnswerDTO))]
+        [ResponseType(typeof(List<UserAnswerDTO>))]
         public IHttpActionResult GetUserAnswer(int id)
         {
-            UserAnswer userAnswer = db.UserAnswers.Find(id);
-            if (userAnswer == null)
+            IEnumerable<UserAnswerDTO> userAnswers =
+                db.UserAnswers.Select(MapUserAnswer).Where(ans=>ans.UserID == id);
+            if (userAnswers == null)
             {
                 return NotFound();
             }
 
-            return Ok(MapUserAnswer(userAnswer));
+            return Ok(userAnswers);
         }
 
         // PUT: api/UserAnswers/5
@@ -105,6 +106,36 @@ namespace DJMatch.Controllers
             }
 
             return CreatedAtRoute("DefaultApi", new { id = userAnswer.UserID }, MapUserAnswer(userAnswer));
+        }
+
+        [ResponseType(typeof(List<UserAnswerDTO>))]
+        [Route("api/UserAnswers/array")]
+        public IHttpActionResult PostUserAnswers(List<UserAnswer> userAnswers)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.UserAnswers.AddRange(userAnswers);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                if (userAnswers.Any(usr=>UserAnswerExists(usr.UserID)))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtRoute("DefaultApi", new { id = 666 }, userAnswers.Select(MapUserAnswer));
         }
 
         // DELETE: api/UserAnswers/5
