@@ -60,6 +60,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Text" Type="text" Nullable="false" />
+          <Property Name="IsSingleAnswer" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -389,6 +390,7 @@
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Answers" Relationship="Self.FK_Answers_Questions" FromRole="Questions" ToRole="Answers" />
           <NavigationProperty Name="UserAnswers" Relationship="Self.FK_UserAnswers_Questions" FromRole="Questions" ToRole="UserAnswers" />
+          <Property Name="IsSingleAnswer" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -737,6 +739,7 @@
           <EntitySetMapping Name="Questions">
             <EntityTypeMapping TypeName="DJMatchModel.Question">
               <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="IsSingleAnswer" ColumnName="IsSingleAnswer" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
               </MappingFragment>
