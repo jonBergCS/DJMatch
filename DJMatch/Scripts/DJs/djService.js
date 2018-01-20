@@ -1,9 +1,12 @@
-﻿djApp.service('djsService', function ($http) {
-    var djsList = [];
-    var currentDJ = {};
-    var currentDJID = null;
+﻿djApp.factory('djsService', function ($http) {
 
-    var getDjs = function ()
+    var fac = {};
+
+    fac.djsList = [];
+    fac.currentDJ = {};
+    fac.currentDJID = null;
+
+    fac.getDjs = function ()
     {
         return(
         $http({
@@ -12,7 +15,7 @@
         }));
     };
 
-    var getCurrentDJDetails = function (djID) {
+    fac.getCurrentDJDetails = function (djID) {
         return (
             $http({
                 method: 'GET',
@@ -24,11 +27,5 @@
 
     };
 
-    return {
-        djsList : djsList,
-        currentDJ : currentDJ,
-        currentDJID: currentDJID,
-        getDjs: getDjs,
-        getCurrentDJDetails: getCurrentDJDetails
-    };
+    return fac;
 });

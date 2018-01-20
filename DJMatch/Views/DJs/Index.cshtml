@@ -1,5 +1,6 @@
 ﻿
 <script src="~/Scripts/DJs/djs.js"></script>
+<script src="~/Scripts/DJs/djProfile.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -13,7 +14,7 @@
                 <p class="w3-opacity">{{currentDJ.ExperienceYears}} years of experience</p>
                 <p class="w3-opacity">{{currentDJ.PriceMin}}$ - {{currentDJ.PriceMax}}$</p>
                 <p class="w3-opacity">Plays {{currentDJ.Genres}}</p>
-                <p> <a href="~/DJs/Details/{{currentDJ.ID}}" ng-click="displayDetails(currentDJ.ID)">Details</a></p>
+                <p ng-click="displayDetails(currentDJ.ID)">Details</p>
             </div>
 
         </div>

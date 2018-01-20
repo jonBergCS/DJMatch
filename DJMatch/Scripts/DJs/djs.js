@@ -19,5 +19,12 @@
 
     $scope.displayDetails = function (djID) {
         djsService.currentDJID = djID;
+
+        $.ajax({
+            url: '/DJs/Details/' + djID,
+            success: function (data) {
+                $("#renderbody").html(data);
+            }
+        });
     };
 }]);
