@@ -65,7 +65,7 @@
             //TODO: get real ID
             $scope.toSend.push({
                 UserID: 1, QuestionID: dateQuestions[i],
-                AnswerID: null, Text: $scope.dateAnswers[dateQuestions[i]]
+                AnswerID: -1, Text: $scope.dateAnswers[dateQuestions[i]]
             });
         }
 
