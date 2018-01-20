@@ -46,7 +46,7 @@ namespace DJMatch.ViewControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Text")] Question question)
+        public ActionResult Create([Bind(Include = "ID,Text,IsSingleAnswer")] Question question)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace DJMatch.ViewControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Text")] Question question)
+        public ActionResult Edit([Bind(Include = "ID,Text,IsSingleAnswer")] Question question)
         {
             if (ModelState.IsValid)
             {
