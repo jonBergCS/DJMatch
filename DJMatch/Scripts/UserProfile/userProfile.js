@@ -16,8 +16,7 @@
                 //TODO: change the user id
                 url: url + '/api/UserAnswers/1'
             }).then(function successCallback(response) {
-                a = response.data; 
-
+                var currentAnswers = response.data; 
                 $scope.currentIndex = 1;
                 $scope.userAnswers = {};
 
@@ -26,7 +25,23 @@
                 }
 
                 for (var i = 0; i < $scope.answers.length; i++) {
-                    $scope.userAnswers[$scope.answers[i].ID] = false;
+                    // Check the previous answers
+                    var result = currentAnswers.filter(function (obj) {
+                        return obj.AnswerID == $scope.answers[i].ID;
+                    });
+
+                    if (result.length != 0) {
+                        if (result[0].Text != null) {
+                            $scope.userAnswers[$scope.answers[i].ID] = result[0].Text;
+                        }
+                        else {
+                            $scope.userAnswers[$scope.answers[i].ID] = true;
+                        }
+                    }
+                    else {
+                        $scope.userAnswers[$scope.answers[i].ID] = false;
+                    }
+                    
                     $scope.questions[$scope.answers[i].QuestionID - 1].Answers.
                         push({ ID: $scope.answers[i].ID, Text: $scope.answers[i].Text });
                 }
