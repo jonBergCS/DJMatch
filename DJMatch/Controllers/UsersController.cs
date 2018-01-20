@@ -29,6 +29,13 @@ namespace DJMatch.Controllers
             return db.Users.Select(MapUser);
         }
 
+        [Route("api/Users/{id}/events")]
+        public IEnumerable<EventDTO> GetUserEvents(int id)
+        {
+            return db.Events.Where(evnt => evnt.UserId == id).Select(new EventMapper().SelectorExpression);
+        }
+
+
         // GET: api/Users/5
         [ResponseType(typeof(UserDTO))]
         public IHttpActionResult GetUser(int id)
