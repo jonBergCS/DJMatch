@@ -30,16 +30,17 @@ namespace DJMatch.Controllers
         }
 
         // GET: api/UserAnswers/5
-        [ResponseType(typeof(UserAnswerDTO))]
+        [ResponseType(typeof(List<UserAnswerDTO>))]
         public IHttpActionResult GetUserAnswer(int id)
         {
-            UserAnswer userAnswer = db.UserAnswers.Find(id);
-            if (userAnswer == null)
+            IEnumerable<UserAnswerDTO> userAnswers =
+                db.UserAnswers.Select(MapUserAnswer).Where(ans=>ans.UserID == id);
+            if (userAnswers == null)
             {
                 return NotFound();
             }
 
-            return Ok(MapUserAnswer(userAnswer));
+            return Ok(userAnswers);
         }
 
         // PUT: api/UserAnswers/5
