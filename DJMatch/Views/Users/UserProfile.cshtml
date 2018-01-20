@@ -1,15 +1,35 @@
-﻿<script src="~/Scripts/UserProfile/userProfile.js"></script>
-<div ng-controller="userProfileController">
-    <h1>My Profile</h1>
-    <div ng-repeat="question in questions track by $index" ng-if="$index == currentIndex">
-        <h3>{{question.ID}}. {{question.Text}}</h3>
-        <form id="{{'answers'+ question.ID}}" ng-if="question.Answers.length > 0">
-            <div ng-repeat="answer in question.Answers">
-                <input type="checkbox" ng-model="userAnswers[answer.ID]"/> {{answer.Text}} 
-            </div>
-        </form>
-        <input type="date" ng-model="dateAnswers[question.ID]" ng-if="question.Answers.length == 0"/>
-        <button type="button" class="btn btn-secondary" ng-click="next()" ng-if="$index != (questions.length - 1)">next</button>
-        <button type="button" class="btn btn-success" ng-click="save()" ng-if="$index == (questions.length - 1)">save</button>
+﻿<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/UserProfile/userProfile.js"></script>
+</head>
+
+<body class="body-content">
+    <div ng-controller="userProfileController">
+        <h1 style=" color: cadetblue; text-align: center;  margin-top:-20px;">My Profile</h1>
+        <div style="background-color:gainsboro; text-align:center;">
+            <h4>Let us know what's important for you and we will find you the</h4>
+            <h4>BEST DJ</h4>
+        </div>
+        <div ng-repeat="question in questions track by $index" ng-if="$index == currentIndex">
+            <h3>{{question.ID}}. {{question.Text}}</h3>
+            <form id="{{'answers'+ question.ID}}" style="margin:2px 0px 0px 20px;" ng-if="question.Answers.length> 0">
+                <div ng-repeat="answer in question.Answers" style="font-size:20px">
+                    <input type="checkbox" ng-model="userAnswers[answer.ID]" /> {{answer.Text}}
+                </div>
+            </form>
+            <input type="date" ng-model="dateAnswers[question.ID]" ng-if="question.Answers.length == 0" /><br /><br />
+
+            <button type="button" class="previous" ng-click="previous()" ng-if="$index != 0">&laquo; Previous</button>
+            <button type="button" class="next" ng-click="next()" ng-if="$index != (questions.length - 1)">Next  &raquo;</button>
+            <br />
+            <br />
+
+            <button type="button" class="btn btn-success" ng-click="save()">Save</button>
+        </div>
     </div>
-</div>
+</body>
