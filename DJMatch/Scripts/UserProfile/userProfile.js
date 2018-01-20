@@ -99,4 +99,8 @@
 
         $scope.currentIndex++;
     };
+
+    $scope.previous = function () {
+        $scope.currentIndex--;
+    }
 });

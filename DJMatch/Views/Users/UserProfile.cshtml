@@ -24,11 +24,12 @@
             </form>
             <input type="date" ng-model="dateAnswers[question.ID]" ng-if="question.Answers.length == 0" /><br /><br />
 
-            <button type="button" class="previous" ng-if="$index != 0">&laquo; Previous</button>
+            <button type="button" class="previous" ng-click="previous()" ng-if="$index != 0">&laquo; Previous</button>
             <button type="button" class="next" ng-click="next()" ng-if="$index != (questions.length - 1)">Next  &raquo;</button>
             <br />
             <br />
 
-            <button type="button" class="btn btn-success" ng-click="save()">Finish</button>
+            <button type="button" class="btn btn-success" ng-click="save()">Save</button>
+        </div>
     </div>
 </body>
