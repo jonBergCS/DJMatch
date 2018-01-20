@@ -46,7 +46,7 @@
         });
     };
 
-    $scope.next = function (questionID) {
+    $scope.next = function () {
       //  $scope.toSend.push({ question: questionID, answer:  })
         $scope.currentIndex++;
     };
