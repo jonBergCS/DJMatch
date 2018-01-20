@@ -16,7 +16,7 @@ namespace DJMatch.Controllers
     {
         private DJMatchEntities db = new DJMatchEntities();
         private ReviewMapper mapper = new ReviewMapper();
-        private Func<Review, ReviewDTO> MapReview;
+        public static Func<Review, ReviewDTO> MapReview;
 
         public ReviewsController()
         {
