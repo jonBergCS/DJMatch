@@ -213,10 +213,10 @@
     <Compile Include="Models\Answer.cs">
       <DependentUpon>DJMatchModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DTOs\AnswerDTO.cs" />
     <Compile Include="Models\DJ.cs">
       <DependentUpon>DJMatchModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTOs\AnswerDTO.cs" />
     <Compile Include="Models\DTOs\DJDTO.cs" />
     <Compile Include="Models\DJMatchModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -233,44 +233,45 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DJMatchModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTOs\EventDTO.cs" />
     <Compile Include="Models\Event.cs">
       <DependentUpon>DJMatchModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DTOs\EventDTO.cs" />
     <Compile Include="Models\Infrastructure\MapperBase.cs" />
+    <Compile Include="Models\DTOs\PlaylistDTO.cs" />
+    <Compile Include="Models\DTOs\QuestionDTO.cs" />
+    <Compile Include="Models\DTOs\ReviewDTO.cs" />
+    <Compile Include="Models\DTOs\SongDTO.cs" />
+    <Compile Include="Models\DTOs\SongsToPlaylistDTO.cs" />
+    <Compile Include="Models\DTOs\UserAnswerDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTO.cs" />
     <Compile Include="Models\Playlist.cs">
       <DependentUpon>DJMatchModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DTOs\PlaylistDTO.cs" />
     <Compile Include="Models\Question.cs">
       <DependentUpon>DJMatchModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DTOs\QuestionDTO.cs" />
     <Compile Include="Models\Review.cs">
       <DependentUpon>DJMatchModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DTOs\ReviewDTO.cs" />
     <Compile Include="Models\Song.cs">
       <DependentUpon>DJMatchModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DTOs\SongDTO.cs" />
     <Compile Include="Models\SongsToPlaylist.cs">
       <DependentUpon>DJMatchModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DTOs\SongsToPlaylistDTO.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>DJMatchModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserAnswer.cs">
       <DependentUpon>DJMatchModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DTOs\UserAnswerDTO.cs" />
-    <Compile Include="Models\DTOs\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\JsonFormatter.cs" />
     <Compile Include="ViewControllers\AnswersController.cs" />
     <Compile Include="ViewControllers\DJsController.cs" />
     <Compile Include="ViewControllers\EventsController.cs" />
+    <Compile Include="ViewControllers\LearningEngineController.cs" />
     <Compile Include="ViewControllers\PlaylistsController.cs" />
     <Compile Include="ViewControllers\QuestionsController.cs" />
     <Compile Include="ViewControllers\ReviewsController.cs" />
@@ -320,9 +321,7 @@
     <None Include="Properties\PublishProfiles\fadj - Web Deploy.pubxml" />
     <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\DJs\djProfile.js" />
     <Content Include="Scripts\DJs\djs.js" />
-    <Content Include="Scripts\DJs\djService.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -335,6 +334,16 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Home\app.js" />
     <Content Include="Scripts\UserProfile\userProfile.js" />
+    <Content Include="Views\Questions\Create.cshtml" />
+    <Content Include="Views\Questions\Delete.cshtml" />
+    <Content Include="Views\Questions\Details.cshtml" />
+    <Content Include="Views\Questions\Edit.cshtml" />
+    <Content Include="Views\Questions\Index.cshtml" />
+    <Content Include="Views\UserAnswers\Create.cshtml" />
+    <Content Include="Views\UserAnswers\Delete.cshtml" />
+    <Content Include="Views\UserAnswers\Details.cshtml" />
+    <Content Include="Views\UserAnswers\Edit.cshtml" />
+    <Content Include="Views\UserAnswers\Index.cshtml" />
     <None Include="Views\Users\UserProfile.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -365,11 +374,6 @@
     <Content Include="Views\Playlists\Details.cshtml" />
     <Content Include="Views\Playlists\Edit.cshtml" />
     <Content Include="Views\Playlists\Index.cshtml" />
-    <Content Include="Views\Questions\Create.cshtml" />
-    <Content Include="Views\Questions\Delete.cshtml" />
-    <Content Include="Views\Questions\Details.cshtml" />
-    <Content Include="Views\Questions\Edit.cshtml" />
-    <Content Include="Views\Questions\Index.cshtml" />
     <Content Include="Views\Reviews\Create.cshtml" />
     <Content Include="Views\Reviews\Delete.cshtml" />
     <Content Include="Views\Reviews\Details.cshtml" />
@@ -390,16 +394,12 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\UserAnswers\Create.cshtml" />
-    <Content Include="Views\UserAnswers\Delete.cshtml" />
-    <Content Include="Views\UserAnswers\Details.cshtml" />
-    <Content Include="Views\UserAnswers\Edit.cshtml" />
-    <Content Include="Views\UserAnswers\Index.cshtml" />
     <Content Include="Views\Events\Create.cshtml" />
     <Content Include="Views\Events\Delete.cshtml" />
     <Content Include="Views\Events\Details.cshtml" />
     <Content Include="Views\Events\Edit.cshtml" />
     <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\LearningEngine\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

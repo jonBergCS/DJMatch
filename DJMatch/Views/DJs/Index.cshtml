@@ -6,16 +6,68 @@
 <body>
     <div ng-controller="djsController">
         <h1>Optinal DJs</h1>
-        <div class="w3-row-padding w3-grayscale">
-            <div ng-repeat="currentDJ in djsList" class="w3-col l3 m6 w3-margin-bottom">
+        <div class="w3-row-padding w3-grayscale" ng-if="currentDJ == undefined">
+            <div ng-repeat="eachDJ in djsList" class="w3-col l3 m6 w3-margin-bottom">
                 <img src="~/Content/Images/icon.png" class="photo">
-                <h3>DJ {{currentDJ.Name}}</h3>
-                <p class="w3-opacity">{{currentDJ.ExperienceYears}} years of experience</p>
-                <p class="w3-opacity">{{currentDJ.PriceMin}}$ - {{currentDJ.PriceMax}}$</p>
-                <p class="w3-opacity">Plays {{currentDJ.Genres}}</p>
-                <p> <a href="~/DJs/Details/{{currentDJ.ID}}" ng-click="displayDetails(currentDJ.ID)">Details</a></p>
+                <h3>DJ {{eachDJ.Name}}</h3>
+                <p class="w3-opacity">{{eachDJ.ExperienceYears}} years of experience</p>
+                <p class="w3-opacity">{{eachDJ.PriceMin}}$ - {{eachDJ.PriceMax}}$</p>
+                <p class="w3-opacity">Plays {{eachDJ.Genres}}</p>
+                <a ng-click="displayDetails(eachDJ.ID)">Details</a>
             </div>
 
+        </div>
+        <div ng-if="currentDJ != undefined">
+            <link rel="stylesheet" type="text/css" href="~/Content/DJProfile.css">
+            <div class="dj-profile-header row">
+                <div class="dj-profile-img-container col">
+                    <img class="dj-profile-img" src="~/Content/Images/Skazi.jpg" />
+                </div>
+                <div class="dj-profile-header-details col">
+                    <div class="dj-profile-name row">
+                        <h2>DJ {{currentDJ.Name}}</h2>
+                    </div>
+                    <div class="dj-profile-header-row row">
+                        <img class="dj-profile-icon" src="~/Content/Icons/location.png" />
+                        <span>{{currentDJ.Address}}</span>
+                    </div>
+                    <div class="dj-profile-header-row row">
+                        <img class="dj-profile-icon" src="~/Content/Icons/money.png" />
+                        <span>{{currentDJ.PriceMin}}$ - {{currentDJ.PriceMax}}$</span>
+                    </div>
+                    <div class="dj-profile-header-row row">
+                        <img class="dj-profile-icon" src="~/Content/Icons/star.png" />
+                        <span ng-if="currentDJ.Rate >= 0">{{currentDJ.Rate}}</span>
+                        <span ng-if="currentDJ.Rate < 0">The DJ hasn't been rated yet</span>
+                    </div>
+                    <div class="dj-profile-header-row row">
+                        <img class="dj-profile-icon" src="~/Content/Icons/laptop.png" />
+                        <a href="{{currentDJ.WebSite}}">DJ's website</a>
+                    </div>
+                    <div class="dj-profile-header-row dj-profile-networks row">
+                        <a href="{{currentDJ.FacebookPage}}">
+                            <img alt="facebook" class="dj-profile-icon" src="~/Content/Icons/facebook.png" />
+                        </a>
+                        <a href="{{currentDJ.IGProfile}}">
+                            <img alt="instagram" class="dj-profile-icon" src="~/Content/Icons/instagram.png" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <hr />
+                <div ng-repeat="eachReview in currentDJ.Reviews" class="dj-profile-reviews-container" >
+                    <div class="dj-profile-review">
+                        <div class="dj-profile-review-header row">
+                            <img class="dj-profile-icon dj-profile-review-icon" src="~/Content/Icons/star.png" />
+                            <span>{{eachReview.Score}}</span>
+                        </div>
+                        <span class="row dj-profile-review-name">Michal Teverovsky, {{eachReview.Date}}</span>
+                        <span class="row dj-profile-review-text">{{eachReview.Text}}</span>
+                    </div>
+                </div>
+            </div>
+            <a ng-click="backToList()">back to DJs list</a>
         </div>
     </div>
 </body>

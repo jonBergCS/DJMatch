@@ -1,23 +1,61 @@
-﻿djApp.controller("djsController", ['djsService', '$scope', '$q', function djsController(djsService, $scope, $q) {
+﻿djApp.controller("djsController", function djsController($scope, $q, $http) {
 
-    if (djsService.djsList.length == 0) {
+    if (($scope.djsList == undefined) || ($scope.djsList,length == 0)) {
         var promises = [];
 
         var defer = $q.defer();
 
-        promises.push(djsService.getDjs());
+        promises.push($http({
+            method: 'GET',
+            url: url + '/api/DJs'
+        }));
 
         //Resolve all promise into the promises array
         $q.all(promises).then(function (response) {
-            djsService.djsList = response[0].data;
-            $scope.djsList = djsService.djsList;
+            $scope.djsList = response[0].data;
         });
     }
     
-    $scope.djsList = djsService.djsList;
-    
 
     $scope.displayDetails = function (djID) {
-        djsService.currentDJID = djID;
+        $scope.currentDJID = djID;
+
+        if (($scope.currentDJ == undefined) || ($scope.currentDJ == {}))
+        {
+            var promises = [];
+
+            var defer = $q.defer();
+
+            // get basic DJ info
+            promises.push($http({
+                method: 'GET',
+                url: url + '/api/DJs/' + djID
+            }));
+
+            // get DJ's reviews
+            promises.push($http({
+                method: 'GET',
+                url: url + '/api/DJs/' + djID + '/reviews'
+            }));
+
+            // get DJ's rate
+            promises.push($http({
+                method: 'GET',
+                url: url + '/api/DJs/' + djID + '/rate'
+            }));
+
+            //Resolve all promise into the promises array
+            $q.all(promises).then(function (response) {
+                debugger;
+                $scope.currentDJ = response[0].data;
+                $scope.currentDJ.Reviews = response[1].data;
+                $scope.currentDJ.Rate = response[2].data;
+            });
+        }
     };
-}]);
+
+    $scope.backToList = function ()
+    {
+        $scope.currentDJ = undefined;
+    };
+});
