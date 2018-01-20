@@ -15,6 +15,8 @@ namespace DJMatch.Models
         ////ECC/ END CUSTOM CODE SECTION 
         public int ID { get; set; }
         public string Text { get; set; }
+
+        public bool IsSingleAnswer { get; set; }
     }
 
     public class QuestionMapper : MapperBase<Question, QuestionDTO>
@@ -30,7 +32,8 @@ namespace DJMatch.Models
                     ////BCC/ BEGIN CUSTOM CODE SECTION 
                     ////ECC/ END CUSTOM CODE SECTION 
                     ID = p.ID,
-                    Text = p.Text
+                    Text = p.Text,
+                    IsSingleAnswer = p.IsSingleAnswer
                 }));
             }
         }
@@ -41,7 +44,7 @@ namespace DJMatch.Models
             ////ECC/ END CUSTOM CODE SECTION 
             model.ID = dto.ID;
             model.Text = dto.Text;
-
+            model.IsSingleAnswer = dto.IsSingleAnswer;
         }
     }
 }

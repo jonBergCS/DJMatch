@@ -10,6 +10,6 @@
         </form>
         <input type="date" ng-model="answer.Text" ng-if="question.Answers.length == 0"/>
         <button type="button" class="btn btn-secondary" ng-click="next()" ng-if="$index != (questions.length - 1)">next</button>
-        <button type="button" class="btn btn-success" ng-click="end()" ng-if="$index == (questions.length - 1)">end</button>
+        <button type="button" class="btn btn-success" ng-click="save()" ng-if="$index == (questions.length - 1)">end</button>
     </div>
 </div>
