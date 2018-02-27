@@ -46,11 +46,11 @@
 
                 // Get the date answers
                 var result = currentAnswers.filter(function (obj) {
-                    return obj.AnswerID == null;
+                    return obj.AnswerID == -1;
                 });
 
                 for (var i = 0; i < result.length; i++) {
-                    $scope.dateAnswers[result[i].QuestionID] = result[i].Text;
+                    $scope.dateAnswers[result[i].QuestionID] = new Date(result[i].Text);
                 }
             });
         });
