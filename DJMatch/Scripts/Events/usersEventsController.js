@@ -1,51 +1,50 @@
-﻿djApp.controller("usersEventsController", function djsController($scope, $q, $http) {
+﻿djApp.controller("usersEventsController",
+    function djsController($scope, $q, $http, playlistFactory) {
 
-    if (($scope.eventsList == undefined) || ($scope.eventsList, length == 0)) {
-        $scope.eventsList = [];
+        if (($scope.eventsList == undefined) || ($scope.eventsList, length == 0)) {
+            $scope.eventsList = [];
 
-        var promises = [];
+            var promises = [];
 
-        var defer = $q.defer();
+            promises.push($http({
+                method: 'GET',
+                url: url + '/api/Users/' + '1' /*userID*/ + '/events'
+            }));
 
-        promises.push($http({
-            method: 'GET',
-            url: url + '/api/Users/' + '1'/*userID*/ + '/events'
-        }));
+            //Resolve all promise into the promises array
+            $q.all(promises).then(function(response) {
+                var eventsList = response[0].data;
 
-        //Resolve all promise into the promises array
-        $q.all(promises).then(function (response) {
-            var eventsList = response[0].data;
+                for (var i = 0; i < eventsList.length; i++) {
+                    var currEvent = eventsList[i];
+                    var innerPromises = [];
 
-            for (var i = 0; i < eventsList.length; i++) {
-                debugger;
-                var currEvent = eventsList[i];
+                    innerPromises.push($http({
+                        method: 'GET',
+                        url: url + '/api/playlists/' + currEvent.PlaylistId
+                    }));
 
-                var innerPromises = [];
+                    innerPromises.push($http({
+                        method: 'GET',
+                        url: url + '/api/DJs/' + currEvent.DJId
+                    }));
 
-                var innerDefer = $q.defer();
+                    //Resolve all promise into the promises array
+                    $q.all(innerPromises).then(function(response) {
+                        currEvent.playlist = response[0].data;
+                        currEvent.DJName = response[1].data.Name;
 
-                innerPromises.push($http({
-                    method: 'GET',
-                    url: url + '/api/playlists/' + currEvent.PlaylistId
-                }));
+                        $scope.eventsList.push(currEvent);
+                    });
 
-                innerPromises.push($http({
-                    method: 'GET',
-                    url: url + '/api/DJs/' + currEvent.DJId
-                }));
+                }
 
-                //Resolve all promise into the promises array
-                $q.all(innerPromises).then(function(response) {
-                    currEvent.playlistName = response[0].data.Name;
-                    currEvent.DJName = response[1].data.Name;
+            });
+        }
 
-                    $scope.eventsList.push(currEvent);
-                });
-                
-            }
+        $scope.displayPlaylist = function(playlist) {
 
-        });
-    }
+            playlistFactory.seChosenPlaylist(playlist);
 
-
-});
+        }
+    });

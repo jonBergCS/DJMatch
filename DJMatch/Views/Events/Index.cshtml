@@ -7,7 +7,7 @@
 <div ng-controller="usersEventsController">
     <h1>My Events</h1>
     
-    <table>
+    <table class="table">
         <thead>
         <tr>
             <th>Date</th>
@@ -16,16 +16,18 @@
             <th>Description</th>
             <th>DJ's Name</th>
             <th>playlist's Name</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
             <tr ng-repeat="currEvent in eventsList">
                 <td>{{ currEvent.Date }}</td>
-                <td>{{ currEvent.Type }}</td>
+                <td>{{ currEvent.EventType }}</td>
                 <td>{{ currEvent.Name }}</td>
                 <td>{{ currEvent.Description }}</td>
                 <td>{{ currEvent.DJName }}</td>
-                <td>{{ currEvent.playlistName }}</td>
+                <td>{{ currEvent.playlist.Name }}</td>
+                <td ng-click="displayPlaylist(currEvent.playlist)"> <a href="~/Playlists/Details">Playlist's Details</a></td>
             </tr>
         </tbody>
     </table>

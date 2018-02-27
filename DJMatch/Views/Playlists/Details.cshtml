@@ -1,56 +1,35 @@
-﻿@model DJMatch.Models.Playlist
+﻿<script src="~/Scripts/Playlists/playlistConroller.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+<div ng-controller="playlistController">
+    <div class="dj-profile-header row">
+        <div class="dj-profile-header-details col">
+            <div class="dj-profile-name row">
+                <h2>DJ {{chosenPlalist.Name}}</h2>
+            </div>
+            <div class="dj-profile-header-row row">
+                <span>{{chosenPlalist.DJ_ID}}</span>
+            </div>
+            <div class="dj-profile-header-row row">
+                <span>{{chosenPlalist.UserID}}</span>
+            </div>
+            <div class="dj-profile-header-row row">
+                <h3>Songs</h3>
+                <span>"Lovefool" - The Cardigans</span>
+                <span>"Love Song" - Selina Gomez</span>
+            </div>
+            <!--<div class="dj-profile-header-row row">
+                <a href="{{currentDJ.WebSite}}">DJ's website</a>
+            </div>
 
-@{
-    ViewBag.Title = "Details";
-}
 
-<h2>@Html.DisplayFor(model => model.Name) Playlist Details</h2>
-
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Name
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <!--<dt>
-            Picture
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Picture)
-        </dd>-->
-
-        <dt>
-            DJ's Name
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DJ.Name)
-        </dd>
-
-        <dt>
-            User's Name
-        </dt>
-
-        <!--<dd>
-            @Html.DisplayFor(model => model.User.Name)
-        </dd>-->
-        <dd>
-            Michal Teverovsky
-        </dd>
-
-        <dt>Songs </dt>
-        <dd>"Lovefool" - The Cardigans</dd>
-        <dd>"Love Song" - Selina Gomez</dd>
-
-    </dl>
+            ("Edit", "Edit", new { id = Model.ID }) |
+            ("Back to My Events", "Index", "Events")
+            </div>-->
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to My Events", "Index", "Events")
-</p>
+</body>
+
