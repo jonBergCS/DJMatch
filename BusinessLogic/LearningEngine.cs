@@ -12,22 +12,36 @@ namespace BusinessLogic
 {
     public class LearningEngine
     {
-        private DecisionTree dtree;
+        //private DecisionTree dtree;
         private DJMatchEntities db = new DJMatchEntities();
+
+        private DecisionNode dTree;
 
         public LearningEngine()
         {
-            this.Learn();
+            this.BuildDecisionTree();
+            
+            //this.Learn();
         }
 
-        private void Learn()
-        {
-            List<DecisionVariable> dvar = new List<DecisionVariable>();
-            dvar.Add(new DecisionVariable("Budget", 4));
-            dvar.Add(new DecisionVariable("Genre", DecisionVariableKind.Discrete));
-            dvar.Add(new DecisionVariable("Area", 4));
+        //private void Learn()
+        //{
+        //    List<DecisionVariable> dvar = new List<DecisionVariable>();
+        //    dvar.Add(new DecisionVariable("Budget", 4));
+        //    dvar.Add(new DecisionVariable("Genre", DecisionVariableKind.Discrete));
+        //    dvar.Add(new DecisionVariable("Area", 4));
 
-            this.dtree = new DecisionTree(dvar, 100);
+        //    this.dtree = new DecisionTree(dvar, 100);
+        //}
+
+        private void BuildDecisionTree()
+        {
+            this.dTree = new DecisionNode()
+            {
+                Result = db.DJs.ToList()
+            };
+
+
         }
 
         public List<DJ> GetDJsForClient(int userID)
@@ -42,7 +56,7 @@ namespace BusinessLogic
 
     class DecisionNode
     {
-        private List<DecisionNode> Branches { get; set; }
+        public List<DecisionNode> Branches { get; set; }
         public List<DJ> Result { get; set; }
 
         public DecisionNode()
@@ -57,5 +71,13 @@ namespace BusinessLogic
 
             return null;
         }
+        /*
+         
+        1. Budget
+        2. eventType
+        3. genres
+        4. experience years
+
+        */
     }
 }
