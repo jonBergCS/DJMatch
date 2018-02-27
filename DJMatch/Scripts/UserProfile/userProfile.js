@@ -39,8 +39,9 @@
                         $scope.userAnswers[$scope.answers[i].ID] = false;
                     }
 
-                    $scope.questions[$scope.answers[i].QuestionID - 1].Answers.
-                        push({ ID: $scope.answers[i].ID, Text: $scope.answers[i].Text });
+                    var curQues = $scope.questions.filter(x => x.ID === $scope.answers[i].QuestionID)[0];
+
+                    curQues.Answers.push({ ID: $scope.answers[i].ID, Text: $scope.answers[i].Text });
                 }
 
                 // Get the date answers
@@ -64,7 +65,7 @@
         for (var i = 0; i < dateQuestions.length; i++) {
             //TODO: get real ID
             $scope.toSend.push({
-                UserID: 1, QuestionID: dateQuestions[i],
+                UserID: 1, QuestionID: parseInt( dateQuestions[i]),
                 AnswerID: -1, Text: $scope.dateAnswers[dateQuestions[i]]
             });
         }
