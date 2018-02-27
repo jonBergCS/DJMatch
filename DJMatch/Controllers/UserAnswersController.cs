@@ -127,7 +127,7 @@ namespace DJMatch.Controllers
             {
                 if (userAnswers.Any(usr=>UserAnswerExists(usr.UserID)))
                 {
-                    return Conflict();
+                    //return Conflict();
                 }
                 else
                 {

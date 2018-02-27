@@ -28,5 +28,13 @@ namespace BusinessLogic
 
             this.dtree = new DecisionTree(dvar, 100);
         }
+
+        public List<DJ> GetDJsForClient(int userID)
+        {
+            // get user answers
+            //var userAnswers = 
+
+            return null;
+        }
     }
 }
