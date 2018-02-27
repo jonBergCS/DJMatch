@@ -147,7 +147,7 @@ namespace DJMatch.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = 666 }, userAnswers.Select(MapUserAnswer));
+            return Ok();
         }
 
         // DELETE: api/UserAnswers/5

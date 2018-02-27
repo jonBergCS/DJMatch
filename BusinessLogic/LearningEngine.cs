@@ -12,22 +12,36 @@ namespace BusinessLogic
 {
     public class LearningEngine
     {
-        private DecisionTree dtree;
+        //private DecisionTree dtree;
         private DJMatchEntities db = new DJMatchEntities();
+
+        private DecisionNode dTree;
 
         public LearningEngine()
         {
-            this.Learn();
+            this.BuildDecisionTree();
+            
+            //this.Learn();
         }
 
-        private void Learn()
-        {
-            List<DecisionVariable> dvar = new List<DecisionVariable>();
-            dvar.Add(new DecisionVariable("Budget", 4));
-            dvar.Add(new DecisionVariable("Genre", DecisionVariableKind.Discrete));
-            dvar.Add(new DecisionVariable("Area", 4));
+        //private void Learn()
+        //{
+        //    List<DecisionVariable> dvar = new List<DecisionVariable>();
+        //    dvar.Add(new DecisionVariable("Budget", 4));
+        //    dvar.Add(new DecisionVariable("Genre", DecisionVariableKind.Discrete));
+        //    dvar.Add(new DecisionVariable("Area", 4));
 
-            this.dtree = new DecisionTree(dvar, 100);
+        //    this.dtree = new DecisionTree(dvar, 100);
+        //}
+
+        private void BuildDecisionTree()
+        {
+            this.dTree = new DecisionNode()
+            {
+                Result = db.DJs.ToList()
+            };
+
+
         }
 
         public List<DJ> GetDJsForClient(int userID)
@@ -40,19 +54,30 @@ namespace BusinessLogic
 
     }
 
-    //class DecisionQuery : Decision
-    //{
-    //    public Decision Positive { get; set; }
-    //    public Decision Negative { get; set; }
-    //    // Primitive operation to be provided by the user
-    //    public Func<Client, bool> Test { get; set; }
+    class DecisionNode
+    {
+        public List<DecisionNode> Branches { get; set; }
+        public List<DJ> Result { get; set; }
 
-    //    public override bool Evaluate(Client client)
-    //    {
-    //        // Test a client using the primitive operation
-    //        bool res = Test(client);
-    //        // Select a branch to follow
-    //        return res ? Positive.Evaluate(client) : Negative.Evaluate(client);
-    //    }
-    //}
+        public DecisionNode()
+        {
+            this.Branches = new List<DecisionNode>();
+            this.Result = new List<DJ>();
+        }
+
+        public List<DJ> Evaluate()
+        {
+
+
+            return null;
+        }
+        /*
+         
+        1. Budget
+        2. eventType
+        3. genres
+        4. experience years
+
+        */
+    }
 }
