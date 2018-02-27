@@ -1,6 +1,6 @@
 ﻿djApp.controller("djsController", function djsController($scope, $q, $http) {
 
-    if (($scope.djsList == undefined) || ($scope.djsList,length == 0)) {
+    if (($scope.djsList == undefined) || ($scope.djsList.size() == 0)) {
         var promises = [];
 
         var defer = $q.defer();
@@ -46,7 +46,6 @@
 
             //Resolve all promise into the promises array
             $q.all(promises).then(function (response) {
-                debugger;
                 $scope.currentDJ = response[0].data;
                 $scope.currentDJ.Reviews = response[1].data;
                 $scope.currentDJ.Rate = response[2].data;
