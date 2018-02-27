@@ -40,19 +40,22 @@ namespace BusinessLogic
 
     }
 
-    //class DecisionQuery : Decision
-    //{
-    //    public Decision Positive { get; set; }
-    //    public Decision Negative { get; set; }
-    //    // Primitive operation to be provided by the user
-    //    public Func<Client, bool> Test { get; set; }
+    class DecisionNode
+    {
+        private List<DecisionNode> Branches { get; set; }
+        public List<DJ> Result { get; set; }
 
-    //    public override bool Evaluate(Client client)
-    //    {
-    //        // Test a client using the primitive operation
-    //        bool res = Test(client);
-    //        // Select a branch to follow
-    //        return res ? Positive.Evaluate(client) : Negative.Evaluate(client);
-    //    }
-    //}
+        public DecisionNode()
+        {
+            this.Branches = new List<DecisionNode>();
+            this.Result = new List<DJ>();
+        }
+
+        public List<DJ> Evaluate()
+        {
+
+
+            return null;
+        }
+    }
 }
