@@ -122,7 +122,7 @@ namespace DJMatch.Controllers
             var email = cred.Property("email").Value.ToString();
             var pass = cred.Property("password").Value.ToString();
 
-            return db.Users.FirstOrDefault(usr => usr.Email == email || usr.Password == pass);
+            return db.Users.FirstOrDefault(usr => usr.Email == email && usr.Password == pass);
         }
 
         protected override void Dispose(bool disposing)
