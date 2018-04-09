@@ -1,12 +1,13 @@
 ﻿
 <script src="~/Scripts/DJs/djs.js"></script>
+<script src="~/Scripts/DJs/DjPlaylistDirective.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <body>
     <div ng-controller="djsController">
-        <h1>Optinal DJs</h1>
         <div class="w3-row-padding w3-grayscale" ng-if="currentDJ == undefined">
+            <h1>Optinal DJs</h1>
             <div ng-repeat="eachDJ in djsList" class="w3-col l3 m6 w3-margin-bottom">
                 <img src="~/Content/Images/icon.png" class="photo">
                 <h3>DJ {{eachDJ.Name}}</h3>
@@ -54,19 +55,26 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <hr />
-                <div ng-repeat="eachReview in currentDJ.Reviews" class="dj-profile-reviews-container" >
-                    <div class="dj-profile-review">
-                        <div class="dj-profile-review-header row">
-                            <img class="dj-profile-icon dj-profile-review-icon" src="~/Content/Icons/star.png" />
-                            <span>{{eachReview.Score}}</span>
+            <div class="row no-gutters dj-profile-details-container">
+                <div class="col">
+                    <h1>Reviews</h1>
+                    <div ng-repeat="eachReview in currentDJ.Reviews" class="dj-profile-reviews-container">
+                        <div class="dj-profile-review">
+                            <div class="dj-profile-review-header row">
+                                <img class="dj-profile-icon dj-profile-review-icon" src="~/Content/Icons/star.png" />
+                                <span>{{eachReview.Score}}</span>
+                            </div>
+                            <span class="row dj-profile-review-name">Michal Teverovsky, {{eachReview.Date}}</span>
+                            <span class="row dj-profile-review-text">{{eachReview.Text}}</span>
                         </div>
-                        <span class="row dj-profile-review-name">Michal Teverovsky, {{eachReview.Date}}</span>
-                        <span class="row dj-profile-review-text">{{eachReview.Text}}</span>
                     </div>
                 </div>
-            </div>
+                <div class="col">
+                    <h2>{{currentDJ.Name}} Playlist</h2>
+                    <div ng-repeat="eachPlaylist in currentDJ.Playlists" class="dj-profile-reviews-container">
+                        <dj-playlist-directive playlistId={{eachPlaylist.ID}} contenteditable="false"></dj-playlist-directive>
+                    </div>
+                </div>
             <a ng-click="backToList()">back to DJs list</a>
         </div>
     </div>

@@ -44,11 +44,18 @@
                 url: url + '/api/DJs/' + djID + '/rate'
             }));
 
+            // get DJ's playlists
+            promises.push($http({
+                method: 'GET',
+                url: url + '/api/DJs/' + djID + '/playlists'
+            }));
+
             //Resolve all promise into the promises array
             $q.all(promises).then(function (response) {
                 $scope.currentDJ = response[0].data;
                 $scope.currentDJ.Reviews = response[1].data;
                 $scope.currentDJ.Rate = response[2].data;
+                $scope.currentDJ.Playlists = response[3].data;
             });
         }
     };
