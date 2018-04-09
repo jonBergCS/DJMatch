@@ -119,7 +119,7 @@ namespace DJMatch.Controllers
         [HttpPost]
         public User Login([FromBody] JObject cred)
         {
-            return db.Users.First(usr => usr.Email == cred.Property("email").Value.ToString() || usr.Password == cred.Property("password").Value.ToString());
+            return db.Users.FirstOrDefault(usr => usr.Email == cred.Property("email").Value.ToString() || usr.Password == cred.Property("password").Value.ToString());
         }
 
         protected override void Dispose(bool disposing)
