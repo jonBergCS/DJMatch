@@ -24,7 +24,7 @@ namespace DJMatch.Controllers
             MapDJ = mapper.SelectorExpression.Compile();
         }
 
-        [System.Web.Http.Route("api/Djs/filterDJs")]
+        [System.Web.Http.Route("api/Djs/filterForUser/{id}")]
         [ResponseType(typeof(DJ))]
         public IHttpActionResult GetDjsForUser(int id)
         {
