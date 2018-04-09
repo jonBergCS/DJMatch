@@ -5,7 +5,6 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using DJMatch.Models;
@@ -118,9 +117,9 @@ namespace DJMatch.Controllers
 
         [Route("api/Users/login")]
         [HttpPost]
-        public int Login([FromBody] JObject cred)
+        public User Login([FromBody] JObject cred)
         {
-            return db.Users.First(usr => usr.Email == cred.Property("email").Value.ToString() || usr.Password == cred.Property("password").Value.ToString()).ID;
+            return db.Users.FirstOrDefault(usr => usr.Email == cred.Property("email").Value.ToString() || usr.Password == cred.Property("password").Value.ToString());
         }
 
         protected override void Dispose(bool disposing)
