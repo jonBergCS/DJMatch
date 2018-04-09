@@ -97,3 +97,14 @@ textarea {
     color: cadetblue;
     text-align: center;
 }
+
+.question {
+    margin: 2px 0px 0px 20px;
+    height: 280px;
+    font-size: 20px;
+}
+
+.questionButtons {
+    width: 300px;
+    margin: 0 auto;
+}
