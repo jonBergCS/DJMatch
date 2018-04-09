@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DJMatch.Models;
 
 namespace DJMatch.Controllers
 {
@@ -25,6 +26,25 @@ namespace DJMatch.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public JsonResult userlogin(User us)
+
+        {
+            bool result = UsersController.Login(us);
+            String strResult = result.ToString();
+
+            if (result)
+            {
+                Session["user"] = us.Email;
+            }
+
+            else  
+            {
+                strResult = "Email or Password is wrong";
+            }
+
+            return Json(strResult, JsonRequestBehavior.AllowGet);
         }
     }
 }

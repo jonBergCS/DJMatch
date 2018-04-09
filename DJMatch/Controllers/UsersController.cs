@@ -115,6 +115,11 @@ namespace DJMatch.Controllers
             return Ok(MapUser(user));
         }
 
+        public static bool Login(User user)
+        {
+            return true;
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
