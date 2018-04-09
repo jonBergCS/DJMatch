@@ -1,74 +1,69 @@
-﻿@model DJMatch.Models.Event
+﻿<script src="~/Scripts/Events/eventDetails.js"></script>
+<div ng-controller="eventDetailsController">
+    <h2>{{currEvent.Name}}</h2>
 
-@{
-    ViewBag.Title = "Details";
-}
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                Date
+            </dt>
 
-<h2>Details</h2>
+            <dd>
+                {{currEvent.Date}}
+            </dd>
 
-<div>
-    <h4>Event</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
+            <dt>
+                EventType
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
+            <dd>
+                {{currEvent.EventType}}
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EventType)
-        </dt>
+            <dt>
+                Name
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.EventType)
-        </dd>
+            <dd>
+                {{currEvent.Name}}
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+            <dt>
+                Description
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dd>
+                {{currEvent.Description}}
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dt>
+                DJ name
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dd>
+                {{currEvent.DJ.Name}}
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DJ.Name)
-        </dt>
+            <dt>
+                Playlist
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DJ.Name)
-        </dd>
+            <dd>
+                {{currEvent.Playlist.Name}}
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Playlist.Name)
-        </dt>
+            <dt>
+                User
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Playlist.Name)
-        </dd>
+            <dd>
+                {{currEvent.User.Name}}
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.User.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.Name)
-        </dd>
-
-    </dl>
+        </dl>
+    </div>
+    <p>
+        <span>edit</span>
+        <span>baclTolist</span>
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

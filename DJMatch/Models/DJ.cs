@@ -35,6 +35,13 @@ namespace DJMatch.Models
         public string FacebookPage { get; set; }
         public string IGProfile { get; set; }
         public byte[] Picture { get; set; }
+        public string EventTypes { get; set; }
+        public string Features { get; set; }
+        public Nullable<int> HasAttractions { get; set; }
+        public string SingleOrGroup { get; set; }
+        public Nullable<int> NumEventsInMonth { get; set; }
+        public string DatesNotAvailable { get; set; }
+        public Nullable<int> HoursPlayingEvent { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Playlist> Playlists { get; set; }

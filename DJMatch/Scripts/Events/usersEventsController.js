@@ -1,5 +1,5 @@
 ﻿djApp.controller("usersEventsController",
-    function djsController($scope, $q, $http, playlistFactory) {
+    function userEventsController($scope, $q, $http, playlistFactory) {
 
         if (($scope.eventsList == undefined) || ($scope.eventsList, length == 0)) {
             $scope.eventsList = [];
@@ -43,8 +43,10 @@
         }
 
         $scope.displayPlaylist = function(playlist) {
-
             playlistFactory.seChosenPlaylist(playlist);
+        }
 
+        $scope.moveToEvent = function (eventId) {
+            window.location = url + '/Events/Details?id=' + eventId;
         }
     });
