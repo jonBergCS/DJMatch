@@ -1,67 +1,35 @@
-﻿@model IEnumerable<DJMatch.Models.Event>
-
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>My Events</h2>
-
-<table class="table table-hover">
-    <thead>
+﻿
+<script src="~/Scripts/Events/usersEventsController.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+<div ng-controller="usersEventsController">
+    <h1>My Events</h1>
+    
+    <table class="table">
+        <thead>
         <tr>
-            <th scope="col">
-                Date
-            </th>
-            <th scope="col">
-                Type
-            </th>
-            <th scope="col">
-                Name
-            </th>
-            <th scope="col">
-                Description
-            </th>
-            <th scope="col">
-                DJ's Name
-            </th>
-            <th scope="col">
-                Playlist's Name
-            </th>
-            <th scope="col">
-                User's Name
-            </th>
-            <th scope="col"></th>
+            <th>Date</th>
+            <th>Type of event</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>DJ's Name</th>
+            <th>playlist's Name</th>
+            <th></th>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EventType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DJ.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Playlist.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Playlist Details", "Details", "Playlists", new { id = item.Playlist.ID }, null)
-                </td>
+        </thead>
+        <tbody>
+            <tr ng-repeat="currEvent in eventsList">
+                <td>{{ currEvent.Date }}</td>
+                <td>{{ currEvent.EventType }}</td>
+                <td>{{ currEvent.Name }}</td>
+                <td>{{ currEvent.Description }}</td>
+                <td>{{ currEvent.DJName }}</td>
+                <td>{{ currEvent.playlist.Name }}</td>
+                <td ng-click="displayPlaylist(currEvent.playlist)"> <a href="~/Playlists/Details">Playlist's Details</a></td>
             </tr>
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
+</body>

@@ -117,17 +117,29 @@ namespace DJMatch.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.UserAnswers.AddRange(userAnswers);
+            userAnswers.ForEach((ua =>
+            {
+                if (db.UserAnswers.Any(ans=> ans.QuestionID==ua.QuestionID &&
+                                             ans.AnswerID==ua.AnswerID &&
+                                             ans.UserID==ua.UserID))
+                {
+                    db.Entry(ua).State = EntityState.Modified;
+                }
+                else
+                {
+                    db.UserAnswers.Add(ua);
+                }
+            }));
 
             try
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException e)
             {
                 if (userAnswers.Any(usr=>UserAnswerExists(usr.UserID)))
                 {
-                    return Conflict();
+                    //return Conflict();
                 }
                 else
                 {
@@ -135,7 +147,7 @@ namespace DJMatch.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = 666 }, userAnswers.Select(MapUserAnswer));
+            return Ok();
         }
 
         // DELETE: api/UserAnswers/5

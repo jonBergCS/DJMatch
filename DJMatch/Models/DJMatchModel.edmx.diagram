@@ -12,7 +12,7 @@
         <EntityTypeShape EntityType="DJMatchModel.Review" Width="1.5" PointX="6" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DJMatchModel.Song" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DJMatchModel.SongsToPlaylist" Width="1.5" PointX="5.25" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DJMatchModel.UserAnswer" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DJMatchModel.UserAnswer" Width="1.5" PointX="7.75" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DJMatchModel.User" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
         <AssociationConnector Association="DJMatchModel.FK_Answers_Questions" ManuallyRouted="false" />
         <AssociationConnector Association="DJMatchModel.FK_UserAnswers_Answers" ManuallyRouted="false" />
