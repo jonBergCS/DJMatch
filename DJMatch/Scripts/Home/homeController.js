@@ -8,7 +8,7 @@
         $scope.btntext = "Please wait..!";
         $http({
             method: "POST",
-            url: '/Home/userlogin',
+            url: '/api/Users/login',
             data: $scope.user
 
         }).then(function (d) {
