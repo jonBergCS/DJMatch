@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using DJMatch.Models;
+using Newtonsoft.Json.Linq;
 
 namespace DJMatch.Controllers
 {
@@ -113,6 +114,13 @@ namespace DJMatch.Controllers
             db.SaveChanges();
 
             return Ok(MapUser(user));
+        }
+
+        [Route("api/Users/login")]
+        [HttpPost]
+        public int Login([FromBody] JObject cred)
+        {
+            return db.Users.First(usr => usr.Email == cred.Property("email").Value.ToString() || usr.Password == cred.Property("password").Value.ToString()).ID;
         }
 
         protected override void Dispose(bool disposing)

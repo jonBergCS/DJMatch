@@ -2,13 +2,21 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
+<div class="jumbotron" ng-controller="homeController">
     <h1>this is home page</h1>
     <h1>FinDJ</h1>
     <p class="lead">FinDJ is a free framework for finding a great DJ.</p>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
     
-</div>
+    <div>
+        <h2> log in please </h2>
+        <span>Email:    </span><input type="text" ng-model="user.email" />
+        <br /><br />
+        <span>Password: </span><input type="password" ng-model="user.password" />
+        <br /><br />
+        <input type="button" value="{{btntext}}" ng-click="login()" />
 
-<div class="row">
+    </div>
+    <script src="~/Scripts/Home/homeController.js"></script>
+
 </div>
