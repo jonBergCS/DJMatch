@@ -72,8 +72,22 @@ namespace DJMatch.Controllers
                 djs.Intersect(db.DJs.Where(dj => dj.Address.Contains(area))
                 .Select(map.SelectorExpression)).ToList();
 
-            // Eventype filtering
-            string evenType
+            //TODO: Eventype filtering
+
+            // Years of exp filtering
+            int requestedYears = user.UserAnswers.First(uans => uans.QuestionID == 6).AnswerID;
+
+            switch (requestedYears)
+            {
+                case 28:
+                    djs = djs.Intersect(db.DJs.Where(dj => dj.ExperienceYears >= 21).Select(map.SelectorExpression)).ToList();
+                    break;
+                case 27:
+                    djs = djs.Intersect(db.DJs.Where(dj => dj.ExperienceYears >= 11).Select(map.SelectorExpression)).ToList();
+                    break;
+                default:
+                    break;
+            }
 
             return Ok(djs);
         }
