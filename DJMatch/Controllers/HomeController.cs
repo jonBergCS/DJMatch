@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using DJMatch.Models;
+using Newtonsoft.Json.Linq;
 
 namespace DJMatch.Controllers
 {
@@ -28,23 +30,17 @@ namespace DJMatch.Controllers
             return View();
         }
 
-        public JsonResult userlogin(User us)
+        public JsonResult userlogin(JObject us)
 
         {
-            bool result = UsersController.Login(us);
-            String strResult = result.ToString();
+            User result = new UsersController().Login(us);
 
-            if (result)
+            if (result != null)
             {
-                Session["user"] = us.Email;
+                Session["user"] = result.Email;
             }
 
-            else  
-            {
-                strResult = "Email or Password is wrong";
-            }
-
-            return Json(strResult, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
