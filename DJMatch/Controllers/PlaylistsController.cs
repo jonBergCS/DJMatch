@@ -43,7 +43,7 @@ namespace DJMatch.Controllers
         }
 
         // GET: api/Playlists/5
-        [System.Web.Http.Route("api/Djs/{id}/full")]
+        [System.Web.Http.Route("api/Playlists/{id}/full")]
         [ResponseType(typeof(PlaylistDTO))]
         public IHttpActionResult GetFullPlaylist(int id)
         {
