@@ -1,10 +1,13 @@
-﻿djApp.controller("usersEventsController",
-    function userEventsController($scope, $q, $http, playlistFactory) {
+﻿djApp.controller("usersEventsController", ['$scope', '$q', '$http', 'generalFactory',
+    function userEventsController($scope, $q, $http) {
 
         if (($scope.eventsList == undefined) || ($scope.eventsList, length == 0)) {
             $scope.eventsList = [];
 
             var promises = [];
+
+            debugger;
+            var x = generalFactory.getCurrentUser();
 
             promises.push($http({
                 method: 'GET',
@@ -49,4 +52,4 @@
         $scope.moveToEvent = function (eventId) {
             window.location = url + '/Events/Details?id=' + eventId;
         }
-    });
+    }]);
