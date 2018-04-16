@@ -30,6 +30,13 @@
           <Property Name="FacebookPage" Type="nvarchar" MaxLength="256" />
           <Property Name="IGProfile" Type="nvarchar" MaxLength="256" />
           <Property Name="Picture" Type="image" />
+          <Property Name="EventTypes" Type="nvarchar" MaxLength="500" />
+          <Property Name="Features" Type="nvarchar" MaxLength="500" />
+          <Property Name="HasAttractions" Type="int" />
+          <Property Name="SingleOrGroup" Type="nvarchar" MaxLength="50" />
+          <Property Name="NumEventsInMonth" Type="int" />
+          <Property Name="DatesNotAvailable" Type="nvarchar" MaxLength="1000" />
+          <Property Name="HoursPlayingEvent" Type="int" />
         </EntityType>
         <EntityType Name="Events">
           <Key>
@@ -350,6 +357,13 @@
           <NavigationProperty Name="Playlists" Relationship="Self.FK_Playlists_DJs" FromRole="DJs" ToRole="Playlists" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_DJs" FromRole="DJs" ToRole="Reviews" />
           <NavigationProperty Name="Events" Relationship="DJMatchModel.FK_Events_DJs" FromRole="DJ" ToRole="Event" />
+          <Property Name="EventTypes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Features" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HasAttractions" Type="Int32" />
+          <Property Name="SingleOrGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NumEventsInMonth" Type="Int32" />
+          <Property Name="DatesNotAvailable" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="HoursPlayingEvent" Type="Int32" />
         </EntityType>
         <EntityType Name="Playlist">
           <Key>
@@ -692,6 +706,13 @@
           <EntitySetMapping Name="DJs">
             <EntityTypeMapping TypeName="DJMatchModel.DJ">
               <MappingFragment StoreEntitySet="DJs">
+                <ScalarProperty Name="HoursPlayingEvent" ColumnName="HoursPlayingEvent" />
+                <ScalarProperty Name="DatesNotAvailable" ColumnName="DatesNotAvailable" />
+                <ScalarProperty Name="NumEventsInMonth" ColumnName="NumEventsInMonth" />
+                <ScalarProperty Name="SingleOrGroup" ColumnName="SingleOrGroup" />
+                <ScalarProperty Name="HasAttractions" ColumnName="HasAttractions" />
+                <ScalarProperty Name="Features" ColumnName="Features" />
+                <ScalarProperty Name="EventTypes" ColumnName="EventTypes" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />

@@ -8,13 +8,12 @@
         $scope.btntext = "Please wait..!";
         $http({
             method: "POST",
-            url: '/Home/userlogin',
+            url: '/api/Users/login',
             data: $scope.user
 
         }).then(function (d) {
-                debugger;
                 $scope.btntext = 'Login';
-                if (d != null) {
+                if (d.data != null) {
                     window.location.href = '/Users/UserProfile';
                 } else {
                     alert("Email or Password is wrong");
@@ -28,28 +27,28 @@
 
     };
 
-    /*$scope.signUp = function() {
+    $scope.signUp = function() {
 
         $scope.btnSigntext = "Please wait..!";
-        $http({
+       $http({
             method: "POST",
-            url: '/Home/userlogin',
-            data: $scope.user
+            url: '/api/Users',
+            data: $scope.newUser
 
         }).then(function (d) {
-                $scope.btntext = 'Login';
-                if (d != null) {
+                $scope.btntext = 'Sign Up';
+                if (d.data != null) {
                     window.location.href = '/Users/UserProfile';
                 } else {
-                    alert("Email or Password is wrong");
+                    alert("The user has a problem");
                 }
 
-                $scope.user = null;
+                $scope.newUser = null;
             },
-            function () {
+            function() {
                 alert('failed');
             });
-    }*/
+    }
 
 
 })

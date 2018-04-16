@@ -324,7 +324,6 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DJs\DjPlaylistDirective.js" />
     <Content Include="Scripts\DJs\djs.js" />
-    <Content Include="Scripts\DJs\stam.html" />
     <Content Include="Scripts\Events\usersEventsController.js" />
     <Content Include="Scripts\Home\homeController.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

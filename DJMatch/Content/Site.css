@@ -108,3 +108,8 @@ textarea {
     width: 300px;
     margin: 0 auto;
 }
+
+.eventRow:hover {
+    background-color:lightgray;
+    cursor:pointer;
+}
