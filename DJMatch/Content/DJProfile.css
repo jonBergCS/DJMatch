@@ -39,6 +39,10 @@
     margin-top: 10px;
 }
 
+.dj-profile-details-container {
+    padding-left: 30px;
+}
+
 .dj-profile-reviews-container {
     margin-left: 25px;
 }
@@ -67,8 +71,4 @@
 
 .dj-profile-review-text {
     font-style: italic
-}
-
-.dj-profile-details-container {
-    padding-left: 30px;
 }

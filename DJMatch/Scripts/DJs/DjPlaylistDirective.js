@@ -1,9 +1,13 @@
-﻿djApp.directive("djPlaylistDirective", function() {
+﻿djApp
+    .controller("DjPlaylistController", ['$scope', function ($scope) {
+        
+    }])
+    .directive("djPlaylistDirective", function () {
     return {
         scope: {
             playlist: '=playlistId',
             editable: '='
         },
-        templateUrl: '~/Views/DJs/dj-playlist.html'
+        template: '<h1>yo dude! </h1>'
     };
 });
