@@ -42,6 +42,20 @@ namespace DJMatch.Controllers
             return Ok(MapPlaylist(playlist));
         }
 
+        // GET: api/Playlists/5
+        [System.Web.Http.Route("api/Djs/{id}/full")]
+        [ResponseType(typeof(PlaylistDTO))]
+        public IHttpActionResult GetFullPlaylist(int id)
+        {
+            Playlist playlist = db.Playlists.Find(id);
+            if (playlist == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(playlist);
+        }
+
         // PUT: api/Playlists/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutPlaylist(int id, Playlist playlist)

@@ -135,7 +135,7 @@ namespace DJMatch.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateException e)
+            catch (DbUpdateException)
             {
                 if (userAnswers.Any(usr=>UserAnswerExists(usr.UserID)))
                 {
