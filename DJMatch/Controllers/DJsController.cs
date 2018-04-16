@@ -26,10 +26,10 @@ namespace DJMatch.Controllers
 
         [System.Web.Http.Route("api/Djs/filterForUser/{id}")]
         [ResponseType(typeof(DJ))]
+        
         public IHttpActionResult GetDjsForUser(int id)
         {
-            List<DJDTO> djs = new List<DJDTO>();
-            DJMapper map = new DJMapper();
+            List<DJ> djs = new List<DJ>();
             
             const int COST_QUESTION_ID = 1;
             const int GENRE_QUESTION_ID = 2;
@@ -43,34 +43,46 @@ namespace DJMatch.Controllers
             {
                 // <=1000
                 case 5:
-                    djs.AddRange(db.DJs.Where(dj => dj.PriceMax <= 1000).Select(map.SelectorExpression));
+                    djs.AddRange(db.DJs.Where(dj => dj.PriceMin <= 1000));
                     break;
                 // 1000-5000
                 case 14:
-                    djs.AddRange(db.DJs.Where(dj => dj.PriceMax <= 5000).Select(map.SelectorExpression));
+                    djs.AddRange(db.DJs.Where(dj => dj.PriceMin <= 5000));
                     break;
                 // over 5000
                 default:
-                    djs.AddRange(db.DJs.Select(map.SelectorExpression));
+                    djs.AddRange(db.DJs);
                     break;
             }
 
             // Genre filtering
             List<string> usrGenres =
                 user.UserAnswers.Where(ans => ans.QuestionID == GENRE_QUESTION_ID)
-                .Select(ans => ans.Text).ToList();
+                .Select(ans => ans.Answer.Text).ToList();
 
-            djs = 
-                djs.Intersect(db.DJs.Where(dj => dj.Genres.Split(';')
-                .Any(gnr => usrGenres.Contains(gnr)))
-                .Select(map.SelectorExpression)).ToList();
+            foreach (DJ dj in db.DJs)
+            {
+                var currGenres = dj.Genres.Split(';');
+
+                if (currGenres.Any(gnr => usrGenres.Contains(gnr)))
+                {
+                    if (!djs.Contains(dj))
+                    {
+                        djs.Add(dj);
+                    }
+                }
+                else if (djs.Contains(dj))
+                {
+                    djs.Remove(dj);
+                }
+            }
 
             // Area filtering
-            string area = user.UserAnswers.First(uans => uans.QuestionID == 3).Text;
+            string area = user.UserAnswers.First(uans => uans.QuestionID == 3).Answer.Text;
 
             djs =
                 djs.Intersect(db.DJs.Where(dj => dj.Address.Contains(area))
-                .Select(map.SelectorExpression)).ToList();
+                ).ToList();
 
             //TODO: Eventype filtering
 
@@ -80,16 +92,21 @@ namespace DJMatch.Controllers
             switch (requestedYears)
             {
                 case 28:
-                    djs = djs.Intersect(db.DJs.Where(dj => dj.ExperienceYears >= 21).Select(map.SelectorExpression)).ToList();
+                    djs = djs.Intersect(db.DJs.Where(dj => dj.ExperienceYears >= 21)).ToList();
                     break;
                 case 27:
-                    djs = djs.Intersect(db.DJs.Where(dj => dj.ExperienceYears >= 11).Select(map.SelectorExpression)).ToList();
+                    djs = djs.Intersect(db.DJs.Where(dj => dj.ExperienceYears >= 11)).ToList();
                     break;
                 default:
                     break;
             }
 
-            return Ok(djs);
+            // Filter by available Dates
+            DateTime wantedDate = DateTime.Parse(user.UserAnswers.First(uans => uans.QuestionID == 5).Text);
+
+            djs = djs.Intersect(djs.Where(dj => !dj.Events.Any(e => e.Date.Equals(wantedDate)))).ToList();
+
+            return Ok(djs.Select(MapDJ));
         }
 
         [System.Web.Http.Route("api/Djs/{id}/full")]
@@ -123,6 +140,19 @@ namespace DJMatch.Controllers
         public IHttpActionResult GetDJPlaylists(int id)
         {
             var playlists = db.Playlists.Where(pl => pl.DJ_ID == id).Select(new PlaylistMapper().SelectorExpression);
+            if (playlists == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(playlists);
+        }
+
+        [System.Web.Http.Route("api/DJs/{id}/playlists/default")]
+        [ResponseType(typeof(List<ReviewDTO>))]
+        public IHttpActionResult GetDJDefaultPlaylists(int id)
+        {
+            var playlists = db.Playlists.Where(pl => pl.DJ_ID == id && !pl.UserID.HasValue).Select(new PlaylistMapper().SelectorExpression);
             if (playlists == null)
             {
                 return NotFound();

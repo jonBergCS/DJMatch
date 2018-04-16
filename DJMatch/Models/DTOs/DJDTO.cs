@@ -25,12 +25,20 @@ namespace DJMatch.Models
         public string WebSite { get; set; }
         public string FacebookPage { get; set; }
         public string IGProfile { get; set; }
+        public string EventTypes { get; set; }
+        public string Features { get; set; }
+        public Nullable<int> HasAttractions { get; set; }
+        public string SingleOrGroup { get; set; }
+        public Nullable<int> NumEventsInMonth { get; set; }
+        public string DatesNotAvailable { get; set; }
+        public Nullable<int> HoursPlayingEvent { get; set; }
     }
 
     public class DJMapper : MapperBase<DJ, DJDTO>
     {
         ////BCC/ BEGIN CUSTOM CODE SECTION 
         ////ECC/ END CUSTOM CODE SECTION 
+
         public override Expression<Func<DJ, DJDTO>> SelectorExpression
         {
             get
@@ -50,7 +58,14 @@ namespace DJMatch.Models
                     PhoneNum = p.PhoneNum,
                     WebSite = p.WebSite,
                     FacebookPage = p.FacebookPage,
-                    IGProfile = p.IGProfile
+                    IGProfile = p.IGProfile,
+                    EventTypes = p.EventTypes,
+                    Features = p.Features,
+                    HasAttractions = p.HasAttractions,
+                    SingleOrGroup = p.SingleOrGroup,
+                    NumEventsInMonth = p.NumEventsInMonth,
+                    DatesNotAvailable = p.DatesNotAvailable,
+                    HoursPlayingEvent = p.HoursPlayingEvent
                 }));
             }
         }
@@ -71,6 +86,13 @@ namespace DJMatch.Models
             model.WebSite = dto.WebSite;
             model.FacebookPage = dto.FacebookPage;
             model.IGProfile = dto.IGProfile;
+            model.EventTypes = dto.EventTypes;
+            model.Features = dto.Features;
+            model.HasAttractions = dto.HasAttractions;
+            model.SingleOrGroup = dto.SingleOrGroup;
+            model.NumEventsInMonth = dto.NumEventsInMonth;
+            model.DatesNotAvailable = dto.DatesNotAvailable;
+            model.HoursPlayingEvent = dto.HoursPlayingEvent;
 
         }
     }
