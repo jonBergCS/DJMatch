@@ -13,7 +13,7 @@ namespace DJMatch.Models
     {
 
         ////BCC/ BEGIN CUSTOM CODE SECTION 
-        public List<SongDTO> Songs { get; set; }
+        //public List<SongDTO> Songs { get; set; }
 
         ////ECC/ END CUSTOM CODE SECTION 
         public int ID { get; set; }

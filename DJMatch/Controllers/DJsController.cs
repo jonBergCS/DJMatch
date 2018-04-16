@@ -145,6 +145,11 @@ namespace DJMatch.Controllers
                 return NotFound();
             }
 
+            //foreach (PlaylistDTO pl in playlists)
+            //{
+            //    pl.Songs = db.Playlists.First(ply => ply.ID == pl.ID).SongsToPlaylists.Select(s => s.Song).Select(new SongMapper().SelectorExpression.Compile()).ToList();
+            //}
+
             return Ok(playlists);
         }
 
