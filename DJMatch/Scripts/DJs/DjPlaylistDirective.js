@@ -5,9 +5,9 @@
     .directive("djPlaylistDirective", function () {
     return {
         scope: {
-            playlist: '=playlistId',
-            editable: '='
+            playlist: "@",
+            editable: "="
         },
-        template: '<h1>yo dude! </h1>'
+        template: '<h1>yo dude! {{playlist}} </h1>'
     };
 });

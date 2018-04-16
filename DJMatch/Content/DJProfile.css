@@ -4,9 +4,11 @@
     padding: 0 5vw;
     padding: 45px 5vw;
     margin-top: -50px;
-    background-image: url("Images/pineapples.jpg");
+    background-image: url("Images/dj-cover.jpeg");
     background-repeat: repeat;
     text-decoration-color: #f9f9f9;
+    background-size: 100%;
+    background-position-y: center;
 }
 
 .dj-profile-img-container {

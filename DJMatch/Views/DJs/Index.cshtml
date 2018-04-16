@@ -70,9 +70,9 @@
                     </div>
                 </div>
                 <div class="col">
-                    <h2>{{currentDJ.Name}}'s Playlist</h2>
+                    <h1>{{currentDJ.Name}}'s Playlist</h1>
                     <div ng-repeat="eachPlaylist in currentDJ.DefaultPlaylists" class="dj-profile-reviews-container">
-                        <dj-playlist-directive playlistId={{eachPlaylist.ID}} contenteditable="false"></dj-playlist-directive>
+                        <dj-playlist-directive playlist="{{eachPlaylist}}" editable="false"></dj-playlist-directive>
                     </div>
                 </div>
             <a ng-click="backToList()">back to DJs list</a>
