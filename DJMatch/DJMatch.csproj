@@ -334,8 +334,8 @@
     <None Include="Properties\PublishProfiles\fadj - Web Deploy.pubxml" />
     <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\DJs\DjPlaylistDirective.js" />
     <Content Include="Scripts\DJs\djs.js" />
-    <Content Include="Scripts\Events\eventDetails.js" />
     <Content Include="Scripts\Events\usersEventsController.js" />
     <Content Include="Scripts\Home\homeController.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -362,6 +362,7 @@
     <Content Include="Views\UserAnswers\Details.cshtml" />
     <Content Include="Views\UserAnswers\Edit.cshtml" />
     <Content Include="Views\UserAnswers\Index.cshtml" />
+    <Content Include="Views\DJs\dj-playlist.html" />
     <None Include="Views\Users\UserProfile.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
