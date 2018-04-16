@@ -11,7 +11,10 @@ namespace DJMatch.Models
 {
     public class PlaylistDTO
     {
+
         ////BCC/ BEGIN CUSTOM CODE SECTION 
+        public List<SongDTO> Songs { get; set; }
+
         ////ECC/ END CUSTOM CODE SECTION 
         public int ID { get; set; }
         public int DJ_ID { get; set; }
@@ -27,15 +30,20 @@ namespace DJMatch.Models
         {
             get
             {
-                return ((Expression<Func<Playlist, PlaylistDTO>>)(p => new PlaylistDTO()
+                var result = (Expression<Func<Playlist, PlaylistDTO>>)(p => new PlaylistDTO()
                 {
                     ////BCC/ BEGIN CUSTOM CODE SECTION 
+                    Songs = p.SongsToPlaylists.Select(s => s.Song).Select(new SongMapper().SelectorExpression.Compile()).ToList(),
                     ////ECC/ END CUSTOM CODE SECTION 
                     ID = p.ID,
                     DJ_ID = p.DJ_ID,
                     UserID = p.UserID,
                     Name = p.Name
-                }));
+                });
+
+                
+
+                return (result);
             }
         }
 

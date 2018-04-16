@@ -42,6 +42,21 @@ namespace DJMatch.Controllers
             return Ok(MapPlaylist(playlist));
         }
 
+        [System.Web.Http.Route("api/Playlists/{id}/songs")]
+        [ResponseType(typeof(PlaylistDTO))]
+        public IHttpActionResult GetPlaylistSongs(int id)
+        {
+            Playlist playlist = db.Playlists.Find(id);
+            if (playlist == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(playlist.SongsToPlaylists
+                .Select(s=>s.Song)
+                .Select(new SongMapper().SelectorExpression.Compile()));
+        }
+
         // GET: api/Playlists/5
         [System.Web.Http.Route("api/Playlists/{id}/full")]
         [ResponseType(typeof(PlaylistDTO))]
