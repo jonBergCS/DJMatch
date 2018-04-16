@@ -8,7 +8,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/angular.min.js"></script>
-    <script src="~/Scripts/angular-material-calendar.js"></script>
+    <script src="~/Scripts/angular-route.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="~/Scripts/Home/app.js" type="text/javascript"></script>
     <script src="~/Scripts/Playlists/playlistService.js" type="text/javascript"></script>
@@ -29,6 +29,22 @@
             <a onclick="window.location.href = '/Events/Index'">My Events</a>
             <a onclick="window.location.href = '/Home/About'">About Us</a>
             <a onclick="window.location.href = '/Home/Contact'">Contact</a>
+
+
+
+            <p><a href="/Users/UserProfile">PROFILE</a></p>
+            
+            <script>
+               /* djApp.config(['$routeProvider', function ($routeProvider) {
+                    $routeProvider.when("/Users/UserProfile",
+                    {
+                        templateUrl: "/Users/UserProfile.cshtml"
+                    });
+                }]);*/
+                
+            </script>
+
+
         </div>
 
     <div class="main" id="renderbody">
