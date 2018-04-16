@@ -1,5 +1,5 @@
 ﻿djApp.controller("usersEventsController", ['$scope', '$q', '$http', 'generalFactory',
-    function userEventsController($scope, $q, $http) {
+    function userEventsController($scope, $q, $http, generalFactory) {
 
         if (($scope.eventsList == undefined) || ($scope.eventsList, length == 0)) {
             $scope.eventsList = [];
