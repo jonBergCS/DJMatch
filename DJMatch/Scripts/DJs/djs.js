@@ -1,4 +1,4 @@
-﻿djApp.controller("djsController", function djsController($scope, $q, $http) {
+﻿djApp.controller("djsController", function djsController($rootScope, $scope, $q, $http) {
 
     if (($scope.djsList == undefined) || ($scope.djsList.size() == 0)) {
         var promises = [];
