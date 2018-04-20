@@ -112,7 +112,7 @@ namespace DJMatch.Controllers
                 // Add the recommended DJ to the list if in any way it's not in.
                 DJ recommended = brains.GetRecommendedDJ(user.ID);
 
-                if (!djs.Contains(recommended))
+                if (recommended != null && !djs.Contains(recommended))
                 {
                     djs.Add(recommended);
                 }
@@ -123,7 +123,7 @@ namespace DJMatch.Controllers
                 djs = djs.Intersect(djs.Where(dj => !dj.Events.Any(e => e.Date.Equals(wantedDate)))).ToList();
 
                 // Check if the list contains the recommended DJ after the calendar filtering.
-                if (djs.Contains(recommended))
+                if (recommended != null && djs.Contains(recommended))
                 {
                     result.Add("recommendedDJId", recommended.ID);
                 }

@@ -75,7 +75,14 @@ namespace DJMatch
 
         public DJ GetRecommendedDJ(int userID)
         {
-            return db.DJs.Find(this.dtree.Decide(this.UserToVector(userID)));
+            try
+            {
+                return db.DJs.Find(this.dtree.Decide(this.UserToVector(userID)));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private double[] UserToVector(int userID)
