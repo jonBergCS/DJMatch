@@ -1,5 +1,6 @@
 ﻿djApp.controller("homeController", function ($scope, $http, generalFactory) {
     $scope.user = {};
+    $scope.newUser = {};
 
     $scope.login = function () {
         $http({
