@@ -26,7 +26,6 @@ namespace DJMatch.Controllers
 
         [System.Web.Http.Route("api/Djs/filterForUser/{id}")]
         [ResponseType(typeof(DJ))]
-        
         public IHttpActionResult GetDjsForUser(int id)
         {
             List<DJ> djs = new List<DJ>();
