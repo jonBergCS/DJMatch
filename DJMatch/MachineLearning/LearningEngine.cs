@@ -22,7 +22,7 @@ namespace DJMatch
         public LearningEngine()
         {
             // Do asynchrously
-            this.Learn();
+            //this.Learn();
         }
 
         private void Learn()
