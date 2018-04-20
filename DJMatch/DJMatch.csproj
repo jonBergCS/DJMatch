@@ -222,6 +222,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MachineLearning\LearningEngine.cs" />
     <Compile Include="Models\Answer.cs">
       <DependentUpon>DJMatchModel.tt</DependentUpon>
     </Compile>
