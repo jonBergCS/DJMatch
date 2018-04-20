@@ -1,4 +1,4 @@
-﻿djApp.controller("userProfileController", function userProfileController($scope, $http, generalFactory, $rootScope) {
+﻿djApp.controller("userProfileController", function userProfileController($rootScope, $scope, $http) {
     $http({
         method: 'GET',
         url: url + '/api/Questions'
