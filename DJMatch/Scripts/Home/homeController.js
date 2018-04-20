@@ -1,4 +1,4 @@
-﻿djApp.controller("homeController", function ($scope, $http, generalFactory) {
+﻿djApp.controller("homeController", function ($scope, $http, generalFactory, $rootScope) {
 
     $scope.login = function() {
         $http({

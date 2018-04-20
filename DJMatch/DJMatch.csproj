@@ -364,6 +364,7 @@
     <Content Include="Views\UserAnswers\Edit.cshtml" />
     <Content Include="Views\UserAnswers\Index.cshtml" />
     <Content Include="Views\DJs\dj-playlist.html" />
+    <Content Include="Views\Home\HomePage.cshtml" />
     <None Include="Views\Users\UserProfile.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

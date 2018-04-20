@@ -20,33 +20,16 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-        <div class="sidenav">
-            <a onclick="window.location.href = '/Home/Index'">
-                <img class="logo" src="~/Content/Images/FinDJ_logo2.png" />
-            </a>
-            <a onclick="window.location.href='/Users/UserProfile'">My profile</a>
-            <a onclick="window.location.href = '/DJs/Index'">DJs</a>
-            <a onclick="window.location.href = '/Events/Index'">My Events</a>
-            <a onclick="window.location.href = '/Home/About'">About Us</a>
-            <a onclick="window.location.href = '/Home/Contact'">Contact</a>
-
-
-
-            <p><a href="/Events/Index">PROFILE</a></p>
-            
-            <script>
-                djApp.config(['$routeProvider', function ($routeProvider) {
-                    $routeProvider.when("/Events/Index",
-                    {
-                        
-                        templateUrl: "/Events/Index.cshtml"
-                    });
-                }]);
-                
-            </script>
-
-
-        </div>
+    <div class="sidenav">
+        <a href = "/">
+            <img class="logo" src="~/Content/Images/FinDJ_logo2.png" />
+        </a>
+        <a href="/Users/UserProfile">My profile</a>
+        <a href = "/DJs/Index">DJs</a>
+        <a href = "/Events/Index">My Events</a>
+        <a href = "/Home/About">About Us</a>
+        <a href = "/Home/Contact">Contact</a>
+    </div>
 
     <div class="main" id="renderbody">
         @RenderBody()

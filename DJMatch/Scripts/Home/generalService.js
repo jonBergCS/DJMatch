@@ -1,15 +1,12 @@
-﻿djApp.factory("generalFactory", function () {
+﻿djApp.service("generalFactory", function ($rootScope) {
 
+    this.currentUser = {};
 
-    service = {
-        currentUser: {},
-
-        getCurrentUser: function () {
-            return service.currentUser;
-        },
-        setCurrentUser: function (user) {
-            service.currentUser = user;
-        }
+    this.getCurrentUser = function () {
+        return service.currentUser;
     };
-    return service;
+
+    this.setCurrentUser = function (user) {
+        service.currentUser = user;
+    };
 });
