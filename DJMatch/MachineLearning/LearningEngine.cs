@@ -22,7 +22,7 @@ namespace DJMatch
         public LearningEngine()
         {
             // Do asynchrously
-            //this.Learn();
+            this.Learn();
         }
 
         private void Learn()
@@ -37,17 +37,18 @@ namespace DJMatch
 
             //this.dtree = new DecisionTree(dvar, 100);
 
+            
             int[][] inputs =
                 (from user in db.Users
                  where user.Events.Count > 0
                  select new int[] {
-                     user.UserAnswers.First(ans => ans.QuestionID == 1).AnswerID,
-                     user.UserAnswers.First(ans => ans.QuestionID == 4).AnswerID,
+                     user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 1).AnswerID,
+                     user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 4).AnswerID,
 #pragma warning disable CS0618 // Type or member is obsolete
                      code.Translate(string.Join("; ", user.UserAnswers.Where(ans => ans.QuestionID == 2)))[0],
 #pragma warning restore CS0618 // Type or member is obsolete
-                     user.UserAnswers.First(ans => ans.QuestionID == 3).AnswerID,
-                     user.UserAnswers.First(ans => ans.QuestionID == 6).AnswerID,
+                     user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 3).AnswerID,
+                     user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 6).AnswerID,
                      user.ID
                  }).ToArray();
 

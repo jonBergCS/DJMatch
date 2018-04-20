@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Mvc;
 using DJMatch.Models;
+using Newtonsoft.Json.Linq;
 
 namespace DJMatch.Controllers
 {
@@ -27,17 +28,19 @@ namespace DJMatch.Controllers
 
         [System.Web.Http.Route("api/Djs/filterForUser/{id}")]
         [ResponseType(typeof(DJ))]
-        public IHttpActionResult GetDjsForUser(int id, bool isSmartSearch = true)
+        public IHttpActionResult GetDjsForUser(int id = -1)
         {
             List<DJ> djs = new List<DJ>();
-            User user = db.Users.FirstOrDefault(usr => usr.ID.Equals(id));
+            JObject result = new JObject();
 
-            if (isSmartSearch)
+            if (id == -1)
             {
-                djs = brains.GetDJsForClient(id);  
+                djs = db.DJs.ToList();
             }
             else
             {
+                User user = db.Users.FirstOrDefault(usr => usr.ID.Equals(id));
+
                 const int COST_QUESTION_ID = 1;
                 const int GENRE_QUESTION_ID = 2;
 
@@ -105,14 +108,34 @@ namespace DJMatch.Controllers
                     default:
                         break;
                 }
+
+                // Add the recommended DJ to the list if in any way it's not in.
+                DJ recommended = brains.GetRecommendedDJ(user.ID);
+
+                if (!djs.Contains(recommended))
+                {
+                    djs.Add(recommended);
+                }
+
+                // Filter by available Dates
+                DateTime wantedDate = DateTime.Parse(user.UserAnswers.First(uans => uans.QuestionID == 5).Text);
+
+                djs = djs.Intersect(djs.Where(dj => !dj.Events.Any(e => e.Date.Equals(wantedDate)))).ToList();
+
+                // Check if the list contains the recommended DJ after the calendar filtering.
+                if (djs.Contains(recommended))
+                {
+                    result.Add("recommendedDJId", recommended.ID);
+                }
+                else
+                {
+                    result.Add("recommendedDJId", "");
+                } 
             }
 
-            // Filter by available Dates
-            DateTime wantedDate = DateTime.Parse(user.UserAnswers.First(uans => uans.QuestionID == 5).Text);
+            result.Add("result", JArray.FromObject(djs.Select(MapDJ)));
 
-            djs = djs.Intersect(djs.Where(dj => !dj.Events.Any(e => e.Date.Equals(wantedDate)))).ToList();
-
-            return Ok(djs.Select(MapDJ));
+            return Ok(result);
         }
 
         [System.Web.Http.Route("api/Djs/{id}/full")]
