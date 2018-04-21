@@ -6,6 +6,6 @@
     $scope.currPlaylist = { Name: "Wedding" };
 
     $scope.createEvent = function () {
-        window.location.href = '/Events/Details';
+        window.location.href = '/Events/Details?id=1';
     };
 });
