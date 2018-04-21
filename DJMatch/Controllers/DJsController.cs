@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Mvc;
 using DJMatch.Models;
+using Newtonsoft.Json.Linq;
 
 namespace DJMatch.Controllers
 {
@@ -18,6 +19,7 @@ namespace DJMatch.Controllers
         private DJMatchEntities db = new DJMatchEntities();
         private DJMapper mapper = new DJMapper();
         private Func<DJ, DJDTO> MapDJ;
+        private LearningEngine brains = new LearningEngine();
 
         public DJsController()
         {
@@ -26,87 +28,114 @@ namespace DJMatch.Controllers
 
         [System.Web.Http.Route("api/Djs/filterForUser/{id}")]
         [ResponseType(typeof(DJ))]
-        
-        public IHttpActionResult GetDjsForUser(int id)
+        public IHttpActionResult GetDjsForUser(int id = -1)
         {
             List<DJ> djs = new List<DJ>();
-            
-            const int COST_QUESTION_ID = 1;
-            const int GENRE_QUESTION_ID = 2;
+            JObject result = new JObject();
 
-            User user = db.Users.FirstOrDefault(usr => usr.ID.Equals(id));
-
-            // Budget filtering
-            int costAnswerId = user.UserAnswers.First(ans => ans.QuestionID == COST_QUESTION_ID).AnswerID;
-
-            switch (costAnswerId)
+            if (id == -1)
             {
-                // <=1000
-                case 5:
-                    djs.AddRange(db.DJs.Where(dj => dj.PriceMin <= 1000));
-                    break;
-                // 1000-5000
-                case 14:
-                    djs.AddRange(db.DJs.Where(dj => dj.PriceMin <= 5000));
-                    break;
-                // over 5000
-                default:
-                    djs.AddRange(db.DJs);
-                    break;
+                djs = db.DJs.ToList();
             }
-
-            // Genre filtering
-            List<string> usrGenres =
-                user.UserAnswers.Where(ans => ans.QuestionID == GENRE_QUESTION_ID)
-                .Select(ans => ans.Answer.Text).ToList();
-
-            foreach (DJ dj in db.DJs)
+            else
             {
-                var currGenres = dj.Genres.Split(';');
+                User user = db.Users.FirstOrDefault(usr => usr.ID.Equals(id));
 
-                if (currGenres.Any(gnr => usrGenres.Contains(gnr)))
+                const int COST_QUESTION_ID = 1;
+                const int GENRE_QUESTION_ID = 2;
+
+                // Budget filtering
+                int costAnswerId = user.UserAnswers.First(ans => ans.QuestionID == COST_QUESTION_ID).AnswerID;
+
+                switch (costAnswerId)
                 {
-                    if (!djs.Contains(dj))
+                    // <=1000
+                    case 5:
+                        djs.AddRange(db.DJs.Where(dj => dj.PriceMin <= 1000));
+                        break;
+                    // 1000-5000
+                    case 14:
+                        djs.AddRange(db.DJs.Where(dj => dj.PriceMin <= 5000));
+                        break;
+                    // over 5000
+                    default:
+                        djs.AddRange(db.DJs);
+                        break;
+                }
+
+                // Genre filtering
+                List<string> usrGenres =
+                    user.UserAnswers.Where(ans => ans.QuestionID == GENRE_QUESTION_ID)
+                    .Select(ans => ans.Answer.Text).ToList();
+
+                foreach (DJ dj in db.DJs)
+                {
+                    var currGenres = dj.Genres.Split(';');
+
+                    if (currGenres.Any(gnr => usrGenres.Contains(gnr)))
                     {
-                        djs.Add(dj);
+                        if (!djs.Contains(dj))
+                        {
+                            djs.Add(dj);
+                        }
+                    }
+                    else if (djs.Contains(dj))
+                    {
+                        djs.Remove(dj);
                     }
                 }
-                else if (djs.Contains(dj))
+
+                // Area filtering
+                string area = user.UserAnswers.First(uans => uans.QuestionID == 3).Answer.Text;
+
+                djs =
+                    djs.Intersect(db.DJs.Where(dj => dj.Address.Contains(area))
+                    ).ToList();
+
+                //TODO: Eventype filtering
+
+                // Years of exp filtering
+                int requestedYears = user.UserAnswers.First(uans => uans.QuestionID == 6).AnswerID;
+
+                switch (requestedYears)
                 {
-                    djs.Remove(dj);
+                    case 28:
+                        djs = djs.Intersect(db.DJs.Where(dj => dj.ExperienceYears >= 21)).ToList();
+                        break;
+                    case 27:
+                        djs = djs.Intersect(db.DJs.Where(dj => dj.ExperienceYears >= 11)).ToList();
+                        break;
+                    default:
+                        break;
                 }
+
+                // Add the recommended DJ to the list if in any way it's not in.
+                DJ recommended = brains.GetRecommendedDJ(user.ID);
+
+                if (recommended != null && !djs.Contains(recommended))
+                {
+                    djs.Add(recommended);
+                }
+
+                // Filter by available Dates
+                DateTime wantedDate = DateTime.Parse(user.UserAnswers.First(uans => uans.QuestionID == 5).Text);
+
+                djs = djs.Intersect(djs.Where(dj => !dj.Events.Any(e => e.Date.Equals(wantedDate)))).ToList();
+
+                // Check if the list contains the recommended DJ after the calendar filtering.
+                if (recommended != null && djs.Contains(recommended))
+                {
+                    result.Add("recommendedDJId", recommended.ID);
+                }
+                else
+                {
+                    result.Add("recommendedDJId", "");
+                } 
             }
 
-            // Area filtering
-            string area = user.UserAnswers.First(uans => uans.QuestionID == 3).Answer.Text;
+            result.Add("result", JArray.FromObject(djs.Select(MapDJ)));
 
-            djs =
-                djs.Intersect(db.DJs.Where(dj => dj.Address.Contains(area))
-                ).ToList();
-
-            //TODO: Eventype filtering
-
-            // Years of exp filtering
-            int requestedYears = user.UserAnswers.First(uans => uans.QuestionID == 6).AnswerID;
-
-            switch (requestedYears)
-            {
-                case 28:
-                    djs = djs.Intersect(db.DJs.Where(dj => dj.ExperienceYears >= 21)).ToList();
-                    break;
-                case 27:
-                    djs = djs.Intersect(db.DJs.Where(dj => dj.ExperienceYears >= 11)).ToList();
-                    break;
-                default:
-                    break;
-            }
-
-            // Filter by available Dates
-            DateTime wantedDate = DateTime.Parse(user.UserAnswers.First(uans => uans.QuestionID == 5).Text);
-
-            djs = djs.Intersect(djs.Where(dj => !dj.Events.Any(e => e.Date.Equals(wantedDate)))).ToList();
-
-            return Ok(djs.Select(MapDJ));
+            return Ok(result);
         }
 
         [System.Web.Http.Route("api/Djs/{id}/full")]

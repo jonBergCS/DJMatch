@@ -2,74 +2,111 @@
     ViewBag.Title = "Home Page";
 }
 
+
+
+
 <div class="jumbotron" ng-controller="homeController">
-    <h1>this is home page</h1>
-    <h1>FinDJ</h1>
-    <p class="lead">FinDJ is a free framework for finding a great DJ.</p>
-
-    <table>
-        <tr>
-            <td class="col-lg-8">
-                <h2> Sign In </h2>
-                <form name="form" ng-submit="login()" role="form">
-                    <div class="form-group">
-                        <label for="username">Email</label>
-                        <i class="fa fa-key"></i>
-                        <input type="text" name="username" id="username" class="form-control" ng-model="user.email" required />
-                        <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Email is required</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <i class="fa fa-lock"></i>
-                        <input type="password" name="password" id="password" class="form-control" ng-model="user.password" required />
-                        <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-danger">Login</button>
-                    </div>
-                </form>
-            </td>
-
-            <td class="col-lg-4">
-                <h2> not registered? Sign up! </h2>
-
-
-                <form name="form" ng-submit="signUp()" role="form">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <i class="fa fa-key"></i>
-                        <input type="text" name="name" id="name" class="form-control" ng-model="newUser.name" required />
-                        <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">Name is required</span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <i class="fa fa-key"></i>
-                        <input type="text" name="email" id="email" class="form-control" ng-model="newUser.email" required />
-                        <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <i class="fa fa-lock"></i>
-                        <input type="password" name="password" id="password" class="form-control" ng-model="newUser.password" required />
-                        <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone number</label>
-                        <i class="fa fa-lock"></i>
-                        <input type="number" name="phone" id="phone" class="form-control" ng-model="newUser.phoneNum" required />
-                        <span ng-show="form.phone.$dirty && form.phone.$error.required" class="help-block">Phone number is required</span>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-danger">Sign Up</button>
-                    </div>
-                </form>
-
-            </td>
-        </tr>
-    </table>
     
+    ﻿<div id="ngView" ng-view></div>
     
+    <div ng-if="user != null">
+        <h1>FinDJ</h1>
+        <p class="lead">FinDJ is a free framework for finding a great DJ.</p>
+
+        <table>
+            <tr>
+                <td class="col-lg-8">
+                    <h2> Sign In </h2>
+                    <form name="form" ng-submit="login()" role="form">
+                        <div class="form-group">
+                            <label for="username">Email</label>
+                            <i class="fa fa-key"></i>
+                            <input type="text" name="username" id="username" class="form-control" ng-model="user.email" required />
+                            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Email is required</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <i class="fa fa-lock"></i>
+                            <input type="password" name="password" id="password" class="form-control" ng-model="user.password" required />
+                            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-danger">Login</button>
+                        </div>
+                    </form>
+                </td>
+
+                <td class="col-lg-4">
+                    <h2> not registered? Sign up! </h2>
+
+
+                    <form name="form" ng-submit="signUp()" role="form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <i class="fa fa-key"></i>
+                            <input type="text" name="name" id="name" class="form-control" ng-model="newUser.name" required />
+                            <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">Name is required</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <i class="fa fa-key"></i>
+                            <input type="text" name="email" id="email" class="form-control" ng-model="newUser.email" required />
+                            <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <i class="fa fa-lock"></i>
+                            <input type="password" name="password" id="password" class="form-control" ng-model="newUser.password" required />
+                            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone number</label>
+                            <i class="fa fa-lock"></i>
+                            <input type="number" name="phone" id="phone" class="form-control" ng-model="newUser.phoneNum" required />
+                            <span ng-show="form.phone.$dirty && form.phone.$error.required" class="help-block">Phone number is required</span>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-danger">Sign Up</button>
+                        </div>
+                    </form>
+
+                </td>
+            </tr>
+        </table>
+    
+    </div>
     <script src="~/Scripts/Home/homeController.js"></script>
+
+    <script>
+    djApp.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider
+            .when('/Home/Index', {
+                templateUrl: "/Home/Index.cshtml"
+            })
+            .when("/Events/Index", {
+                templateUrl: "/Events/Index.cshtml"
+            })
+            .when("/Events/Create", {
+                templateUrl: "/Events/Create.cshtml"
+            })
+            .when("/Users/UserProfile", {
+                templateUrl: "/Users/UserProfile.cshtml"
+            })
+            .when("/DJs/Index", {
+                templateUrl: "/DJs/Index.cshtml"
+            })
+            .when("/Home/About", {
+                templateUrl: "/Home/About.cshtml"
+            })
+            .when("/Events/Details", {
+                templateUrl: "/Events/Details.cshtml"
+            })
+            .when("/Home/Contact", {
+                templateUrl: "/Home/Contact.cshtml"
+            }); 
+    }]);
+
+    </script>
 
 </div>

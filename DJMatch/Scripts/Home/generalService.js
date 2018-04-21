@@ -1,14 +1,10 @@
-﻿djApp.factory("generalFactory", function () {
-
-
+﻿djApp.factory("generalFactory", function ($rootScope) {
     service = {
-        currentUser: {},
-
         getCurrentUser: function () {
-            return service.currentUser;
+            return $rootScope.currentUser;
         },
         setCurrentUser: function (user) {
-            service.currentUser = user;
+            $rootScope.currentUser = user;
         }
     };
     return service;
