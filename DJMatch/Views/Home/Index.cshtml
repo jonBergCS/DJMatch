@@ -7,7 +7,7 @@
 
 <div class="jumbotron" ng-controller="homeController">
     
-    ﻿<div id="ngView" ng-view ng-if="user == null"></div>
+    ﻿<div id="ngView" ng-view></div>
     
     <div ng-if="user != null">
         <h1>FinDJ</h1>
@@ -82,7 +82,7 @@
     djApp.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/Home/Index', {
-                templateUrl: "/Home/Index"
+                templateUrl: "/Home/Index.cshtml"
             })
             .when("/Events/Index", {
                 templateUrl: "/Events/Index.cshtml"
