@@ -71,7 +71,7 @@
                 </div>
                 <div class="col">
                     <h1>{{currentDJ.Name}}'s Playlist</h1>
-                    <div ng-repeat="eachPlaylist in currentDJ.DefaultPlaylists" class="dj-profile-reviews-container">
+                    <div ng-controller="djPlaylistController" ng-repeat="eachPlaylist in currentDJ.DefaultPlaylists" class="dj-profile-reviews-container">
                         <dj-playlist-directive playlist="{{eachPlaylist}}" editable="false"></dj-playlist-directive>
                     </div>
                 </div>

@@ -1,11 +1,11 @@
 ﻿djApp
-    .controller("DjPlaylistController", ["$scope", function ($scope, $http) {
-            $http({
-                method: 'GET',
-                url: url + '/api/Playlists/' + $scope.playlist.ID + '/full',
-            }).then(function successCallback(response) {
-                $scope.playlist.songs = response;
-            });
+    .controller("djPlaylistController", ["$scope", function ($scope, $http) {
+            //$http({
+            //    method: 'GET',
+            //    url: url + '/api/Playlists/' + $scope.$parent.eachPlaylist.ID + '/full',
+            //}).then(function successCallback(response) {
+            //    $scope.songs = response;
+            //});
     }])
     .directive("djPlaylistDirective", function () {
     return {
