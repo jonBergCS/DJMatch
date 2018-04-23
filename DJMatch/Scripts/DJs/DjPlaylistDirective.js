@@ -15,7 +15,7 @@
         },
         link: link,
         template: "<h3>{{playlist.Name}}</h3>"
-        + "<table class='table' ng-if='playlist.songs.length > 0' >"
+        + "<table class='table dj-playlist-table' ng-if='playlist.songs.length > 0' >"
         + "<thead>"
         + "<tr>"
         + "<th>Song name</th>"
