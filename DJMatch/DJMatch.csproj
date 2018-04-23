@@ -338,6 +338,7 @@
     <Content Include="Scripts\DJs\DjPlaylistDirective.js" />
     <Content Include="Scripts\DJs\djs.js" />
     <Content Include="Scripts\Events\createEventController.js" />
+    <Content Include="Scripts\Events\eventDetailsController.js" />
     <Content Include="Scripts\Events\usersEventsController.js" />
     <Content Include="Scripts\Home\generalService.js" />
     <Content Include="Scripts\Home\homeController.js" />
