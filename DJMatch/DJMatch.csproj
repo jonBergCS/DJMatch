@@ -337,6 +337,8 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DJs\DjPlaylistDirective.js" />
     <Content Include="Scripts\DJs\djs.js" />
+    <Content Include="Scripts\Events\createEventController.js" />
+    <Content Include="Scripts\Events\eventDetailsController.js" />
     <Content Include="Scripts\Events\usersEventsController.js" />
     <Content Include="Scripts\Home\generalService.js" />
     <Content Include="Scripts\Home\homeController.js" />
@@ -354,6 +356,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Home\app.js" />
     <Content Include="Scripts\UserProfile\userProfile.js" />
+    <Content Include="Views\DJs\Playlist.html" />
     <Content Include="Views\Questions\Create.cshtml" />
     <Content Include="Views\Questions\Delete.cshtml" />
     <Content Include="Views\Questions\Details.cshtml" />

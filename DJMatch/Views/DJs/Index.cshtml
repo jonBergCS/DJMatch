@@ -58,6 +58,7 @@
             <div class="row no-gutters dj-profile-details-container">
                 <div class="col">
                     <h1>Reviews</h1>
+                    <h4 ng-if="currentDJ.Reviews.length == 0">No reviews on {{currentDJ.Name}}</h4>
                     <div ng-repeat="eachReview in currentDJ.Reviews" class="dj-profile-reviews-container">
                         <div class="dj-profile-review">
                             <div class="dj-profile-review-header row">
@@ -69,10 +70,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <h1>{{currentDJ.Name}}'s Playlist</h1>
+                <div class="col" ng-if="currentDJ.DefaultPlaylists.length > 0">
+                    <h1>{{currentDJ.Name}}'s Playlists</h1>
                     <div ng-repeat="eachPlaylist in currentDJ.DefaultPlaylists" class="dj-profile-reviews-container">
-                        <dj-playlist-directive playlist="{{eachPlaylist}}" editable="false"></dj-playlist-directive>
+                        <dj-playlist-directive playlist="eachPlaylist" editable=false></dj-playlist-directive>
+                        <div class="questionButtons">
+                            <button class="btn btn-success" ng-click="createEventPage(eachPlaylist)">Create an event</button>
+                        </div>
                     </div>
                 </div>
             <a ng-click="backToList()">back to DJs list</a>

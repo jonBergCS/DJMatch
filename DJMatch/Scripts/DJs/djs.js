@@ -1,4 +1,4 @@
-﻿djApp.controller("djsController", function djsController($rootScope, $scope, $q, $http) {
+﻿djApp.controller("djsController", function djsController($rootScope, $scope, $q, $http, generalFactory) {
 
     if (($scope.djsList == undefined) || ($scope.djsList.size() == 0)) {
         var promises = [];
@@ -70,5 +70,9 @@
     $scope.backToList = function ()
     {
         $scope.currentDJ = undefined;
+    };
+
+    $scope.createEventPage = function (currPlaylist) {
+        window.location.href = '/Events/Create?dj=' + currPlaylist.DJ_ID + '&playlist=' + currPlaylist.ID;
     };
 });

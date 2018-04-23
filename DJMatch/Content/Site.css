@@ -113,3 +113,8 @@ textarea {
     background-color:lightgray;
     cursor:pointer;
 }
+
+.addSong {
+    cursor: pointer;
+    margin:20px;
+}
