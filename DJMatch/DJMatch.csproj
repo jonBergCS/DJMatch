@@ -365,6 +365,7 @@
     </Content>
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Content\Images\Thumbs.db" />
+    <None Include="Properties\PublishProfiles\DJMatch20180423084905 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\fadj - Web Deploy.pubxml" />
     <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -388,7 +389,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Home\app.js" />
-    <Content Include="Scripts\UserProfile\userProfile.js" />
+    <Content Include="Scripts\UserProfile\userProfile.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\Questions\Create.cshtml" />
     <Content Include="Views\Questions\Delete.cshtml" />
     <Content Include="Views\Questions\Details.cshtml" />
