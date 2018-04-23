@@ -298,6 +298,38 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\DJProfile.css" />
+    <Content Include="Content\Icons\facebook.png" />
+    <Content Include="Content\Icons\instagram.png" />
+    <Content Include="Content\Icons\laptop.png" />
+    <Content Include="Content\Icons\location.png" />
+    <Content Include="Content\Icons\money.png" />
+    <Content Include="Content\Icons\star.png" />
+    <Content Include="Content\Images\About.png" />
+    <Content Include="Content\Images\astrix.jpeg" />
+    <Content Include="Content\Images\back.jpg" />
+    <Content Include="Content\Images\background.jpg" />
+    <Content Include="Content\Images\bar.jpg" />
+    <Content Include="Content\Images\bar2.jpg" />
+    <Content Include="Content\Images\burgul.jpeg" />
+    <Content Include="Content\Images\contact.png" />
+    <Content Include="Content\Images\dj-cover.jpeg" />
+    <Content Include="Content\Images\einav.jpg" />
+    <Content Include="Content\Images\einav2.jpg" />
+    <Content Include="Content\Images\FinDJ_logo.png" />
+    <Content Include="Content\Images\FinDJ_logo2.png" />
+    <Content Include="Content\Images\guygerber.jpeg" />
+    <Content Include="Content\Images\icon.png" />
+    <Content Include="Content\Images\jon.jpg" />
+    <Content Include="Content\Images\jon2.jpg" />
+    <Content Include="Content\Images\michal.jpg" />
+    <Content Include="Content\Images\michal232323.jpg" />
+    <Content Include="Content\Images\pineapples.jpg" />
+    <Content Include="Content\Images\shir.jpg" />
+    <Content Include="Content\Images\shir2.jpg" />
+    <Content Include="Content\Images\shlomi.jpeg" />
+    <Content Include="Content\Images\skazi.jpeg" />
+    <Content Include="Content\Images\Skazi.jpg" />
+    <Content Include="Content\Images\yahel.jpeg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -332,6 +364,7 @@
       <DependentUpon>DJMatchModel.edmx</DependentUpon>
     </Content>
     <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Content\Images\Thumbs.db" />
     <None Include="Properties\PublishProfiles\fadj - Web Deploy.pubxml" />
     <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

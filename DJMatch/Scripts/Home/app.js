@@ -1,2 +1,2 @@
 ﻿var djApp = angular.module("FinDJApp", ["ngRoute"]);
-var url = "http://localhost:2155";
+var url = "http://fadj.azurewebsites.net";
