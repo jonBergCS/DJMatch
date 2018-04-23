@@ -356,7 +356,6 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Home\app.js" />
     <Content Include="Scripts\UserProfile\userProfile.js" />
-    <Content Include="Views\DJs\Playlist.html" />
     <Content Include="Views\Questions\Create.cshtml" />
     <Content Include="Views\Questions\Delete.cshtml" />
     <Content Include="Views\Questions\Details.cshtml" />
