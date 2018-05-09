@@ -5,6 +5,7 @@
 
         var defer = $q.defer();
 
+        // TODO: change to real user
         promises.push($http({
             method: 'GET',
             url: url + '/api/Djs/filterForUser/' + 1
