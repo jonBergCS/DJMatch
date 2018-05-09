@@ -1,4 +1,6 @@
 ﻿djApp.controller("userProfileController", function userProfileController($rootScope, $scope, $http, generalFactory) {
+    var userID = generalFactory.getCookieData();
+
     $http({
         method: 'GET',
         url: url + '/api/Questions'
@@ -10,7 +12,6 @@
             url: url + '/api/Answers'
         }).then(function successCallback(response) {
             $scope.answers = response.data;
-            var userID = generalFactory.getCookieData();
 
             $http({
                 method: 'GET',
@@ -58,7 +59,6 @@
 
     $scope.save = function () {
         $scope.next();
-        var userID = generalFactory.getCookieData();
 
         // Save the date answers
         var dateQuestions = Object.getOwnPropertyNames($scope.dateAnswers);
@@ -84,8 +84,6 @@
     };
 
     $scope.next = function () {
-        var userID = generalFactory.getCookieData();
-
         // Save the current question's answers
         var currentAnswers = $scope.questions[$scope.currentIndex].Answers;
 
