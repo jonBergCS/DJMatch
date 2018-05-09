@@ -1,11 +1,18 @@
-﻿djApp.factory("generalFactory", function ($rootScope) {
-    service = {
-        getCurrentUser: function () {
-            return $rootScope.currentUser;
+﻿djApp.factory("generalFactory", function ($cookies) {
+    var userID = "";
+
+    return {
+        setCookieData: function (userID) {
+            userID = userID;
+            $cookies.put("userID", userID);
         },
-        setCurrentUser: function (user) {
-            $rootScope.currentUser = user;
+        getCookieData: function () {
+            userID = $cookies.get("userID");
+            return userID;
+        },
+        clearCookieData: function () {
+            userID = "";
+            $cookies.remove("userID");
         }
     };
-    return service;
 });
