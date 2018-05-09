@@ -1,4 +1,4 @@
-﻿djApp.controller("userProfileController", function userProfileController($rootScope, $scope, $http) {
+﻿djApp.controller("userProfileController", function userProfileController($rootScope, $scope, $http, generalFactory) {
     $http({
         method: 'GET',
         url: url + '/api/Questions'
@@ -10,11 +10,12 @@
             url: url + '/api/Answers'
         }).then(function successCallback(response) {
             $scope.answers = response.data;
+            var userID = generalFactory.getCookieData();
 
             $http({
                 method: 'GET',
                 //TODO: change the user id
-                url: url + '/api/UserAnswers/1'
+                url: url + '/api/UserAnswers/' + userID
             }).then(function successCallback(response) {
                 var currentAnswers = response.data; 
                 $scope.currentIndex = 0;
@@ -58,6 +59,7 @@
 
     $scope.save = function () {
         $scope.next();
+        var userID = generalFactory.getCookieData();
 
         // Save the date answers
         var dateQuestions = Object.getOwnPropertyNames($scope.dateAnswers);
@@ -65,8 +67,10 @@
         for (var i = 0; i < dateQuestions.length; i++) {
             //TODO: get real ID
             $scope.toSend.push({
-                UserID: 1, QuestionID: parseInt(dateQuestions[i]),
-                AnswerID: -1, Text: $scope.dateAnswers[dateQuestions[i]]
+                UserID: userID,
+                QuestionID: parseInt(dateQuestions[i]),
+                AnswerID: -1,
+                Text: $scope.dateAnswers[dateQuestions[i]]
             });
         }
 
@@ -82,6 +86,8 @@
     };
 
     $scope.next = function () {
+        var userID = generalFactory.getCookieData();
+
         // Save the current question's answers
         var currentAnswers = $scope.questions[$scope.currentIndex].Answers;
 
@@ -91,8 +97,10 @@
                 if ($scope.userAnswers[currentAnswers[i].ID] == true) {
                     // TODO: get real id
                     $scope.toSend.push({
-                        UserID: 1, QuestionID: $scope.questions[$scope.currentIndex].ID,
-                        AnswerID: currentAnswers[i].ID, Text: ""
+                        UserID: userID,
+                        QuestionID: $scope.questions[$scope.currentIndex].ID,
+                        AnswerID: currentAnswers[i].ID,
+                        Text: ""
                     });
                 }
             }
