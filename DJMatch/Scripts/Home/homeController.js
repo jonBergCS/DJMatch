@@ -10,8 +10,7 @@
 
         }).then(function (d) {
             if (d.data != null) {
-                debugger;
-                generalFactory.setCurrentUser($scope.user);
+                generalFactory.setCookieData(d.data.ID);
                 window.location.href = '/Users/UserProfile';
             } else {
                 alert("Email or Password is wrong");
