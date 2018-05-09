@@ -30,9 +30,9 @@ namespace DJMatch.Controllers
         }
 
         [Route("api/Users/{id}/events")]
-        public IEnumerable<EventDTO> GetUserEvents(int id)
+        public IEnumerable<Event> GetUserEvents(int id)
         {
-            return db.Events.Where(evnt => evnt.UserId == id).Select(new EventMapper().SelectorExpression);
+            return db.Events.Where(evnt => evnt.UserId == id);
         }
 
 
