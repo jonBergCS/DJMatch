@@ -51,7 +51,13 @@ namespace DJMatch.Controllers
                 return NotFound();
             }
 
-            return Ok(MapEvent(@event));
+            return Ok(new
+            {
+                evnt = @event,
+                dj_name = db.DJs.FirstOrDefault(dj => @event.DJId == dj.ID).Name,
+                playlist_name = db.Playlists.FirstOrDefault(pl => pl.ID == @event.PlaylistId).Name,
+                user_name = db.Users.FirstOrDefault(u => u.ID == @event.UserId).Name
+            });
         }
 
         // PUT: api/Events/5
