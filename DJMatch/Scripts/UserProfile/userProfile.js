@@ -14,7 +14,6 @@
 
             $http({
                 method: 'GET',
-                //TODO: change the user id
                 url: url + '/api/UserAnswers/' + userID
             }).then(function successCallback(response) {
                 var currentAnswers = response.data; 
@@ -65,7 +64,6 @@
         var dateQuestions = Object.getOwnPropertyNames($scope.dateAnswers);
 
         for (var i = 0; i < dateQuestions.length; i++) {
-            //TODO: get real ID
             $scope.toSend.push({
                 UserID: userID,
                 QuestionID: parseInt(dateQuestions[i]),
@@ -95,7 +93,6 @@
             for (var i = 0; i < currentAnswers.length; i++) {
                 // Check if the answer is checked
                 if ($scope.userAnswers[currentAnswers[i].ID] == true) {
-                    // TODO: get real id
                     $scope.toSend.push({
                         UserID: userID,
                         QuestionID: $scope.questions[$scope.currentIndex].ID,
