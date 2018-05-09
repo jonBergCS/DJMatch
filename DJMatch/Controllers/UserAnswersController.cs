@@ -121,7 +121,7 @@ namespace DJMatch.Controllers
             {
                 // to avoid conflicts, if a user answers same question again, delete the old one.
                 // (when it's a one-answer question
-                if (ua.Question.IsSingleAnswer)
+                if (db.Questions.FirstOrDefault(q => q.ID == ua.QuestionID).IsSingleAnswer)
                 {
                     db.UserAnswers.RemoveRange(db.UserAnswers.Where(uas => uas.QuestionID == ua.QuestionID));
                 }
