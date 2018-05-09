@@ -6,12 +6,11 @@
 
             var promises = [];
 
-            debugger;
-            var x = generalFactory.getCurrentUser();
+            var userID = generalFactory.getCookieData();
 
             promises.push($http({
                 method: 'GET',
-                url: url + '/api/Users/' + '1' /*userID*/ + '/events'
+                url: url + '/api/Users/' + userID + '/events'
             }));
 
             //Resolve all promise into the promises array
