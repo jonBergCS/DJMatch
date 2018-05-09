@@ -118,7 +118,7 @@ namespace DJMatch.Controllers
             }
 
             // to avoid conflicts, if a user answers same question again, delete the old one
-            userAnswers.ForEach(ua => db.UserAnswers.RemoveRange(db.UserAnswers.Where(uas => uas.QuestionID == ua.QuestionID)));
+            userAnswers.ForEach(ua => db.UserAnswers.RemoveRange(db.UserAnswers.Where(uas => uas.QuestionID == ua.QuestionID && uas.UserID == ua.UserID)));
 
             userAnswers.ForEach((ua =>
             {
