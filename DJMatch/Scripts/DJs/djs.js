@@ -7,12 +7,19 @@
 
         promises.push($http({
             method: 'GET',
-            url: url + '/api/DJs'
+            url: url + '/api/Djs/filterForUser/' + 1
         }));
 
         //Resolve all promise into the promises array
         $q.all(promises).then(function (response) {
-            $scope.djsList = response[0].data;
+            $scope.djsList = response[0].data.result;
+            var recommended = response[0].data.recommendedDJId;
+
+            if (recommended !== "") {
+                $scope.recommended = $scope.djsList.filter(dj => dj.ID == recommended)[0];
+                var index = $scope.djsList.indexOf($scope.recommended);
+                $scope.djsList.splice(index, 1);
+            }
         });
     }
     
