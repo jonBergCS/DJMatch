@@ -13,6 +13,19 @@
         clearCookieData: function () {
             userID = "";
             $cookies.remove("userID");
+        },
+
+        setEventData: function (eventID) {
+            eventID = eventID;
+            $cookies.put("eventID", eventID);
+        },
+        getEventData: function () {
+            eventID = $cookies.get("eventID");
+            return eventID;
+        },
+        clearEventData: function () {
+            eventID = "";
+            $cookies.remove("eventID");
         }
     };
 });

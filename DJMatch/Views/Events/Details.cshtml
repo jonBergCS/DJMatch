@@ -1,7 +1,7 @@
 ﻿<script type="text/javascript" src="~/Scripts/Events/eventDetailsController.js"></script>
 <script src="~/Scripts/DJs/DjPlaylistDirective.js"></script>
 <div ng-controller="eventDetailsController">
-    <h2>{{currEvent.Name}}</h2>
+    <h2>{{currEvent.evnt.Name}}</h2>
 
     <div>
         <dl class="dl-horizontal">
@@ -10,7 +10,7 @@
             </dt>
 
             <dd>
-                {{currEvent.Date}}
+                {{currEvent.evnt.Date}}
             </dd>
 
             <dt>
@@ -18,7 +18,7 @@
             </dt>
 
             <dd>
-                {{currEvent.EventType}}
+                {{currEvent.evnt.EventType}}
             </dd>
 
             <dt>
@@ -26,7 +26,7 @@
             </dt>
 
             <dd>
-                {{currEvent.Name}}
+                {{currEvent.evnt.Name}}
             </dd>
 
             <dt>
@@ -34,7 +34,7 @@
             </dt>
 
             <dd>
-                {{currEvent.Description}}
+                {{currEvent.evnt.Description}}
             </dd>
 
             <dt>
@@ -42,14 +42,14 @@
             </dt>
 
             <dd>
-                {{DJ.Name}}
+                {{currEvent.dj_name}}
             </dd>
         </dl>
     </div>
-    <div>
-        <dj-playlist-directive playlist="{ID:1}" editable=true></dj-playlist-directive>
+    <div ng-if="currPlaylist!=undefined">
+        <dj-playlist-directive playlist="currPlaylist" editable=true></dj-playlist-directive>
     </div>
     <p>
-        <span>back to my events list</span>
+        <span onclick="window.location.href = '/Events/Index'">back to my events list</span>
     </p>
 </div>

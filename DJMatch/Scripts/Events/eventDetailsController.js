@@ -1,6 +1,17 @@
-﻿djApp.controller("eventDetailsController", function eventDetailsController($scope) {
-    $scope.currUser = "Michal Teverovsky";
-    $scope.DJ = { Name: "Skazi" };
-    $scope.currEvent = { Date: "23/03/2019", EventType: "wedding", Name: "Best wedding", Description: "Our day" };
-    $scope.currPlaylist = { Name: "Wedding" };
+﻿djApp.controller("eventDetailsController", function eventDetailsController($scope, $q, $http, generalFactory) {
+    
+    var promises = [];
+
+    var eventID = generalFactory.getEventData();
+
+    promises.push($http({
+        method: 'GET',
+        url: url + '/api/Events/' + eventID
+    }));
+
+    //Resolve all promise into the promises array
+    $q.all(promises).then(function (response) {
+        $scope.currEvent = response[0].data;
+        $scope.currPlaylist = $scope.currEvent.evnt.Playlist;
+    });
 });
