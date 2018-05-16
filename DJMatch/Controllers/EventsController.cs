@@ -53,7 +53,7 @@ namespace DJMatch.Controllers
 
             return Ok(new
             {
-                evnt = @event,
+                evnt = MapEvent(@event),
                 dj_name = db.DJs.FirstOrDefault(dj => @event.DJId == dj.ID).Name,
                 playlist_name = db.Playlists.FirstOrDefault(pl => pl.ID == @event.PlaylistId).Name,
                 user_name = db.Users.FirstOrDefault(u => u.ID == @event.UserId).Name
