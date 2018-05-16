@@ -33,6 +33,7 @@
 
         }).then(function (d) {
             if (d.data != null) {
+                generalFactory.setCookieData(d.data.ID);
                 window.location.href = '/Users/UserProfile';
             } else {
                 alert("The user has a problem");

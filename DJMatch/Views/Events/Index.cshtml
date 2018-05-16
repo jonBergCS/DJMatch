@@ -20,13 +20,13 @@
         </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="currEvent in eventsList" class="eventRow" ng-click="moveToEvent(currEvent.ID)">
-                <td>{{ currEvent.Date }}</td>
-                <td>{{ currEvent.EventType }}</td>
-                <td>{{ currEvent.Name }}</td>
-                <td>{{ currEvent.Description }}</td>
-                <td>{{ currEvent.DJName }}</td>
-                <td>{{ currEvent.playlist.Name }}</td>
+            <tr ng-repeat="currEvent in eventsList" class="eventRow" ng-click="moveToEvent(currEvent.evnt.ID)">
+                <td>{{ currEvent.evnt.Date }}</td>
+                <td>{{ currEvent.evnt.EventType }}</td>
+                <td>{{ currEvent.evnt.Name }}</td>
+                <td>{{ currEvent.evnt.Description }}</td>
+                <td>{{ currEvent.dj_name }}</td>
+                <td>{{ currEvent.playlist_name }}</td>
             </tr>
         </tbody>
     </table>
