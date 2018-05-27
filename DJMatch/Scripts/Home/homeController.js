@@ -1,14 +1,28 @@
 ﻿djApp.controller("homeController", function ($scope, $http, generalFactory) {
+    $scope.loading = false;
     $scope.user = {};
     $scope.newUser = {};
+    $scope.register = false;
+
+    var userData = generalFactory.getCookieData(); 
+
+    if (userData) {
+        window.location.href = '/Users/UserProfile';
+    }
+
+    $scope.registerFunc = function () {
+        $scope.register = true;
+    }
 
     $scope.login = function () {
+        $scope.loading = true;
         $http({
             method: "POST",
             url: '/api/Users/login',
             data: $scope.user
 
         }).then(function (d) {
+            $scope.loading = false;
             if (d.data != null) {
                 generalFactory.setCookieData(d.data.ID);
                 window.location.href = '/Users/UserProfile';
@@ -17,11 +31,12 @@
             }
 
             $scope.user = null;
-        },
+            },
+
             function () {
+                $scope.loading = false;
                 alert('failed');
             });
-
     };
 
     $scope.signUp = function () {

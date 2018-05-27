@@ -8,6 +8,10 @@
         },
         getCookieData: function () {
             userID = $cookies.get("userID");
+            if (!userID && window.location.href !== url + '/') {
+                window.location.href = '/';
+            }
+
             return userID;
         },
         clearCookieData: function () {
@@ -26,6 +30,7 @@
         clearEventData: function () {
             eventID = "";
             $cookies.remove("eventID");
+            window.location.href = '/';
         }
     };
 });
