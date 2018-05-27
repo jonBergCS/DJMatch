@@ -1,4 +1,5 @@
 ﻿djApp.controller("djsController", function djsController($rootScope, $scope, $q, $http, generalFactory) {
+    $scope.userID = generalFactory.getCookieData();
 
     if (($scope.djsList == undefined) || ($scope.djsList.size() == 0)) {
         var promises = [];

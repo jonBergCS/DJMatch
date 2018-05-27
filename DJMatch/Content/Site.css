@@ -118,3 +118,11 @@ textarea {
     cursor: pointer;
     margin:20px;
 }
+
+.djDiv {
+    width: 350px;
+}
+
+.djsOverview {
+    display: inline-block;
+}
