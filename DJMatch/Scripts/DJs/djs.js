@@ -1,14 +1,14 @@
 ﻿djApp.controller("djsController", function djsController($rootScope, $scope, $q, $http, generalFactory) {
+    $scope.userID = generalFactory.getCookieData();
 
     if (($scope.djsList == undefined) || ($scope.djsList.size() == 0)) {
         var promises = [];
 
         var defer = $q.defer();
 
-        // TODO: change to real user
         promises.push($http({
             method: 'GET',
-            url: url + '/api/Djs/filterForUser/' + 1
+            url: url + '/api/Djs/filterForUser/' + generalFactory.getCookieData()
         }));
 
         //Resolve all promise into the promises array

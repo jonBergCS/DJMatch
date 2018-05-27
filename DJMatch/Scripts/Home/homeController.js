@@ -18,7 +18,7 @@
 
             $scope.user = null;
         },
-            function () {
+            function (r) {
                 alert('failed');
             });
 
