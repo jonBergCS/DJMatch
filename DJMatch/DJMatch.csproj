@@ -345,6 +345,8 @@
       <DependentUpon>DJMatchModel.edmx</DependentUpon>
       <LastGenOutput>DJMatchModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\angular-cookies.min.js" />
+    <Content Include="Scripts\angular-cookies.min.js.js" />
     <Content Include="Scripts\angular-material-calendar.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-route.js" />
