@@ -15,6 +15,7 @@
         },
         link: link,
         template: "<h3>{{playlist.Name}}</h3>"
+        + "<span ng-if='playlist.songs.length == 0'>Add songs to your playlist!</span>"
         + "<table class='table dj-playlist-table' ng-if='playlist.songs.length > 0' >"
         + "<thead>"
         + "<tr>"

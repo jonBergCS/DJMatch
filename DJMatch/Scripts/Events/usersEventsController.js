@@ -18,29 +18,8 @@
                 var eventsList = response[0].data;
 
                 for (var i = 0; i < eventsList.length; i++) {
-                    var currEvent = eventsList[i];
-                    var innerPromises = [];
-
-                    innerPromises.push($http({
-                        method: 'GET',
-                        url: url + '/api/playlists/' + currEvent.PlaylistId
-                    }));
-
-                    innerPromises.push($http({
-                        method: 'GET',
-                        url: url + '/api/DJs/' + currEvent.DJId
-                    }));
-
-                    //Resolve all promise into the promises array
-                    $q.all(innerPromises).then(function(response) {
-                        currEvent.playlist = response[0].data;
-                        currEvent.DJName = response[1].data.Name;
-
-                        $scope.eventsList.push(currEvent);
-                    });
-
+                    $scope.eventsList.push(eventsList[i]);
                 }
-
             });
         }
 
@@ -49,6 +28,7 @@
         }
 
         $scope.moveToEvent = function (eventId) {
+            generalFactory.setEventData(eventId);
             window.location = url + '/Events/Details?id=' + eventId;
         }
     }]);

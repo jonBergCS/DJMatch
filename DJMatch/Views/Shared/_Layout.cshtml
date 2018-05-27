@@ -19,8 +19,8 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
-        <div class="sidenav">
+    <div ng-controller="layoutController">
+        <div class="sidenav" ng-if="userId != ''">
             <img class="logo" src="~/Content/Images/FinDJ_logo2.png" />
             <a onclick="window.location.href='/Users/UserProfile'">My profile</a>
             <a onclick="window.location.href = '/DJs/Index'">DJs</a>
@@ -28,10 +28,9 @@
             <a onclick="window.location.href = '/Home/About'">About Us</a>
             <a onclick="window.location.href = '/Home/Contact'">Contact</a>
             <br />
-            <a onclick="window.location.href = '/Home/Index'">Logout</a>
-
-
+            <a onclick="window.location.href = '/Home/Index'" ng-click="logout()">Logout</a>
         </div>
+    </div>
 
     <div class="main" id="renderbody">
         @RenderBody()

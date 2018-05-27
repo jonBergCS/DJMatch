@@ -18,17 +18,20 @@
                     <a ng-click="displayDetails(recommended.ID)">Details</a>
                 </div>
             </div>
-            <div class="w3-row-padding w3-grayscale">
-                <h1>Optional DJs</h1>
-                <div ng-repeat="eachDJ in djsList" class="w3-col l3 m6 w3-margin-bottom">
-                    <img src="~/Content/Images/icon.png" class="photo">
-                    <h3>DJ {{eachDJ.Name}}</h3>
-                    <p class="w3-opacity">{{eachDJ.ExperienceYears}} years of experience</p>
-                    <p class="w3-opacity">{{eachDJ.PriceMin}}$ - {{eachDJ.PriceMax}}$</p>
-                    <p class="w3-opacity">Plays {{eachDJ.Genres}}</p>
-                    <a ng-click="displayDetails(eachDJ.ID)">Details</a>
-                </div>
-
+            <div>
+                <center>
+                    <h1>Optional DJs</h1>
+                    <div ng-repeat="eachDJ in djsList" class="djsOverview">
+                        <div class="djDiv">
+                            <img src="~/Content/Images/icon.png" class="photo">
+                            <h3>DJ {{eachDJ.Name}}</h3>
+                            <p class="w3-opacity">{{eachDJ.ExperienceYears}} years of experience</p>
+                            <p class="w3-opacity">{{eachDJ.PriceMin}}$ - {{eachDJ.PriceMax}}$</p>
+                            <p class="w3-opacity">Plays {{eachDJ.Genres}}</p>
+                            <a ng-click="displayDetails(eachDJ.ID)">Details</a>
+                        </div>
+                    </div>
+                </center>
             </div>
         </div>
         <div ng-if="currentDJ != undefined">

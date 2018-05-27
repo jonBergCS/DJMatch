@@ -30,9 +30,15 @@ namespace DJMatch.Controllers
         }
 
         [Route("api/Users/{id}/events")]
-        public IEnumerable<Event> GetUserEvents(int id)
+        public IEnumerable<object> GetUserEvents(int id)
         {
-            return db.Events.Where(evnt => evnt.UserId == id);
+            return db.Events.Where(evnt => evnt.UserId == id)
+                .Select(new EventMapper().SelectorExpression.Compile())
+                .Select(prev => new { evnt = prev,
+                                      dj_name = db.DJs.FirstOrDefault(dj => prev.DJId == dj.ID).Name,
+                                      playlist_name = db.Playlists.FirstOrDefault(pl => pl.ID == prev.PlaylistId).Name,
+                                      user_name = db.Users.FirstOrDefault(u => u.ID == prev.UserId).Name
+                });
         }
 
 

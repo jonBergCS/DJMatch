@@ -8,7 +8,7 @@
 
         promises.push($http({
             method: 'GET',
-            url: url + '/api/Djs/filterForUser/' + $scope.userID
+            url: url + '/api/Djs/filterForUser/' + generalFactory.getCookieData()
         }));
 
         //Resolve all promise into the promises array
