@@ -33,10 +33,11 @@ namespace DJMatch.Controllers
         [System.Web.Http.Route("api/UserAnswers/eventData/{userid}")]
         public JObject GetEventData(int userid)
         {
-            var response = new JObject();
-            
-            response.Add("type", new JValue(db.UserAnswers.FirstOrDefault(ua => (ua.UserID == userid) && (ua.QuestionID == 4)).Answer.Text));
-            response.Add("date", new JValue(db.UserAnswers.FirstOrDefault(ua => (ua.UserID == userid) && (ua.QuestionID == 5)).Text));
+            var response = new JObject
+            {
+                { "type", new JValue(db.UserAnswers.FirstOrDefault(ua => (ua.UserID == userid) && (ua.QuestionID == 4)).Answer.Text) },
+                { "date", new JValue(db.UserAnswers.FirstOrDefault(ua => (ua.UserID == userid) && (ua.QuestionID == 5)).Text) }
+            };
 
             return response;
         }
