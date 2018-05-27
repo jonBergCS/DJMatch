@@ -14,4 +14,10 @@
         $scope.currEvent = response[0].data;
         $scope.currPlaylist = $scope.currEvent.evnt.PlaylistId;
     });
+
+    $scope.backToList = function()
+    {
+        generalFactory.clearEventData();
+        window.location.href = '/Events/Index';
+    }
 });
