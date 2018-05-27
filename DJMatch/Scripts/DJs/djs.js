@@ -78,9 +78,11 @@
     $scope.backToList = function ()
     {
         $scope.currentDJ = undefined;
+        generalFactory.clearDJData();
     };
 
     $scope.createEventPage = function (currPlaylist) {
+        generalFactory.setDJData(currPlaylist.DJ_ID);
         window.location.href = '/Events/Create?dj=' + currPlaylist.DJ_ID + '&playlist=' + currPlaylist.ID;
     };
 });

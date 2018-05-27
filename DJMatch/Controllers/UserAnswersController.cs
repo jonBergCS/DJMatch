@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using DJMatch.Models;
+using Newtonsoft.Json.Linq;
 
 namespace DJMatch.Controllers
 {
@@ -27,6 +28,18 @@ namespace DJMatch.Controllers
         public IEnumerable<UserAnswerDTO> GetUserAnswers()
         {
             return db.UserAnswers.Select(MapUserAnswer);
+        }
+
+        [System.Web.Http.Route("api/UserAnswers/eventData/{userid}")]
+        public JObject GetEventData(int userid)
+        {
+            var response = new JObject
+            {
+                { "type", new JValue(db.UserAnswers.FirstOrDefault(ua => (ua.UserID == userid) && (ua.QuestionID == 4)).Answer.Text) },
+                { "date", new JValue(db.UserAnswers.FirstOrDefault(ua => (ua.UserID == userid) && (ua.QuestionID == 5)).Text) }
+            };
+
+            return response;
         }
 
         // GET: api/UserAnswers/5

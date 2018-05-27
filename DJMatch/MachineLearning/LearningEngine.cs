@@ -9,6 +9,8 @@ using Accord.MachineLearning;
 using Accord.MachineLearning.DecisionTrees.Learning;
 using Accord.Math.Optimization.Losses;
 using Accord.Statistics.Filters;
+using Accord.MachineLearning.VectorMachines.Learning;
+using Accord.Statistics.Kernels;
 
 namespace DJMatch
 {
@@ -16,77 +18,47 @@ namespace DJMatch
     {
         //private DecisionTree dtree;
         private DJMatchEntities db = new DJMatchEntities();
-        private DecisionTree dtree;
+        dynamic machine;
         private Codification code = new Codification();
 
         public LearningEngine()
         {
             // Do asynchrously
-            //this.Learn();
+            this.Learn();
         }
 
         private void Learn()
         {
-            //List<DecisionVariable> dvar = new List<DecisionVariable>();
-            //dvar.Add(new DecisionVariable("Budget", DecisionVariableKind.Discrete));
-            //dvar.Add(new DecisionVariable("Eventype", DecisionVariableKind.Discrete));
-            //dvar.Add(new DecisionVariable("Genre", DecisionVariableKind.Discrete));
-            //dvar.Add(new DecisionVariable("Area", DecisionVariableKind.Discrete));
-            //dvar.Add(new DecisionVariable("Experience", DecisionVariableKind.Discrete));
-            // Attractions
-
-            //this.dtree = new DecisionTree(dvar, 100);
-
-            //int[][] inputs =
-            //    (from user in db.Users
-            //     where user.Events.Count > 0
-            //     select new int[] {
-            //         user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 1).AnswerID,
-            //         user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 4).AnswerID,
-            //         user.UserAnswers.Where(ans => ans.QuestionID == 2)
-            //            .Average(an => an.Answer.Text.Average(s=> s)),
-            //         user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 3).AnswerID,
-            //         user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 6).AnswerID,
-            //         user.ID
-            //     }).ToArray();
-
-            int[][] inputs = db.Users.Where(user => user.Events.Count > 0)
-                .Select(user => new
-                {
-                    a = (int?) user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 1).AnswerID ?? 0,
-                    b = (int?)user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 4).AnswerID ?? 0,
-                    c = user.UserAnswers.Where(ans => ans.QuestionID == 2).Select(ans => ans.Answer.Text),
-                    d = (int?)user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 3).AnswerID ?? 0,
-                    e = (int?)user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 6).AnswerID ?? 0,
-                    f = (int?)user.ID ?? 0
-                }).AsEnumerable()
-                .Select(user => new int[] 
-                              { user.a,
-                                user.b,
-                                code.Translate(string.Join(";", user.c))[0],
-                                user.d,
-                                user.e,
-                                user.f })
+            double[][] inputs = db.Users.Where(user => user.Events.Count > 0)
+                .AsEnumerable()
+                .Select(user => this.UserToVector(user.ID))
                 .ToArray();
-           
+
             List<int> outputList = new List<int>();
 
-            foreach (int[] currVect in inputs)
+            foreach (double[] currVect in inputs)
             {
                 outputList.Add(db.Users.Find(currVect.Last()).Events.GroupBy(ev => ev.DJId).
                   OrderByDescending(grp => grp.Count()).
-                  First().Key);
+                  Select(u => u.Key).
+                  FirstOrDefault());
             }
 
             int[] outputs = outputList.ToArray();
 
-            // Create an ID3 learning algorithm
-            ID3Learning teacher = new ID3Learning();
-            // Learn a decision tree for the XOR problem
-            dtree = teacher.Learn(inputs, outputs, new double[] {6,5,4,3,2,1,0});
+            // Create a learning algorithm
+            // Create a one-vs-one multi-class SVM learning algorithm 
+
+            var teacher = new RandomForestLearning()
+            {
+                NumberOfTrees = 1,
+                SampleRatio = 1.0
+            };
+
+            machine = teacher.Learn(inputs, outputs);
 
             // Compute the error in the learning
-            double error = new ZeroOneLoss(outputs).Loss(dtree.Decide(inputs));
+            double error = new ZeroOneLoss(outputs).Loss(machine.Decide(inputs));
             Console.WriteLine("ERROR - " + error);
         }
 
@@ -94,30 +66,39 @@ namespace DJMatch
         {
             try
             {
-                int chosenOne = this.dtree.Decide(this.UserToVector(userID));
+                int chosenOne = this.machine.Decide(this.UserToVector(userID));
 
                 return db.DJs.Find(chosenOne);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return null;
             }
         }
 
         private double[] UserToVector(int userID)
         {
-            return (from user in db.Users
-                    where user.ID == userID
-                    select new double[] {
-                     user.UserAnswers.First(ans => ans.QuestionID == 1).AnswerID,
-                     user.UserAnswers.First(ans => ans.QuestionID == 4).AnswerID,
-#pragma warning disable CS0618 // Type or member is obsolete
-                     code.Translate(string.Join("; ", user.UserAnswers.Where(ans => ans.QuestionID == 2)))[0],
-#pragma warning restore CS0618 // Type or member is obsolete
-                     user.UserAnswers.First(ans => ans.QuestionID == 3).AnswerID,
-                     user.UserAnswers.First(ans => ans.QuestionID == 6).AnswerID,
-                     user.ID
-                 }).First();
+            List<double> vector = new List<double>();
+            User user = db.Users.FirstOrDefault((usr) => usr.ID == userID);
+
+            var genres = string.Join(";", user.UserAnswers.Where(ans => ans.QuestionID == 2).Select(ua => ua.Answer.Text)).GetHashCode();
+
+            var ans1 = user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 1);
+            var ans4 = user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 4);
+            var ans3 = user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 3);
+            var ans6 = user.UserAnswers.FirstOrDefault(ans => ans.QuestionID == 6);
+
+            vector.Add(ans1 != null ? ans1.AnswerID : -999);
+            vector.Add(ans4 != null ? ans4.AnswerID : -999);
+            vector.Add(genres);
+            vector.Add(ans3 != null ? ans3.AnswerID : -999);
+            vector.Add(ans6 != null ? ans6.AnswerID : -999);
+            vector.Add(user.ID);
+
+            return vector.ToArray();
         }
     }
 }
+
+
