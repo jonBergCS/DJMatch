@@ -12,6 +12,6 @@
     //Resolve all promise into the promises array
     $q.all(promises).then(function (response) {
         $scope.currEvent = response[0].data;
-        $scope.currPlaylist = $scope.currEvent.evnt.Playlist;
+        $scope.currPlaylist = $scope.currEvent.evnt.PlaylistId;
     });
 });

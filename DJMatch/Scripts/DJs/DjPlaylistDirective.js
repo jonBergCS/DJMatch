@@ -2,9 +2,9 @@
     var link = function (scope) {
         $http({
             method: 'GET',
-            url: url + '/api/Playlists/' + scope.playlist.ID + '/Songs',
+            url: url + '/api/Playlists/' + scope.playlist + '/Songs',
         }).then(function successCallback(response) {
-            scope.playlist.songs = response.data;
+            scope.songs = response.data;
         });
     };
 
@@ -14,9 +14,8 @@
             editable: "="
         },
         link: link,
-        template: "<h3>{{playlist.Name}}</h3>"
-        + "<span ng-if='playlist.songs.length == 0'>Add songs to your playlist!</span>"
-        + "<table class='table dj-playlist-table' ng-if='playlist.songs.length > 0' >"
+        template: "<span ng-if='songs.length == 0'>Add songs to your playlist!</span>"
+        + "<table class='table dj-playlist-table' ng-if='songs.length > 0' >"
         + "<thead>"
         + "<tr>"
         + "<th>Song name</th>"
@@ -25,7 +24,7 @@
         + "</tr>"
         + "</thead>"
         + "<tbody>"
-        + "<tr ng-repeat='song in playlist.songs'>"
+        + "<tr ng-repeat='song in songs'>"
         + "<td>{{ song.Name }}</td>"
         + "<td>{{ song.Artist }}</td>"
         + "<td ng-if='editable'><span class='glyphicon glyphicon-remove'></span></td>"
