@@ -30,9 +30,8 @@
             }
 
             $scope.user = null;
-            },
-
             $scope.loading = false;
+            },
 
             function () {
                 $scope.loading = false;

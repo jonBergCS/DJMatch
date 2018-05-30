@@ -132,6 +132,7 @@ textarea {
     padding: 50px;
     width: 350px;
     height: 450px;
+    margin-top: 50px;
 }
 
 .registerDiv {
@@ -140,6 +141,7 @@ textarea {
     padding: 10px;
     width: 350px;
     height: 450px;
+    margin-top: 50px;
 }
 
 .loader {
