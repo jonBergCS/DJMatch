@@ -29,6 +29,22 @@ namespace DJMatch.Controllers
             return db.Playlists.Select(MapPlaylist);
         }
 
+        [System.Web.Http.Route("api/Playlists/{id}/songs/{songID}")]
+        [ResponseType(typeof(PlaylistDTO))]
+        public IHttpActionResult DeletePlaylistSong(int id, int songID)
+        {
+            SongsToPlaylist songToPlaylist = 
+                db.SongsToPlaylists.FirstOrDefault(stp => stp.PlaylistID == id && stp.SongID == songID);
+            if (songToPlaylist == null)
+            {
+                return NotFound();
+            }
+
+            db.SongsToPlaylists.Remove(songToPlaylist);
+
+            return Ok(new SongsToPlaylistMapper().SelectorExpression.Compile().Invoke(songToPlaylist));
+        }
+
         // GET: api/Playlists/5
         [ResponseType(typeof(PlaylistDTO))]
         public IHttpActionResult GetPlaylist(int id)
