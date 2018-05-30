@@ -11,7 +11,8 @@
     return {
         scope: {
             playlist: "=",
-            editable: "="
+            editable: "=",
+            removeSong: "=",
         },
         link: link,
         template: "<span ng-if='songs.length == 0'>Add songs to your playlist!</span>"
@@ -27,7 +28,7 @@
         + "<tr ng-repeat='song in songs'>"
         + "<td>{{ song.Name }}</td>"
         + "<td>{{ song.Artist }}</td>"
-        + "<td ng-if='editable'><span class='glyphicon glyphicon-remove'></span></td>"
+        + "<td ng-if='editable'><button ngclick='removeSong(song.id)'><span class='glyphicon glyphicon-remove'></span></button></td>"
         + "</tr>"
         + "</tbody>"
         + "</table>"

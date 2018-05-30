@@ -20,4 +20,15 @@
         generalFactory.clearEventData();
         window.location.href = '/Events/Index';
     }
+
+    $scope.removeSongFromPlaylist = function (singId) {
+        $http({
+            method: "POST",
+            url: '/api/Playlists/' + $scope.currPlaylist + '/songs/' + songId,
+        })
+    }
+
+    $scope.addSongtoPlaylist = function () {
+
+    } 
 });

@@ -1,13 +1,15 @@
 ﻿djApp.controller("createEventController", function createEventController($scope, $q, $http, generalFactory) {
 
     var promises = [];
+    var DJID = location.search.split('dj=')[1].split('&')[0];
+    var PlaylistID = location.search.split('playlist=')[1];
     var userID = generalFactory.getCookieData();
-    var DJID = generalFactory.getDJData();
-    $scope.currEvent = {"DJId":DJID, "UserId":userID};
+
+    $scope.currEvent = { "DJId": DJID, "UserId": userID, "PlaylistId": PlaylistID };
     
     promises.push($http({
         method: 'GET',
-        url: url + '/api/DJs/' + 1 //TODO!!!!
+        url: url + '/api/DJs/' + DJID
     }));
 
     promises.push($http({
@@ -24,15 +26,11 @@
     $q.all(promises).then(function (response) {
         $scope.currDJ = response[0].data;
         $scope.currUser = response[1].data;
-        debugger;
         var answers = response[2].data;
         $scope.currEvent.Date = answers.date;
         $scope.currEvent.EventType = answers.type;
         
     });
-
-
-    $scope.currEvent = { Date: "23/03/2019", EventType: "wedding" };
 
     $scope.createEvent = function () {
         $http({
@@ -51,7 +49,5 @@
             function () {
                 alert('failed');
             });
-
-        generalFactory.clearDJData();
     };
 });
