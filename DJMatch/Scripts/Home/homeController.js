@@ -22,7 +22,6 @@
             data: $scope.user
 
         }).then(function (d) {
-            $scope.loading = false;
             if (d.data != null) {
                 generalFactory.setCookieData(d.data.ID);
                 window.location.href = '/Users/UserProfile';
@@ -32,6 +31,8 @@
 
             $scope.user = null;
             },
+
+            $scope.loading = false;
 
             function () {
                 $scope.loading = false;
