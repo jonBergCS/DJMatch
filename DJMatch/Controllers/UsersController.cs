@@ -125,7 +125,7 @@ namespace DJMatch.Controllers
         [HttpPost]
         public UserDTO Login(JObject cred)
         {
-            var email = cred.Property("email").Value.ToString();
+            var email = cred.Property("email").Value.ToString().ToLower();
             var pass = cred.Property("password").Value.ToString();
 
             return db.Users.Select(MapUser).FirstOrDefault(usr => usr.Email == email && usr.Password == pass);
