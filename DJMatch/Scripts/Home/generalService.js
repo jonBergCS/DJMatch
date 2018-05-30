@@ -18,7 +18,7 @@
         },
         clearCookieData: function () {
             userID = "";
-            $cookies.remove("userID");
+            $cookies.remove("userID", { path: '/' });
         },
 
         setEventData: function (_eventID) {
