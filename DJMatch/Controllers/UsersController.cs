@@ -123,12 +123,12 @@ namespace DJMatch.Controllers
 
         [Route("api/Users/login")]
         [HttpPost]
-        public User Login(JObject cred)
+        public UserDTO Login(JObject cred)
         {
             var email = cred.Property("email").Value.ToString();
             var pass = cred.Property("password").Value.ToString();
 
-            return db.Users.FirstOrDefault(usr => usr.Email == email && usr.Password == pass);
+            return db.Users.Select(MapUser).FirstOrDefault(usr => usr.Email == email && usr.Password == pass);
         }
 
         protected override void Dispose(bool disposing)
