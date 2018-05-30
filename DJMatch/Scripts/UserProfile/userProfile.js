@@ -1,5 +1,6 @@
 ﻿djApp.controller("userProfileController", function userProfileController($rootScope, $scope, $http, generalFactory) {
     var userID = generalFactory.getCookieData();
+    $scope.loading = true;
 
     $http({
         method: 'GET',
@@ -25,6 +26,13 @@
 
                 for (var i = 0; i < $scope.questions.length; i++) {
                     $scope.questions[i].Answers = [];
+
+                    if ($scope.questions[i].IsSingleAnswer) {
+                        $scope.questions[i].type = 'radio';
+                    }
+                    else {
+                        $scope.questions[i].type = 'checkbox';
+                    }
                 }
 
                 // Get the previous answers and match answers to question
@@ -51,13 +59,21 @@
                 });
 
                 for (var i = 0; i < result.length; i++) {
-                    $scope.dateAnswers[result[i].QuestionID] = new Date(result[i].Text);
+                    var question = $scope.questions.filter(x => x.ID == result[i].QuestionID);
+                    if (question[0].IsSingleAnswer) {
+                        $scope.dateAnswers[result[i].QuestionID] = new Date(result[i].Text);
+                    } else {
+                        $scope.dateAnswers[result[i].QuestionID] = parseInt(result[i].Text);
+                    }
                 }
+
+                $scope.loading = false;
             });
         });
     });
 
     $scope.save = function () {
+        $scope.loading = true;
         $scope.next();
 
         // Save the date answers
@@ -88,15 +104,36 @@
         var currentAnswers = $scope.questions[$scope.currentIndex].Answers;
 
         if (currentAnswers.length != 0) {
-            for (var i = 0; i < currentAnswers.length; i++) {
-                // Check if the answer is checked
-                if ($scope.userAnswers[currentAnswers[i].ID] == true) {
-                    $scope.toSend.push({
-                        UserID: userID,
-                        QuestionID: $scope.questions[$scope.currentIndex].ID,
-                        AnswerID: currentAnswers[i].ID,
-                        Text: ""
-                    });
+            if ($scope.questions[$scope.currentIndex].type == 'radio') {
+                var index = $scope.toSend.indexOf($scope.toSend.filter(x => x.QuestionID == $scope.questions[$scope.currentIndex].ID)[0]);
+                delete $scope.toSend[index];
+
+                for (var i = 0; i < currentAnswers.length; i++) {
+                    $scope.userAnswers[currentAnswers[i].ID] = false;
+                }
+
+                var checkedAnswer =
+                    $('#answers' + $scope.questions[$scope.currentIndex].ID + " input[type = 'radio']:checked").val();
+
+                $scope.userAnswers[checkedAnswer] = true;
+
+                $scope.toSend.push({
+                    UserID: userID,
+                    QuestionID: $scope.questions[$scope.currentIndex].ID,
+                    AnswerID: checkedAnswer,
+                    Text: ""
+                });
+            } else {
+                for (var i = 0; i < currentAnswers.length; i++) {
+                    // Check if the answer is checked
+                    if ($scope.userAnswers[currentAnswers[i].ID] == true) {
+                        $scope.toSend.push({
+                            UserID: userID,
+                            QuestionID: $scope.questions[$scope.currentIndex].ID,
+                            AnswerID: currentAnswers[i].ID,
+                            Text: ""
+                        });
+                    }
                 }
             }
         }

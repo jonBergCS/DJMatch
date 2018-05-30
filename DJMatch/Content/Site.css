@@ -1,5 +1,4 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
     font-family: "Lato", sans-serif;
 }
@@ -162,4 +161,10 @@ textarea {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.loaderDiv {
+    position: absolute;
+    top: 35%;
+    left: 50%;
 }

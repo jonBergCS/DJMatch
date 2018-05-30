@@ -330,6 +330,7 @@
     <Content Include="Content\Images\skazi.jpeg" />
     <Content Include="Content\Images\Skazi.jpg" />
     <Content Include="Content\Images\yahel.jpeg" />
+    <Content Include="Content\userProfile.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

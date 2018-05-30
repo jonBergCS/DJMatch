@@ -1,5 +1,6 @@
 ﻿djApp.controller("djsController", function djsController($rootScope, $scope, $q, $http, generalFactory) {
     $scope.userID = generalFactory.getCookieData();
+    $scope.loading = true;
 
     if (($scope.djsList == undefined) || ($scope.djsList.size() == 0)) {
         var promises = [];
@@ -21,6 +22,8 @@
                 var index = $scope.djsList.indexOf($scope.recommended);
                 $scope.djsList.splice(index, 1);
             }
+
+            $scope.loading = false;
         });
     }
     
