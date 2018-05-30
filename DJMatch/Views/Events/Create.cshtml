@@ -1,45 +1,53 @@
 ﻿<script src="~/Scripts/Events/createEventController.js"></script>
 <div ng-controller="createEventController" style="margin-left:20px">
-    <h2>Create your event</h2>
-    <form class="form-horizontal">
-        <div class="col-xs-3">
-            <div class="form-group">
-                <label class="control-label">User:</label>
-                <div class="form-control" disabled>
-                    {{currUser.Name}}
+    <div ng-if="loading" class="loaderDiv">
+        <div class="loader"></div>
+        <h2>Loading...</h2>
+    </div>
+    <div ng-if="!loading">
+        <center>
+            <h1 class="title">Create your event</h1>
+            <form class="form-horizontal">
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <label class="control-label">User:</label>
+                        <div class="form-control" disabled>
+                            {{currUser.Name}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">DJ:</label>
+                        <div class="form-control" disabled>
+                            {{currDJ.Name}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Date:</label>
+                        <div class="form-control" disabled>
+                            {{currEvent.Date}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Event type:</label>
+                        <div class="form-control" disabled>
+                            {{currEvent.EventType}}
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label">DJ:</label>
-                <div class="form-control" disabled>
-                    {{currDJ.Name}}
+                <div class="col-xs-3 col-sm-offset-1">
+                    <div class="form-group">
+                        <label class="control-label">Name:</label>
+                        <input ng-model="currEvent.Name" type="text" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Description:</label>
+                        <textarea class="form-control" ng-model="currEvent.Description" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" style="position:absolute; right:0" ng-click="createEvent()">Create</button>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Date:</label>
-                <div class="form-control" disabled>
-                    {{currEvent.Date}}
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Event type:</label>
-                <div class="form-control" disabled>
-                    {{currEvent.EventType}}
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-3 col-sm-offset-1">
-            <div class="form-group">
-                <label class="control-label">Name:</label>
-                <input ng-model="currEvent.Name" type="text" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label class="control-label">Description:</label>
-                <textarea class="form-control" ng-model="currEvent.Description" rows="5"></textarea>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-success" style="position:absolute; right:0" ng-click="createEvent()">Create</button>
-            </div>
-        </div>
-    </form>
+            </form>
+        </center>
+    </div>
 </div>

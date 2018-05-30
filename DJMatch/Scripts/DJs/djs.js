@@ -29,6 +29,7 @@
     
 
     $scope.displayDetails = function (djID) {
+        $scope.loading = true;
         $scope.currentDJID = djID;
 
         if (($scope.currentDJ == undefined) || ($scope.currentDJ == {}))
@@ -74,6 +75,8 @@
                 $scope.currentDJ.Rate = response[2].data;
                 $scope.currentDJ.Playlists = response[3].data;
                 $scope.currentDJ.DefaultPlaylists = response[4].data;
+
+                $scope.loading = false;
             });
         }
     };

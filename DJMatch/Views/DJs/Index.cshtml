@@ -12,32 +12,34 @@
         </div>
         <div ng-if="!loading">
             <div ng-if="currentDJ == undefined">
-                <div class="w3-row-padding w3-grayscale" ng-if="recommended != undefined">
-                    <h1>Our recommended DJ</h1>
-                    <div class="w3-col l3 m6 w3-margin-bottom">
-                        <img src="~/Content/Images/icon.png" class="photo">
-                        <h3>DJ {{recommended.Name}}</h3>
-                        <p class="w3-opacity">{{recommended.ExperienceYears}} years of experience</p>
-                        <p class="w3-opacity">{{recommended.PriceMin}}$ - {{recommended.PriceMax}}$</p>
-                        <p class="w3-opacity">Plays {{recommended.Genres}}</p>
-                        <a ng-click="displayDetails(recommended.ID)">Details</a>
+                <center>
+                    <div class="w3-row-padding w3-grayscale" ng-if="recommended != undefined">
+                        <h1>Our recommended DJ</h1>
+                        <div class="djDiv recommended">
+                            <img src="~/Content/Images/icon.png" class="photo">
+                            <h3>DJ {{recommended.Name}}</h3>
+                            <p>{{recommended.ExperienceYears}} years of experience</p>
+                            <p>{{recommended.PriceMin}}$ - {{recommended.PriceMax}}$</p>
+                            <p>Plays {{recommended.Genres}}</p>
+                            <a ng-click="displayDetails(recommended.ID)">Details</a>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <center>
+                    <br />
+                    <br />
+                    <div>
                         <h1>Optional DJs</h1>
                         <div ng-repeat="eachDJ in djsList" class="djsOverview">
                             <div class="djDiv">
                                 <img src="~/Content/Images/icon.png" class="photo">
                                 <h3>DJ {{eachDJ.Name}}</h3>
-                                <p class="w3-opacity">{{eachDJ.ExperienceYears}} years of experience</p>
-                                <p class="w3-opacity">{{eachDJ.PriceMin}}$ - {{eachDJ.PriceMax}}$</p>
-                                <p class="w3-opacity">Plays {{eachDJ.Genres}}</p>
+                                <p>{{eachDJ.ExperienceYears}} years of experience</p>
+                                <p>{{eachDJ.PriceMin}}$ - {{eachDJ.PriceMax}}$</p>
+                                <p>Plays {{eachDJ.Genres}}</p>
                                 <a ng-click="displayDetails(eachDJ.ID)">Details</a>
                             </div>
                         </div>
-                    </center>
-                </div>
+                    </div>
+                </center>
             </div>
             <div ng-if="currentDJ != undefined">
                 <link rel="stylesheet" type="text/css" href="~/Content/DJProfile.css">

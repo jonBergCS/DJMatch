@@ -5,30 +5,32 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <body>
 <div ng-controller="usersEventsController">
-    <h1>My Events</h1>
-    
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th>Type of event</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>DJ's Name</th>
-            <th>playlist's Name</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="currEvent in eventsList" class="eventRow" ng-click="moveToEvent(currEvent.evnt.ID)">
-                <td>{{ currEvent.evnt.Date }}</td>
-                <td>{{ currEvent.evnt.EventType }}</td>
-                <td>{{ currEvent.evnt.Name }}</td>
-                <td>{{ currEvent.evnt.Description }}</td>
-                <td>{{ currEvent.dj_name }}</td>
-                <td>{{ currEvent.playlist_name }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <center>
+        <h1 class="title">My Events</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type of event</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>DJ's Name</th>
+                    <th>playlist's Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="currEvent in eventsList" class="eventRow" ng-click="moveToEvent(currEvent.evnt.ID)">
+                    <td>{{ currEvent.evnt.Date }}</td>
+                    <td>{{ currEvent.evnt.EventType }}</td>
+                    <td>{{ currEvent.evnt.Name }}</td>
+                    <td>{{ currEvent.evnt.Description }}</td>
+                    <td>{{ currEvent.dj_name }}</td>
+                    <td>{{ currEvent.playlist_name }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </center>
 </div>
 </body>

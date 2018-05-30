@@ -122,6 +122,13 @@ textarea {
     width: 350px;
 }
 
+.recommended {
+    background-color: cornflowerblue;
+    color: white;
+    border-radius: 10px;
+    padding: 15px;
+}
+
 .djsOverview {
     display: inline-block;
 }
@@ -169,4 +176,9 @@ textarea {
     position: absolute;
     top: 35%;
     left: 50%;
+}
+
+.title {
+    font-weight: 700;
+    color: cornflowerblue;
 }
