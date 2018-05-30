@@ -32,19 +32,6 @@
         clearEventData: function () {
             eventID = "";
             $cookies.remove("eventID");
-        },
-
-        setDJData: function (_DJID) {
-            DJID = _DJID;
-            $cookies.put("djID", DJID);
-        },
-        getDJData: function () {
-            DJID = $cookies.get("djID");
-            return DJID;
-        },
-        clearDJData: function () {
-            DJID = "";
-            $cookies.remove("djID");
         }
     };
 });
