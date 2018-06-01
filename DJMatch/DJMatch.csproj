@@ -376,7 +376,6 @@
       <DependentUpon>DJMatchModel.edmx</DependentUpon>
     </Content>
     <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="Content\Images\Thumbs.db" />
     <None Include="Properties\PublishProfiles\DJMatch20180423084905 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\fadj - Web Deploy.pubxml" />
     <Content Include="Scripts\angular-route.min.js.map" />

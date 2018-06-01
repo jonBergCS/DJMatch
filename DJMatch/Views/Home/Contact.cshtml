@@ -10,7 +10,7 @@
         <div>
             <h3 class="title">Contact</h3>
             <p>Lets get in touch and talk about your and our next project.</p>
-            <form action="/action_page.php" target="_blank">
+            <form id="contactForm" onclick="{ document.getElementById('contactForm').reset() }">
                 <input class="w3-input" type="text" placeholder="Name" required name="Name">
                 <input class="w3-input w3-section" type="text" placeholder="Email" required name="Email">
                 <input class="w3-input w3-section" type="text" placeholder="Subject" required name="Subject">
