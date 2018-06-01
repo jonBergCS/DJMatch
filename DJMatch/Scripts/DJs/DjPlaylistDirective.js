@@ -50,7 +50,7 @@ djApp.directive("djPlaylistDirective", function ($http) {
         + "</tbody>"
         + "</table>"
         + "<button class='addSong btn btn-success' ng-if='editable'>" 
-        + "<span class='glyphicon glyphicon-plus'></span>add a song"
+        + "<span class='glyphicon glyphicon-plus'></span> Add a song"
         + "</buton>"
     };
 });
