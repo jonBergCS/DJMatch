@@ -305,6 +305,7 @@
     <Content Include="Content\Icons\location.png" />
     <Content Include="Content\Icons\money.png" />
     <Content Include="Content\Icons\star.png" />
+    <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\10.jpg" />
     <Content Include="Content\Images\11.jpg" />
     <Content Include="Content\Images\12.jpg" />
@@ -312,6 +313,9 @@
     <Content Include="Content\Images\14.jpg" />
     <Content Include="Content\Images\15.jpg" />
     <Content Include="Content\Images\2.jpg" />
+    <Content Include="Content\Images\3.jpg" />
+    <Content Include="Content\Images\4.jpg" />
+    <Content Include="Content\Images\5.jpg" />
     <Content Include="Content\Images\6.jpg" />
     <Content Include="Content\Images\7.jpg" />
     <Content Include="Content\Images\8.jpg" />
