@@ -51,8 +51,8 @@ namespace DJMatch
 
             var teacher = new RandomForestLearning()
             {
-                NumberOfTrees = 1,
-                SampleRatio = 1.0
+                NumberOfTrees = 5,
+                //SampleRatio = 1.0
             };
 
             machine = teacher.Learn(inputs, outputs);
