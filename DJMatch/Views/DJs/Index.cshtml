@@ -16,7 +16,7 @@
                     <div class="w3-row-padding w3-grayscale" ng-if="recommended != undefined">
                         <h1>Our recommended DJ</h1>
                         <div class="djDiv recommended">
-                            <img src="~/Content/Images/icon.png" class="photo">
+                            <img src="~/Content/Images/{{recommended.ID}}.jpg" class="photo">
                             <h3>DJ {{recommended.Name}}</h3>
                             <p>{{recommended.ExperienceYears}} years of experience</p>
                             <p>{{recommended.PriceMin}}$ - {{recommended.PriceMax}}$</p>
@@ -30,7 +30,7 @@
                         <h1>Optional DJs</h1>
                         <div ng-repeat="eachDJ in djsList" class="djsOverview">
                             <div class="djDiv">
-                                <img src="~/Content/Images/icon.png" class="photo">
+                                <img src="~/Content/Images/{{eachDJ.ID}}.jpg" class="photo">
                                 <h3>DJ {{eachDJ.Name}}</h3>
                                 <p>{{eachDJ.ExperienceYears}} years of experience</p>
                                 <p>{{eachDJ.PriceMin}}$ - {{eachDJ.PriceMax}}$</p>
@@ -45,7 +45,7 @@
                 <link rel="stylesheet" type="text/css" href="~/Content/DJProfile.css">
                 <div class="dj-profile-header row">
                     <div class="dj-profile-img-container col">
-                        <img class="dj-profile-img" src="~/Content/Images/icon.png" />
+                        <img class="dj-profile-img" src="~/Content/Images/{{currentDJ.ID}}.jpg" />
                     </div>
                     <div class="dj-profile-header-details col">
                         <div class="dj-profile-name row">

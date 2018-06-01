@@ -41,6 +41,7 @@ namespace DJMatch.Controllers
             }
 
             db.SongsToPlaylists.Remove(songToPlaylist);
+            db.SaveChanges();
 
             return Ok(new SongsToPlaylistMapper().SelectorExpression.Compile().Invoke(songToPlaylist));
         }

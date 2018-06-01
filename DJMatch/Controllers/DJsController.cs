@@ -92,8 +92,6 @@ namespace DJMatch.Controllers
                     djs.Intersect(db.DJs.Where(dj => dj.Address.Contains(area))
                     ).ToList();
 
-                //TODO: Eventype filtering
-
                 // Years of exp filtering
                 int requestedYears = user.UserAnswers.First(uans => uans.QuestionID == 6).AnswerID;
 
@@ -112,7 +110,7 @@ namespace DJMatch.Controllers
                 // Add the recommended DJ to the list if in any way it's not in.
                 DJ recommended = brains.GetRecommendedDJ(user.ID);
 
-                if (recommended != null && !djs.Contains(recommended))
+                if (recommended != null && !djs.Any(dj => dj.ID == recommended.ID))
                 {
                     djs.Add(recommended);
                 }

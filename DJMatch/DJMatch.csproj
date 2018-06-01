@@ -304,6 +304,16 @@
     <Content Include="Content\Icons\location.png" />
     <Content Include="Content\Icons\money.png" />
     <Content Include="Content\Icons\star.png" />
+    <Content Include="Content\Images\10.jpg" />
+    <Content Include="Content\Images\11.jpg" />
+    <Content Include="Content\Images\12.jpg" />
+    <Content Include="Content\Images\13.jpg" />
+    <Content Include="Content\Images\14.jpg" />
+    <Content Include="Content\Images\15.jpg" />
+    <Content Include="Content\Images\6.jpg" />
+    <Content Include="Content\Images\7.jpg" />
+    <Content Include="Content\Images\8.jpg" />
+    <Content Include="Content\Images\9.jpg" />
     <Content Include="Content\Images\About.png" />
     <Content Include="Content\Images\astrix.jpeg" />
     <Content Include="Content\Images\back.jpg" />

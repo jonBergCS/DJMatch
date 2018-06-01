@@ -1,4 +1,6 @@
-﻿djApp.directive("djPlaylistDirective", function ($http) {
+﻿
+
+djApp.directive("djPlaylistDirective", function ($http) {
     var link = function (scope) {
         $http({
             method: 'GET',
@@ -12,9 +14,24 @@
         scope: {
             playlist: "=",
             editable: "=",
-            removeSong: "=",
         },
         link: link,
+        controller: ['$scope', '$http', function ($scope, $http) {
+            $scope.removeSong = function (songId, playlistId) {
+                console.log('yo')
+                $http({
+                    method: "DELETE",
+                    url: '/api/Playlists/' + playlistId + '/songs/' + songId,
+                }).then(function successCallback(response) {
+                    $http({
+                        method: 'GET',
+                        url: url + '/api/Playlists/' + playlistId + '/Songs',
+                    }).then(function successCallback(response) {
+                        $scope.songs = response.data;
+                    });
+                });
+            };
+        }],
         template: "<span ng-if='songs.length == 0'>Add songs to your playlist!</span>"
         + "<table class='table dj-playlist-table' ng-if='songs.length > 0' >"
         + "<thead>"
@@ -28,7 +45,7 @@
         + "<tr ng-repeat='song in songs'>"
         + "<td>{{ song.Name }}</td>"
         + "<td>{{ song.Artist }}</td>"
-        + "<td ng-if='editable'><button ngclick='removeSong(song.id)'><span class='glyphicon glyphicon-remove'></span></button></td>"
+        + "<td ng-if='editable'><button ng-click='removeSong(song.ID, playlist)'><span class='glyphicon glyphicon-remove'></span></button></td>"
         + "</tr>"
         + "</tbody>"
         + "</table>"
