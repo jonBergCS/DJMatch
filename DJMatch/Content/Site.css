@@ -182,3 +182,18 @@ textarea {
     font-weight: 700;
     color: cornflowerblue;
 }
+
+.detailSpan {
+    background-color: cornflowerblue;
+    border-radius: 4px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.recoDetailSpan {
+    background-color: white;
+    color: cornflowerblue;
+    border-radius: 4px;
+    padding: 5px;
+    cursor: pointer;
+}
