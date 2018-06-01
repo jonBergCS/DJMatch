@@ -43,7 +43,7 @@
             </div>
             <div ng-if="currentDJ != undefined">
                 <link rel="stylesheet" type="text/css" href="~/Content/DJProfile.css">
-                <div class="dj-profile-header row">
+                <div class="dj-profile-header row no-gutters">
                     <div class="dj-profile-img-container col">
                         <img class="dj-profile-img" src="~/Content/Images/{{currentDJ.ID}}.jpg" />
                     </div>
@@ -93,7 +93,7 @@
                             </div>
                         </div>
                         <center>
-                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#reviewModal">addReview</button>
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#reviewModal">Add your review</button>
                         </center>
                         <!-- Modal -->
                         <div id="reviewModal" class="modal fade" role="dialog">
