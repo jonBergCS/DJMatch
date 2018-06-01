@@ -88,8 +88,41 @@
                                     <img class="dj-profile-icon dj-profile-review-icon" src="~/Content/Icons/star.png" />
                                     <span>{{eachReview.Score}}</span>
                                 </div>
-                                <span class="row dj-profile-review-name">Michal Teverovsky, {{eachReview.Date}}</span>
+                                <span class="row dj-profile-review-name">{{getUserName(eachReview.UserID)}}, {{getDate(eachReview.Date)}}</span>
                                 <span class="row dj-profile-review-text">{{eachReview.Text}}</span>
+                            </div>
+                        </div>
+                        <center>
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#reviewModal">addReview</button>
+                        </center>
+                        <!-- Modal -->
+                        <div id="reviewModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Add review</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <center>
+                                            <textarea rows="4" cols="100" id="reviewText" ng-model="review.reviewText" placeholder="add your review.."></textarea>
+                                            <br />
+                                            <br />
+                                            Choose your rate:
+                                            <div class="star-rating">
+                                                <span class="glyphicon glyphicon-star" ng-click="checkStar($event)"></span>
+                                                <span class="glyphicon glyphicon-star" ng-click="checkStar($event)"></span>
+                                                <span class="glyphicon glyphicon-star" ng-click="checkStar($event)"></span>
+                                                <span class="glyphicon glyphicon-star" ng-click="checkStar($event)"></span>
+                                                <span class="glyphicon glyphicon-star" ng-click="checkStar($event)"></span>
+                                            </div>
+                                        </center>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="saveReview()">Save</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,9 +130,9 @@
                         <h1>{{currentDJ.Name}}'s Playlists</h1>
                         <div ng-repeat="eachPlaylist in currentDJ.DefaultPlaylists" class="dj-profile-reviews-container">
                             <dj-playlist-directive playlist="eachPlaylist.ID" editable=false></dj-playlist-directive>
-                            <div class="questionButtons">
+                            <center>
                                 <button class="btn btn-success" ng-click="createEventPage(eachPlaylist)">Create an event</button>
-                            </div>
+                            </center>
                         </div>
                     </div>
                     <a ng-click="backToList()">back to DJs list</a>
