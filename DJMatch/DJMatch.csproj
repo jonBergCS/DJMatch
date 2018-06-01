@@ -339,7 +339,6 @@
     <Content Include="Content\Images\pineapples.jpg" />
     <Content Include="Content\Images\shir.jpg" />
     <Content Include="Content\Images\shir2.jpg" />
-    <Content Include="Content\Images\skazi.jpeg" />
     <Content Include="Content\userProfile.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
