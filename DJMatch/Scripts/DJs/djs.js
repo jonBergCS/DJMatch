@@ -80,10 +80,10 @@
                 $scope.currentDJ = response[0].data;
                 $scope.currentDJ.Reviews = response[1].data;
                 $scope.currentDJ.Rate = response[2].data;
+                $scope.currentDJ.Rate = Number($scope.currentDJ.Rate).toFixed(1);   
                 $scope.currentDJ.Playlists = response[3].data;
                 $scope.currentDJ.DefaultPlaylists = response[4].data;
                 $scope.allUsers = response[5].data;
-
                 $scope.loading = false;
             });
         }
