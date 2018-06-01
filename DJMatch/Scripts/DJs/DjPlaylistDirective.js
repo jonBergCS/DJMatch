@@ -45,7 +45,7 @@ djApp.directive("djPlaylistDirective", function ($http) {
         + "<tr ng-repeat='song in songs'>"
         + "<td>{{ song.Name }}</td>"
         + "<td>{{ song.Artist }}</td>"
-        + "<td ng-if='editable'><button ng-click='removeSong(song.ID, playlist)'><span class='glyphicon glyphicon-remove'></span></button></td>"
+        + "<td ng-if='editable'><button class='remove-song-button' ng-click='removeSong(song.ID, playlist)'><span class='glyphicon glyphicon-remove'></span></button></td>"
         + "</tr>"
         + "</tbody>"
         + "</table>"
