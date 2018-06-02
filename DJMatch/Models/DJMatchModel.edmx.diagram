@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1d82fec14cef46c2b8827be139d0a24d" Name="Diagram1">
-        <EntityTypeShape EntityType="DJMatchModel.Answer" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DJMatchModel.DJ" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DJMatchModel.Playlist" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DJMatchModel.Question" Width="1.5" PointX="1.5" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DJMatchModel.Review" Width="1.5" PointX="6" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DJMatchModel.Song" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DJMatchModel.SongsToPlaylist" Width="1.5" PointX="5.25" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DJMatchModel.UserAnswer" Width="1.5" PointX="7.75" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DJMatchModel.User" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+      <Diagram DiagramId="1d82fec14cef46c2b8827be139d0a24d" Name="Diagram1" ZoomLevel="92">
+        <EntityTypeShape EntityType="DJMatchModel.Answer" Width="1.5" PointX="17.625" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DJMatchModel.DJ" Width="1.5" PointX="10" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DJMatchModel.Playlist" Width="1.5" PointX="11.875" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DJMatchModel.Question" Width="1.5" PointX="15.625" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="DJMatchModel.Review" Width="1.5" PointX="13.875" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DJMatchModel.Song" Width="1.5" PointX="15.75" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DJMatchModel.SongsToPlaylist" Width="1.5" PointX="13.875" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DJMatchModel.UserAnswer" Width="1.5" PointX="15.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DJMatchModel.User" Width="1.5" PointX="13.875" PointY="9.125" IsExpanded="true" />
         <AssociationConnector Association="DJMatchModel.FK_Answers_Questions" ManuallyRouted="false" />
         <AssociationConnector Association="DJMatchModel.FK_UserAnswers_Answers" ManuallyRouted="false" />
         <AssociationConnector Association="DJMatchModel.FK_Playlists_DJs" ManuallyRouted="false" />
@@ -24,7 +24,7 @@
         <AssociationConnector Association="DJMatchModel.FK_Reviews_Users" ManuallyRouted="false" />
         <AssociationConnector Association="DJMatchModel.FK_SongsToPlaylists_Songs" ManuallyRouted="false" />
         <AssociationConnector Association="DJMatchModel.FK_UserAnswers_Users" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="DJMatchModel.Event" Width="1.5" PointX="5.25" PointY="8.625" />
+        <EntityTypeShape EntityType="DJMatchModel.Event" Width="1.5" PointX="11.875" PointY="7.75" />
         <AssociationConnector Association="DJMatchModel.FK_Events_DJs" />
         <AssociationConnector Association="DJMatchModel.FK_Events_Playlists" />
         <AssociationConnector Association="DJMatchModel.FK_Events_Users" />

@@ -4,6 +4,7 @@
     <h2>{{currEvent.evnt.Name}}</h2>
 
     <div>
+        <link rel="stylesheet" type="text/css" href="~/Content/EventDetails.css">
         <dl class="dl-horizontal">
             <dt>
                 Date
@@ -47,9 +48,9 @@
         </dl>
     </div>
     <div ng-if="currPlaylist!=undefined">
-        <dj-playlist-directive playlist="currPlaylist" editable=true removeSong="removeSongFromPlaylist"></dj-playlist-directive>
+        <dj-playlist-directive playlist="currPlaylist" editable=true></dj-playlist-directive>
     </div>
     <p>
-        <span ng-click="backToList()">back to my events list</span>
+        <span class="back-to-list" ng-click="backToList()"> Back to my events</span>
     </p>
 </div>

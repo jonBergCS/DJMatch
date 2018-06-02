@@ -21,7 +21,8 @@
         window.location.href = '/Events/Index';
     }
 
-    $scope.removeSongFromPlaylist = function (singId) {
+    $scope.removeSongFromPlaylist = function (songId) {
+        console.log('yo')
         $http({
             method: "POST",
             url: '/api/Playlists/' + $scope.currPlaylist + '/songs/' + songId,

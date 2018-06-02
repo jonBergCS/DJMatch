@@ -1,5 +1,5 @@
 ﻿djApp.controller("createEventController", function createEventController($scope, $q, $http, generalFactory) {
-
+    $scope.loading = true;
     var promises = [];
     var DJID = location.search.split('dj=')[1].split('&')[0];
     var PlaylistID = location.search.split('playlist=')[1];
@@ -29,7 +29,7 @@
         var answers = response[2].data;
         $scope.currEvent.Date = answers.date;
         $scope.currEvent.EventType = answers.type;
-        
+        $scope.loading = false;
     });
 
     $scope.createEvent = function () {

@@ -3,7 +3,6 @@
     display: -webkit-box;
     padding: 0 5vw;
     padding: 45px 5vw;
-    margin-top: -50px;
     background-image: url("Images/dj-cover.jpeg");
     background-repeat: repeat;
     text-decoration-color: #f9f9f9;
@@ -26,7 +25,6 @@
 }
 
 .dj-profile-name {
-    margin-top: -22px;
 }
 
 .dj-profile-icon {
@@ -64,7 +62,7 @@
 }
 
 .dj-profile-review-icon {
-    margin-top: -10px;
+    
 }
 
 .dj-profile-review-name {
@@ -74,3 +72,8 @@
 .dj-profile-review-text {
     font-style: italic
 }
+
+.checked {
+    color: orange;
+}
+

@@ -1,9 +1,7 @@
 ﻿.message {
     background-color: cornflowerblue;
     color: white;
-}
-
-.title {
-    font-weight: 700;
-    color: cornflowerblue;
+    border-radius: 10px;
+    margin: 10px 5px;
+    padding: 10px;
 }

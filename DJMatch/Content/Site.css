@@ -79,6 +79,7 @@ textarea {
 .sidenav a {
     font-size: 20px;
     padding-left : 0px;
+    cursor: pointer;
 }
 
 .logo {
@@ -120,6 +121,13 @@ textarea {
 
 .djDiv {
     width: 350px;
+}
+
+.recommended {
+    background-color: cornflowerblue;
+    color: white;
+    border-radius: 10px;
+    padding: 15px;
 }
 
 .djsOverview {
@@ -169,4 +177,24 @@ textarea {
     position: absolute;
     top: 35%;
     left: 50%;
+}
+
+.title {
+    font-weight: 700;
+    color: cornflowerblue;
+}
+
+.detailSpan {
+    background-color: cornflowerblue;
+    border-radius: 4px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.recoDetailSpan {
+    background-color: white;
+    color: cornflowerblue;
+    border-radius: 4px;
+    padding: 5px;
+    cursor: pointer;
 }

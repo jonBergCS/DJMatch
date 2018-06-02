@@ -12,38 +12,40 @@
         </div>
         <div ng-if="!loading">
             <div ng-if="currentDJ == undefined">
-                <div class="w3-row-padding w3-grayscale" ng-if="recommended != undefined">
-                    <h1>Our recommended DJ</h1>
-                    <div class="w3-col l3 m6 w3-margin-bottom">
-                        <img src="~/Content/Images/icon.png" class="photo">
-                        <h3>DJ {{recommended.Name}}</h3>
-                        <p class="w3-opacity">{{recommended.ExperienceYears}} years of experience</p>
-                        <p class="w3-opacity">{{recommended.PriceMin}}$ - {{recommended.PriceMax}}$</p>
-                        <p class="w3-opacity">Plays {{recommended.Genres}}</p>
-                        <a ng-click="displayDetails(recommended.ID)">Details</a>
+                <center>
+                    <div class="w3-row-padding w3-grayscale" ng-if="recommended != undefined">
+                        <h1>Our recommended DJ</h1>
+                        <div class="djDiv recommended">
+                            <img src="~/Content/Images/{{recommended.ID}}.jpg" class="photo">
+                            <h3>DJ {{recommended.Name}}</h3>
+                            <p>{{recommended.ExperienceYears}} years of experience</p>
+                            <p>{{recommended.PriceMin}}$ - {{recommended.PriceMax}}$</p>
+                            <p>Plays {{recommended.Genres}}</p>
+                            <a ng-click="displayDetails(recommended.ID)" class="recoDetailSpan">Details</a>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <center>
+                    <br />
+                    <br />
+                    <div>
                         <h1>Optional DJs</h1>
                         <div ng-repeat="eachDJ in djsList" class="djsOverview">
                             <div class="djDiv">
-                                <img src="~/Content/Images/icon.png" class="photo">
+                                <img src="~/Content/Images/{{eachDJ.ID}}.jpg" class="photo">
                                 <h3>DJ {{eachDJ.Name}}</h3>
-                                <p class="w3-opacity">{{eachDJ.ExperienceYears}} years of experience</p>
-                                <p class="w3-opacity">{{eachDJ.PriceMin}}$ - {{eachDJ.PriceMax}}$</p>
-                                <p class="w3-opacity">Plays {{eachDJ.Genres}}</p>
-                                <a ng-click="displayDetails(eachDJ.ID)">Details</a>
+                                <p>{{eachDJ.ExperienceYears}} years of experience</p>
+                                <p>{{eachDJ.PriceMin}}$ - {{eachDJ.PriceMax}}$</p>
+                                <p>Plays {{eachDJ.Genres}}</p>
+                                <a ng-click="displayDetails(eachDJ.ID)" class="detailSpan">Details</a>
                             </div>
                         </div>
-                    </center>
-                </div>
+                    </div>
+                </center>
             </div>
             <div ng-if="currentDJ != undefined">
                 <link rel="stylesheet" type="text/css" href="~/Content/DJProfile.css">
-                <div class="dj-profile-header row">
+                <div class="dj-profile-header row no-gutters">
                     <div class="dj-profile-img-container col">
-                        <img class="dj-profile-img" src="~/Content/Images/icon.png" />
+                        <img class="dj-profile-img" src="~/Content/Images/{{currentDJ.ID}}.jpg" />
                     </div>
                     <div class="dj-profile-header-details col">
                         <div class="dj-profile-name row">
@@ -86,8 +88,41 @@
                                     <img class="dj-profile-icon dj-profile-review-icon" src="~/Content/Icons/star.png" />
                                     <span>{{eachReview.Score}}</span>
                                 </div>
-                                <span class="row dj-profile-review-name">Michal Teverovsky, {{eachReview.Date}}</span>
+                                <span class="row dj-profile-review-name">{{getUserName(eachReview.UserID)}}, {{getDate(eachReview.Date)}}</span>
                                 <span class="row dj-profile-review-text">{{eachReview.Text}}</span>
+                            </div>
+                        </div>
+                        <center>
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#reviewModal">Add your review</button>
+                        </center>
+                        <!-- Modal -->
+                        <div id="reviewModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Add review</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <center>
+                                            <textarea rows="4" cols="100" id="reviewText" ng-model="review.reviewText" placeholder="add your review.."></textarea>
+                                            <br />
+                                            <br />
+                                            Choose your rate:
+                                            <div class="star-rating">
+                                                <span class="glyphicon glyphicon-star" ng-click="checkStar($event)"></span>
+                                                <span class="glyphicon glyphicon-star" ng-click="checkStar($event)"></span>
+                                                <span class="glyphicon glyphicon-star" ng-click="checkStar($event)"></span>
+                                                <span class="glyphicon glyphicon-star" ng-click="checkStar($event)"></span>
+                                                <span class="glyphicon glyphicon-star" ng-click="checkStar($event)"></span>
+                                            </div>
+                                        </center>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="saveReview()">Save</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -95,9 +130,9 @@
                         <h1>{{currentDJ.Name}}'s Playlists</h1>
                         <div ng-repeat="eachPlaylist in currentDJ.DefaultPlaylists" class="dj-profile-reviews-container">
                             <dj-playlist-directive playlist="eachPlaylist.ID" editable=false></dj-playlist-directive>
-                            <div class="questionButtons">
+                            <center>
                                 <button class="btn btn-success" ng-click="createEventPage(eachPlaylist)">Create an event</button>
-                            </div>
+                            </center>
                         </div>
                     </div>
                     <a ng-click="backToList()">back to DJs list</a>

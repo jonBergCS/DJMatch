@@ -21,16 +21,18 @@
     @RenderSection("scripts", required: false)
     <div ng-controller="layoutController">
         <div class="sidenav">
-            <img class="logo" src="~/Content/Images/FinDJ_logo2.png" />
-            <div ng-if="userId != undefined">
-                <a onclick="window.location.href='/Users/UserProfile'">My profile</a>
-                <a onclick="window.location.href = '/DJs/Index'">DJs</a>
-                <a onclick="window.location.href = '/Events/Index'">My Events</a>
-                <a onclick="window.location.href = '/Home/About'">About Us</a>
-                <a onclick="window.location.href = '/Home/Contact'">Contact</a>
-                <br />
-                <a onclick="window.location.href = '/Home/Index'" ng-click="logout()">Logout</a>
-            </div>
+            <center>
+                <img class="logo" src="~/Content/Images/FinDJ_logo2.png" />
+                <div ng-if="userId != undefined">
+                    <a onclick="window.location.href='/Users/UserProfile'">My profile</a>
+                    <a onclick="window.location.href = '/DJs/Index'">DJs</a>
+                    <a onclick="window.location.href = '/Events/Index'">My Events</a>
+                    <a onclick="window.location.href = '/Home/About'">About Us</a>
+                    <a onclick="window.location.href = '/Home/Contact'">Contact</a>
+                    <br />
+                    <a onclick="window.location.href = '/Home/Index'" ng-click="logout()">Logout</a>
+                </div>
+            </center>
         </div>
     </div>
 
